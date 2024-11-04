@@ -7,17 +7,9 @@
     <link rel="stylesheet" href="indexStyle.css">
 </head>
 <body>
-    <header>
-        <h1>NBA Fantasy Visualizer</h1>
-        <nav>
-            <ul>
-                <li><a href="playerStats.html">Player Statistics</a></li>
-                <li><a href="#player-compare">Player Comparison</a></li>
-                <li><a href="#player-trends">Player Trends</a></li>
-                <li><a href="#nba-schedule">NBA Schedule</a></li>
-            </ul>
-        </nav>
-    </header>
+
+    <!-- Container for the shared header -->
+    <div id="header-container"></div>
 
     <section id="player-stats">
         <h2>Player Statistics</h2>
@@ -64,14 +56,14 @@
                     <th>Player</th>
                     <th>Team</th>
                     <th>Games Played</th>
-                    <th>FG%</th>
-                    <th>FT%</th>
                     <th>Points</th>
-                    <th>3PM</th>
                     <th>Rebounds</th>
                     <th>Assists</th>
                     <th>Steals</th>
                     <th>Blocks</th>
+                    <th>FG%</th>
+                    <th>FT%</th>
+                    <th>3PM</th>
                     <th>Turnovers</th>
                 </tr>
             </thead>
@@ -81,15 +73,17 @@
         </table>
         <button id="load-stats">Load Player Stats</button>
     </section>
-
-    <script src="script.js"></script>
+    
     <script>
-        const stats = [
-            { player: 'LeBron James', team: 'LAL', gamesPlayed: 10, points: 24, rebounds: 8, assists: 7, steals: 1, blocks: 1, fgPercentage: 50, ftPercentage: 75, threePMade: 3, turnovers: 2 },
-            { player: 'Kevin Durant', team: 'PHX', gamesPlayed: 10, points: 26, rebounds: 6, assists: 5, steals: 1, blocks: 0, fgPercentage: 52, ftPercentage: 90, threePMade: 2, turnovers: 1 },
-            { player: 'Giannis Antetokounmpo', team: 'MIL', gamesPlayed: 10, points: 30, rebounds: 12, assists: 5, steals: 1, blocks: 2, fgPercentage: 55, ftPercentage: 67, threePMade: 1, turnovers: 3 },
-            // Add more player data as needed
-        ];
+        // JavaScript to load header.html into header-container
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('header.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('header-container').innerHTML = data;
+                })
+                .catch(error => console.error('Error loading header:', error));
+        });
 
         document.getElementById('load-stats').addEventListener('click', loadStats);
         document.getElementById('team-filter').addEventListener('change', loadStats);
@@ -97,26 +91,40 @@
         function loadStats() {
             const selectedTeam = document.getElementById('team-filter').value;
             const tbody = document.getElementById('stats-table').getElementsByTagName('tbody')[0];
-            tbody.innerHTML = ''; // Clear previous stats
+            tbody.innerHTML = '';
 
-            const filteredStats = selectedTeam ? stats.filter(stat => stat.team === selectedTeam) : stats;
+            // Fetch player stats from the server
+            fetch('http://localhost:3003/api/stats') // Update the port if necessary
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok ' + response.statusText);
+                    }
+                    return response.json(); // Parse the JSON data
+                })
+                .then(data => {
+                    // Filter stats based on selected team
+                    const filteredStats = selectedTeam ? data.filter(stat => stat.team === selectedTeam) : data;
 
-            filteredStats.forEach(stat => {
-                const row = tbody.insertRow();
-                row.insertCell(0).innerText = stat.player;
-                row.insertCell(1).innerText = stat.team;
-                row.insertCell(2).innerText = stat.gamesPlayed;
-                row.insertCell(3).innerText = stat.points;
-                row.insertCell(4).innerText = stat.rebounds;
-                row.insertCell(5).innerText = stat.assists;
-                row.insertCell(6).innerText = stat.steals;
-                row.insertCell(7).innerText = stat.blocks;
-                row.insertCell(8).innerText = stat.fgPercentage + '%';
-                row.insertCell(9).innerText = stat.ftPercentage + '%';
-                row.insertCell(10).innerText = stat.threePMade;
-                row.insertCell(11).innerText = stat.turnovers;
-            });
+                    // Populate the table with player stats
+                    filteredStats.forEach(stat => {
+                        const row = tbody.insertRow();
+                        row.insertCell(0).innerText = stat.player;
+                        row.insertCell(1).innerText = stat.team;
+                        row.insertCell(2).innerText = stat.gamesPlayed;
+                        row.insertCell(3).innerText = stat.points;
+                        row.insertCell(4).innerText = stat.rebounds;
+                        row.insertCell(5).innerText = stat.assists;
+                        row.insertCell(6).innerText = stat.steals;
+                        row.insertCell(7).innerText = stat.blocks;
+                        row.insertCell(8).innerText = stat.fgPercentage + '%';
+                        row.insertCell(9).innerText = stat.ftPercentage + '%';
+                        row.insertCell(10).innerText = stat.threePMade;
+                        row.insertCell(11).innerText = stat.turnovers;
+                    });
+                })
+                .catch(error => console.error('Error fetching player stats:', error));
         }
     </script>
+
 </body>
 </html>

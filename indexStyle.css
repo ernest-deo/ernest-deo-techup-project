@@ -4,6 +4,16 @@ html, body {
     margin: 0; /* Reset default margin */
 }
 
+.header-container {
+    text-align: center; /* Centers content inside the container */
+    margin-bottom: 10px; /* Optional: Adds space below the image */
+}
+
+.header-container img {
+    width: 200px; /* Adjusts image width */
+    height: auto;
+}
+
 /* Header Styles */
 header {
     background-color: rgba(208, 223, 220, 0.215); /* Header background with opacity */
