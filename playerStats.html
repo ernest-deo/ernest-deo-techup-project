@@ -13,57 +13,30 @@
 
     <section id="player-stats">
         <h2>Player Statistics</h2>
-        
-        <!-- Team Filter Dropdown -->
+
         <label for="team-filter">Filter by Team:</label>
         <select id="team-filter">
             <option value="">All Teams</option>
-            <option value="ATL">Atlanta Hawks</option>
-            <option value="BOS">Boston Celtics</option>
-            <option value="BKN">Brooklyn Nets</option>
-            <option value="CHA">Charlotte Hornets</option>
-            <option value="CHI">Chicago Bulls</option>
-            <option value="CLE">Cleveland Cavaliers</option>
-            <option value="DAL">Dallas Mavericks</option>
-            <option value="DEN">Denver Nuggets</option>
-            <option value="DET">Detroit Pistons</option>
-            <option value="GSW">Golden State Warriors</option>
-            <option value="HOU">Houston Rockets</option>
-            <option value="IND">Indiana Pacers</option>
-            <option value="LAC">Los Angeles Clippers</option>
-            <option value="LAL">Los Angeles Lakers</option>
-            <option value="MEM">Memphis Grizzlies</option>
-            <option value="MIA">Miami Heat</option>
-            <option value="MIL">Milwaukee Bucks</option>
-            <option value="MIN">Minnesota Timberwolves</option>
-            <option value="NOP">New Orleans Pelicans</option>
-            <option value="NYK">New York Knicks</option>
-            <option value="OKC">Oklahoma City Thunder</option>
-            <option value="ORL">Orlando Magic</option>
-            <option value="PHI">Philadelphia 76ers</option>
-            <option value="PHX">Phoenix Suns</option>
-            <option value="POR">Portland Trail Blazers</option>
-            <option value="SAC">Sacramento Kings</option>
-            <option value="SAN">San Antonio Spurs</option>
-            <option value="TOR">Toronto Raptors</option>
-            <option value="UTA">Utah Jazz</option>
-            <option value="WAS">Washington Wizards</option>
+            <!-- Add team options here -->
         </select>
 
         <table id="stats-table">
             <thead>
                 <tr>
+                    <th>R#</th>
                     <th>Player</th>
+                    <th>Position</th>
                     <th>Team</th>
                     <th>Games Played</th>
+                    <th>Minutes Per Game</th>
+                    <th>Field Goal %</th>
+                    <th>Free Throw %</th>
+                    <th>3PM</th>
                     <th>Points</th>
                     <th>Rebounds</th>
                     <th>Assists</th>
                     <th>Steals</th>
                     <th>Blocks</th>
-                    <th>FG%</th>
-                    <th>FT%</th>
-                    <th>3PM</th>
                     <th>Turnovers</th>
                 </tr>
             </thead>
@@ -75,54 +48,43 @@
     </section>
     
     <script>
-        // JavaScript to load header.html into header-container
-        document.addEventListener('DOMContentLoaded', () => {
-            fetch('header.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('header-container').innerHTML = data;
-                })
-                .catch(error => console.error('Error loading header:', error));
-        });
-
         document.getElementById('load-stats').addEventListener('click', loadStats);
-        document.getElementById('team-filter').addEventListener('change', loadStats);
 
         function loadStats() {
-            const selectedTeam = document.getElementById('team-filter').value;
-            const tbody = document.getElementById('stats-table').getElementsByTagName('tbody')[0];
-            tbody.innerHTML = '';
-
-            // Fetch player stats from the server
-            fetch('http://localhost:3003/api/stats') // Update the port if necessary
+            fetch('playerStats.json')
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Network response was not ok ' + response.statusText);
                     }
-                    return response.json(); // Parse the JSON data
+                    return response.json();
                 })
                 .then(data => {
-                    // Filter stats based on selected team
-                    const filteredStats = selectedTeam ? data.filter(stat => stat.team === selectedTeam) : data;
+                    console.log(data); // This logs the loaded data to the console
 
-                    // Populate the table with player stats
-                    filteredStats.forEach(stat => {
+                    // Clear table body before loading new data
+                    const tbody = document.getElementById('stats-table').getElementsByTagName('tbody')[0];
+                    tbody.innerHTML = '';
+
+                    data.forEach(stat => {
                         const row = tbody.insertRow();
-                        row.insertCell(0).innerText = stat.player;
-                        row.insertCell(1).innerText = stat.team;
-                        row.insertCell(2).innerText = stat.gamesPlayed;
-                        row.insertCell(3).innerText = stat.points;
-                        row.insertCell(4).innerText = stat.rebounds;
-                        row.insertCell(5).innerText = stat.assists;
-                        row.insertCell(6).innerText = stat.steals;
-                        row.insertCell(7).innerText = stat.blocks;
-                        row.insertCell(8).innerText = stat.fgPercentage + '%';
-                        row.insertCell(9).innerText = stat.ftPercentage + '%';
-                        row.insertCell(10).innerText = stat.threePMade;
-                        row.insertCell(11).innerText = stat.turnovers;
+                        row.insertCell(0).innerText = stat["R#"];
+                        row.insertCell(1).innerText = stat.PLAYER;
+                        row.insertCell(2).innerText = stat.POS;
+                        row.insertCell(3).innerText = stat.TEAM;
+                        row.insertCell(4).innerText = stat.GP;
+                        row.insertCell(5).innerText = stat.MPG;
+                        row.insertCell(6).innerText = stat["FG%"];
+                        row.insertCell(7).innerText = stat["FT%"];
+                        row.insertCell(8).innerText = stat["3PM"];
+                        row.insertCell(9).innerText = stat.PTS;
+                        row.insertCell(10).innerText = stat.TREB;
+                        row.insertCell(11).innerText = stat.AST;
+                        row.insertCell(12).innerText = stat.STL;
+                        row.insertCell(13).innerText = stat.BLK;
+                        row.insertCell(14).innerText = stat.TO;
                     });
                 })
-                .catch(error => console.error('Error fetching player stats:', error));
+                .catch(error => console.error('Error fetching JSON:', error));
         }
     </script>
 
