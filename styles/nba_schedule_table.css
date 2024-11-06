@@ -1,0 +1,77 @@
+table {
+    border-collapse: collapse;
+    table-layout: fixed;
+    width: 6959pt;
+}
+
+col:first-child {
+    width: 89pt;
+}
+
+col:not(:first-child) {
+    width: 44pt;
+}
+
+.xl69 {
+    height: 20.25pt;
+    width: 89pt;
+}
+
+.xl115 {
+    border-right: 1.5pt solid black;
+    border-left: none;
+    width: 308pt;
+}
+
+.xl112 {
+    border-right: 1.5pt solid black;
+    width: 308pt;
+}
+
+.xl65 {
+    width: 44pt;
+}
+
+.xl70 {
+    height: 19.5pt;
+    width: 89pt;
+}
+
+.xl71, .xl72, .xl73 {
+    /* Add specific styles for these classes if needed */
+}
+
+/* Add more styles as needed */
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+.week-row th, .date-row th {
+    position: sticky;
+    top: 0;
+    background-color: #fff;
+    z-index: 1;
+}
+
+tbody th {
+    position: sticky;
+    left: 0;
+    background-color: #fff;
+    z-index: 1;
+}
+
+/* Easy highlighting options */
+.highlight-home {
+    background-color: #e6f3ff;
+}
+
+.highlight-away {
+    background-color: #fff0e6;
+}
