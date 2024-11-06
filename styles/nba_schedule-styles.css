@@ -1,0 +1,48 @@
+#table-container {
+    overflow: auto;
+    max-height: 80vh;
+    position: relative;
+}
+
+#sheet-data {
+    border-collapse: separate;
+    border-spacing: 0;
+    width: max-content;
+}
+
+#sheet-data th, #sheet-data td {
+    position: relative;
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+/* Make the first column sticky */
+#sheet-data th:first-child,
+#sheet-data td:first-child {
+    position: sticky;
+    left: 0;
+    z-index: 10;
+}
+
+/* Make only the first three rows sticky */
+#sheet-data tr:nth-child(-n+3) th,
+#sheet-data tr:nth-child(-n+3) td {
+    position: sticky;
+}
+
+#sheet-data tr:nth-child(1) th,
+#sheet-data tr:nth-child(1) td { top: 0; z-index: 20; }
+#sheet-data tr:nth-child(2) th,
+#sheet-data tr:nth-child(2) td { top: 33px; z-index: 19; }
+#sheet-data tr:nth-child(3) th,
+#sheet-data tr:nth-child(3) td { top: 66px; z-index: 18; }
+
+/* Make the corner cells (intersection of sticky rows and columns) have the highest z-index */
+#sheet-data tr:nth-child(-n+3) th:first-child,
+#sheet-data tr:nth-child(-n+3) td:first-child {
+    z-index: 30;
+}
+
+.cell-bold { font-weight: bold; }
+.cell-italic { font-style: italic; }
+.cell-underline { text-decoration: underline; }

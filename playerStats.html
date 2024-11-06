@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>NBA Fantasy Visualizer - Player Statistics</title>
-        <link rel="stylesheet" href="styles/styles.css">
-        <link rel="stylesheet" href="styles/playerStats-styles.css">
-    </head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBA Fantasy Visualizer - Player Statistics</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/playerStats-styles.css">
+    <link rel="stylesheet" href="styles/playerStats-table.css">
+</head>
     <body>
         <div id="header-container"></div>
 
@@ -20,45 +20,51 @@
     </script>
 
     <section id="player-stats">
-        <h2>Player Statistics</h2>
-
+        <h2>Top-200 Player Ranks (Updated 6 Nov 2024)</h2>
+    
         <div class="filters">
             <div class="filter-group">
-                <label for="team-filter">Filter by Team:</label>
+                <label for="player-count-filter">Show Top:</label>
+                <select id="player-count-filter">
+                    <option value="50" selected>Top 50</option>
+                    <option value="100">Top 100</option>
+                    <option value="200">All Players</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="team-filter">Team:</label>
                 <select id="team-filter">
                     <option value="">All Teams</option>
                 </select>
             </div>
-
             <div class="filter-group">
-                <label for="position-filter">Filter by Position:</label>
+                <label for="position-filter">Position:</label>
                 <select id="position-filter">
-                    <option value="">All Positions</option>
-                    <option value="PG">Point Guard</option>
-                    <option value="SG">Shooting Guard</option>
-                    <option value="SF">Small Forward</option>
-                    <option value="PF">Power Forward</option>
-                    <option value="C">Center</option>
+                    <option value="">All</option>
+                    <option value="PG">PG</option>
+                    <option value="SG">SG</option>
+                    <option value="SF">SF</option>
+                    <option value="PF">PF</option>
+                    <option value="C">C</option>
                 </select>
             </div>
-
             <div class="filter-group">
-                <label for="search">Search Players:</label>
-                <input type="text" id="search" placeholder="Enter player name...">
+                <label for="search">Search:</label>
+                <input type="text" id="search" placeholder="Player name">
             </div>
-
             <div class="filter-group">
-                <label for="min-mpg">Minimum MPG:</label>
-                <input type="number" id="min-mpg" min="0" max="48" placeholder="Min minutes">
+                <label for="min-mpg">Min MPG:</label>
+                <input type="number" id="min-mpg" min="0" max="48" placeholder="Min">
             </div>
         </div>
+        
 
         <div class="table-container">
             <table id="stats-table">
                 <thead>
                     <tr>
-                        <th data-sort="R#">R# <span class="sort-icon"></span></th>
-                        <th data-sort="PLAYER">Player <span class="sort-icon"></span></th>
+                        <th class="sticky-col first-col" data-sort="R#">R# <span class="sort-icon"></span></th>
+                        <th class="sticky-col second-col" data-sort="PLAYER">Player <span class="sort-icon"></span></th>
                         <th data-sort="POS">Position <span class="sort-icon"></span></th>
                         <th data-sort="TEAM">Team <span class="sort-icon"></span></th>
                         <th data-sort="GP">GP <span class="sort-icon"></span></th>
@@ -83,42 +89,42 @@
         let allPlayers = [];
         let currentSort = { column: null, direction: 'asc' };
 
-// Map of team abbreviations to full names
-const teamNames = {
-    'ATL': 'Atlanta Hawks',
-    'BOS': 'Boston Celtics',
-    'BKN': 'Brooklyn Nets',
-    'CHA': 'Charlotte Hornets',
-    'CHI': 'Chicago Bulls',
-    'CLE': 'Cleveland Cavaliers',
-    'DAL': 'Dallas Mavericks',
-    'DEN': 'Denver Nuggets',
-    'DET': 'Detroit Pistons',
-    'GSW': 'Golden State Warriors',
-    'HOU': 'Houston Rockets',
-    'IND': 'Indiana Pacers',
-    'LAC': 'Los Angeles Clippers',
-    'LAL': 'Los Angeles Lakers',
-    'MEM': 'Memphis Grizzlies',
-    'MIA': 'Miami Heat',
-    'MIL': 'Milwaukee Bucks',
-    'MIN': 'Minnesota Timberwolves',
-    'NOP': 'New Orleans Pelicans',
-    'NYK': 'New York Knicks',
-    'OKC': 'Oklahoma City Thunder',
-    'ORL': 'Orlando Magic',
-    'PHI': 'Philadelphia 76ers',
-    'PHX': 'Phoenix Suns',
-    'POR': 'Portland Trail Blazers',
-    'SAC': 'Sacramento Kings',
-    'SAS': 'San Antonio Spurs',
-    'TOR': 'Toronto Raptors',
-    'UTA': 'Utah Jazz',
-    'WAS': 'Washington Wizards'
-};
+        // Map of team abbreviations to full names
+        const teamNames = {
+            'ATL': 'Atlanta Hawks',
+            'BOS': 'Boston Celtics',
+            'BKN': 'Brooklyn Nets',
+            'CHA': 'Charlotte Hornets',
+            'CHI': 'Chicago Bulls',
+            'CLE': 'Cleveland Cavaliers',
+            'DAL': 'Dallas Mavericks',
+            'DEN': 'Denver Nuggets',
+            'DET': 'Detroit Pistons',
+            'GS': 'Golden State Warriors',
+            'HOU': 'Houston Rockets',
+            'IND': 'Indiana Pacers',
+            'LAC': 'Los Angeles Clippers',
+            'LAL': 'Los Angeles Lakers',
+            'MEM': 'Memphis Grizzlies',
+            'MIA': 'Miami Heat',
+            'MIL': 'Milwaukee Bucks',
+            'MIN': 'Minnesota Timberwolves',
+            'NO': 'New Orleans Pelicans',
+            'NY': 'New York Knicks',
+            'OKC': 'Oklahoma City Thunder',
+            'ORL': 'Orlando Magic',
+            'PHI': 'Philadelphia 76ers',
+            'PHO': 'Phoenix Suns',
+            'POR': 'Portland Trail Blazers',
+            'SAC': 'Sacramento Kings',
+            'SA': 'San Antonio Spurs',
+            'TOR': 'Toronto Raptors',
+            'UTA': 'Utah Jazz',
+            'WAS': 'Washington Wizards'
+        };
 
         document.addEventListener('DOMContentLoaded', loadStats);
-
+        document.getElementById('player-count-filter').addEventListener('change', filterData);
         document.getElementById('team-filter').addEventListener('change', filterData);
         document.getElementById('position-filter').addEventListener('change', filterData);
         document.getElementById('search').addEventListener('input', filterData);
@@ -138,9 +144,9 @@ const teamNames = {
                     return response.json();
                 })
                 .then(data => {
-                    allPlayers = data;
-                    populateTeamFilter(data);
-                    displayData(data);
+                    allPlayers = data.sort((a, b) => parseInt(a['R#']) - parseInt(b['R#']));
+                    populateTeamFilter(allPlayers);
+                    filterData(); // Apply filters (including top 50) immediately after loading
                 })
                 .catch(error => {
                     console.error('Error:', error);
@@ -148,6 +154,7 @@ const teamNames = {
                         '<tr><td colspan="15">Error loading data. Please try again.</td></tr>';
                 });
         }
+
         function populateTeamFilter(data) {
             const teams = [...new Set(data.map(player => player.TEAM))].sort();
             const teamFilter = document.getElementById('team-filter');
@@ -164,6 +171,7 @@ const teamNames = {
             const position = document.getElementById('position-filter').value;
             const search = document.getElementById('search').value.toLowerCase();
             const minMpg = document.getElementById('min-mpg').value;
+            const playerCount = parseInt(document.getElementById('player-count-filter').value);
 
             let filteredData = allPlayers.filter(player => {
                 return (!team || player.TEAM === team) &&
@@ -171,6 +179,12 @@ const teamNames = {
                        (!search || player.PLAYER.toLowerCase().includes(search)) &&
                        (!minMpg || parseFloat(player.MPG) >= parseFloat(minMpg));
             });
+
+            // Sort by R# to ensure we're getting the top players
+            filteredData.sort((a, b) => parseInt(a['R#']) - parseInt(b['R#']));
+
+            // Limit to selected number of players
+            filteredData = filteredData.slice(0, playerCount);
 
             displayData(filteredData);
         }
@@ -194,7 +208,7 @@ const teamNames = {
             const sortedData = [...allPlayers].sort((a, b) => {
                 let valueA = isNaN(a[column]) ? a[column] : parseFloat(a[column]);
                 let valueB = isNaN(b[column]) ? b[column] : parseFloat(b[column]);
-                
+
                 if (currentSort.direction === 'asc') {
                     return valueA > valueB ? 1 : -1;
                 } else {
@@ -205,15 +219,118 @@ const teamNames = {
             displayData(sortedData);
         }
 
+        function getCellColor(value, column) {
+            const numValue = parseFloat(value);
+            if (isNaN(numValue)) return null; // Return null for non-numeric values
+
+            let percentile;
+            switch (column) {
+                case 'FG%':
+                case 'FT%':
+                case '3PM':
+                case 'PTS':
+                case 'TREB':
+                case 'AST':
+                case 'STL':
+                case 'BLK':
+                    percentile = getPercentile(numValue, column);
+                    break;
+                case 'TO':
+                    percentile = 100 - getPercentile(numValue, column); // Invert for TO (lower is better)
+                    break;
+                default:
+                    return null;
+            }
+
+            return getColorGradient(percentile);
+        }
+
+        function getPercentile(value, column) {
+            // You'll need to define these thresholds based on your data
+            const thresholds = {
+                'FG%': [0.40, 0.42, 0.44, 0.46, 0.48, 0.50],
+                'FT%': [0.60, 0.65, 0.70, 0.75, 0.80, 0.85],
+                '3PM': [0.5, 1.0, 1.5, 2.0, 2.5, 3.0],
+                'PTS': [5, 10, 15, 20, 25, 30],
+                'TREB': [2, 3, 4, 5, 6, 7],
+                'AST': [1, 2, 3, 4, 5, 6],
+                'STL': [0.5, 0.8, 1.1, 1.4, 1.7, 2.0],
+                'BLK': [0.3, 0.6, 0.9, 1.2, 1.5, 1.8],
+                'TO': [1, 1.5, 2, 2.5, 3, 3.5]
+            };
+
+            const categoryThresholds = thresholds[column];
+            for (let i = 0; i < categoryThresholds.length; i++) {
+                if (value < categoryThresholds[i]) {
+                    return (i / categoryThresholds.length) * 100;
+                }
+            }
+            return 100;
+        }
+
+        function getColorGradient(percentile) {
+            // Convert percentile to a value between 0 and 1
+            const t = percentile / 100;
+
+            // Use HSL color model for smoother transitions
+            let h, s, l;
+
+            if (t < 0.5) {
+                // Red (0) to Yellow (60)
+                h = t * 120;
+                s = 100;
+                l = 50;
+            } else {
+                // Yellow (60) to Green (120)
+                h = 60 + (t - 0.5) * 120;
+                s = 100;
+                l = 50;
+            }
+
+            // Adjust lightness for better readability
+            l = Math.min(Math.max(l - 20 + t * 40, 30), 70);
+
+            // Convert HSL to RGB
+            const c = (1 - Math.abs(2 * l / 100 - 1)) * s / 100;
+            const x = c * (1 - Math.abs((h / 60) % 2 - 1));
+            const m = l / 100 - c / 2;
+            let r, g, b;
+            if (h < 60) {
+                [r, g, b] = [c, x, 0];
+            } else if (h < 120) {
+                [r, g, b] = [x, c, 0];
+            } else {
+                [r, g, b] = [0, c, x];
+            }
+
+            // Convert to 8-bit color values
+            r = Math.round((r + m) * 255);
+            g = Math.round((g + m) * 255);
+            b = Math.round((b + m) * 255);
+
+            // Calculate relative luminance for text color
+            const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+            const textColor = luminance > 0.5 ? '#000000' : '#FFFFFF';
+
+            return {
+                background: `rgb(${r}, ${g}, ${b})`,
+                text: textColor
+            };
+        }
         function displayData(data) {
             const tbody = document.querySelector('#stats-table tbody');
             tbody.innerHTML = '';
 
             data.forEach(player => {
                 const row = tbody.insertRow();
-                Object.values(player).forEach(value => {
+                Object.entries(player).forEach(([key, value]) => {
                     const cell = row.insertCell();
                     cell.textContent = value;
+                    const colors = getCellColor(value, key);
+                    if (colors) {
+                        cell.style.backgroundColor = colors.background;
+                        cell.style.color = colors.text;
+                    }
                 });
             });
         }

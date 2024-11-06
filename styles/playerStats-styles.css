@@ -10,24 +10,49 @@
 .filters {
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
     margin-bottom: 1rem;
+    flex-wrap: nowrap;
 }
 
 .filter-group {
-    display: flex;
-    flex-direction: column;
+    flex: 0 1 18%;
+    min-width: 0;
+    margin-right: 0.5rem;
 }
 
+.filter-group:last-child {
+    margin-right: 0;
+}
 .filter-group label {
-    margin-bottom: 0.5rem;
+    display: block;
+    margin-bottom: 0.25rem;
     color: var(--nba-blue);
+    font-size: 0.9em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .filter-group select,
 .filter-group input {
-    padding: 0.5rem;
+    width: 100%;
+    padding: 0.25rem;
     border: 1px solid var(--nba-blue);
     border-radius: 4px;
+    font-size: 0.9em;
+}
+
+/* Remove any responsive styles that might be causing issues */
+@media (max-width: 1200px), (max-width: 768px), (max-width: 480px) {
+    .filters {
+        flex-wrap: nowrap;
+    }
+
+    .filter-group {
+        flex: 0 1 18%;
+        margin-bottom: 0;
+    }
 }
 
 .sort-icon {

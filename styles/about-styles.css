@@ -1,0 +1,39 @@
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.about-content h1 {
+    color: var(--nba-blue);
+    border-bottom: 2px solid var(--nba-red);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.about-content h2 {
+    color: var(--basketball-orange);
+    margin-top: 30px;
+}
+
+.about-content ul {
+    list-style-type: none;
+    padding-left: 30px;
+}
+
+.about-content li {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.about-content li::before {
+    content: '🏀';
+    position: absolute;
+    left: -25px;
+    top: 0;
+}
+
+.about-content section {
+    margin-bottom: 30px;
+}

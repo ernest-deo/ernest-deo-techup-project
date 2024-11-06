@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NBA Fantasy League Dashboard</title>
+    <title>HoopHub</title>
     <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-    <div id="header-container"></div>
+    <div id="header-container">
     <script>
         fetch('header.html')
             .then(response => response.text())
@@ -17,17 +17,18 @@
             .catch(error => {
                 console.error('Error loading header:', error);
             });
-    </script>
+    </script></div>
 
     <main class="main-container">
         <section id="nba-champions">
             <div class="gif-container">
-                <img src="giphy.webp" alt="NBA Champions" class="responsive-image">
+                <img src="giphy.webp" alt="NBA Champions" class="responsive-gif">
             </div>
         </section>
     </main>
     <footer>
-        <p>&copy; 2024 NBA Fantasy League Dashboard | Designed for fantasy enthusiasts</p>
+        <p>&copy; 2024 HoopHub. All rights reserved.</p>
+        <p class="disclaimer-text">Disclaimer: This website is created for learning purposes only. The information here should not be considered professional advice. Please note that we make no guarantees regarding the accuracy, completeness, or reliability of the contents of this website. Any actions you take based on the contents of this website are at your own risk. We are not liable for any losses or damages incurred from the use of this website.</p>
     </footer>
 </body>
 </html>
