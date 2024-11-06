@@ -1,0 +1,49 @@
+#player-stats {
+    max-width: 1400px;
+    margin: 2rem auto;
+    background: var(--nba-white);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.filters {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.filter-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.filter-group label {
+    margin-bottom: 0.5rem;
+    color: var(--nba-blue);
+}
+
+.filter-group select,
+.filter-group input {
+    padding: 0.5rem;
+    border: 1px solid var(--nba-blue);
+    border-radius: 4px;
+}
+
+.sort-icon {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    margin-left: 5px;
+    vertical-align: middle;
+    border-right: 4px solid transparent;
+    border-left: 4px solid transparent;
+}
+
+.sort-asc .sort-icon {
+    border-bottom: 4px solid var(--text-light);
+}
+
+.sort-desc .sort-icon {
+    border-top: 4px solid var(--text-light);
+}

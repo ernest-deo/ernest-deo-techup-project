@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBA Schedule 2024-25</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+        /* ... existing styles ... */
+        #sheet-data {
+            margin-top: 30px;
+            border-collapse: collapse;
+            width: 100%;
+        }
+        #sheet-data th, #sheet-data td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+        #sheet-data th {
+            background-color: #f2f2f2;
+        }
+        /* Add these new styles */
+        .cell {
+            font-family: Arial, sans-serif;
+        }
+        .cell-bold {
+            font-weight: bold;
+        }
+        .cell-italic {
+            font-style: italic;
+        }
+        .cell-underline {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div id="header-container"></div>
+
+    <script>
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-container').innerHTML = data;
+            });
+    </script>
+
+    <main class="schedule-container">
+        <h1>NBA Schedule 2024-25</h1>
+        <div id="schedule"></div>
+
+        <h2>Google Sheet Data</h2>
+        <div id="sheet-container">
+            <table id="sheet-data"></table>
+        </div>
+    </main>
+
+    <script>
+        // ... existing script for NBA schedule ...
+<head>
+    <!-- ... other head content ... -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.9/xlsx.full.min.js"></script>
+</head>
+<script>
+function fetchGoogleSheetData() {
+    const sheetId = 'Y12sHhQrIJdpkuC4nhnA3wyLUKuXD3ZmqUld_S03ddItM';
+    const sheetName = '@DanBesbris Fantasy Basketball Super G-Sheet';
+    const url = `https://docs.google.com/spreadsheets/d/${sheetId}/export?format=xlsx`;
+
+    fetch(url)
+        .then(response => response.arrayBuffer())
+        .then(data => {
+            const workbook = XLSX.read(new Uint8Array(data), {type: 'array'});
+            const worksheet = workbook.Sheets[sheetName];
+
+            const html = XLSX.utils.sheet_to_html(worksheet, {
+                editable: false,
+                style: true
+            });
+
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+
+            const table = doc.querySelector('table');
+            table.id = 'sheet-data';
+
+            Array.from(table.querySelectorAll('td')).forEach(cell => {
+                const style = cell.style;
+                cell.className = 'cell';
+
+                if (style.fontWeight === 'bold') cell.classList.add('cell-bold');
+                if (style.fontStyle === 'italic') cell.classList.add('cell-italic');
+                if (style.textDecoration === 'underline') cell.classList.add('cell-underline');
+
+                if (style.backgroundColor) cell.style.backgroundColor = style.backgroundColor;
+                if (style.color) cell.style.color = style.color;
+            });
+
+            document.getElementById('sheet-container').innerHTML = '';
+            document.getElementById('sheet-container').appendChild(table);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            document.getElementById('sheet-container').innerHTML = '<p>Error loading sheet data. Please try again later.</p>';
+        });
+}
+
+// Call the function to fetch and display Google Sheet data
+fetchGoogleSheetData();
+</script>
+</body>
+</html>

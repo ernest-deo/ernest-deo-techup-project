@@ -1,92 +1,222 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NBA Fantasy Visualizer - Player Statistics</title>
-    <link rel="stylesheet" href="indexStyle.css">
-</head>
-<body>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>NBA Fantasy Visualizer - Player Statistics</title>
+        <link rel="stylesheet" href="styles/styles.css">
+        <link rel="stylesheet" href="styles/playerStats-styles.css">
+    </head>
+    <body>
+        <div id="header-container"></div>
 
-    <!-- Container for the shared header -->
-    <div id="header-container"></div>
+    <script>
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-container').innerHTML = data;
+            });
+    </script>
 
     <section id="player-stats">
         <h2>Player Statistics</h2>
 
-        <label for="team-filter">Filter by Team:</label>
-        <select id="team-filter">
-            <option value="">All Teams</option>
-            <!-- Add team options here -->
-        </select>
+        <div class="filters">
+            <div class="filter-group">
+                <label for="team-filter">Filter by Team:</label>
+                <select id="team-filter">
+                    <option value="">All Teams</option>
+                </select>
+            </div>
 
-        <table id="stats-table">
-            <thead>
-                <tr>
-                    <th>R#</th>
-                    <th>Player</th>
-                    <th>Position</th>
-                    <th>Team</th>
-                    <th>Games Played</th>
-                    <th>Minutes Per Game</th>
-                    <th>Field Goal %</th>
-                    <th>Free Throw %</th>
-                    <th>3PM</th>
-                    <th>Points</th>
-                    <th>Rebounds</th>
-                    <th>Assists</th>
-                    <th>Steals</th>
-                    <th>Blocks</th>
-                    <th>Turnovers</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Player statistics will be populated here -->
-            </tbody>
-        </table>
-        <button id="load-stats">Load Player Stats</button>
+            <div class="filter-group">
+                <label for="position-filter">Filter by Position:</label>
+                <select id="position-filter">
+                    <option value="">All Positions</option>
+                    <option value="PG">Point Guard</option>
+                    <option value="SG">Shooting Guard</option>
+                    <option value="SF">Small Forward</option>
+                    <option value="PF">Power Forward</option>
+                    <option value="C">Center</option>
+                </select>
+            </div>
+
+            <div class="filter-group">
+                <label for="search">Search Players:</label>
+                <input type="text" id="search" placeholder="Enter player name...">
+            </div>
+
+            <div class="filter-group">
+                <label for="min-mpg">Minimum MPG:</label>
+                <input type="number" id="min-mpg" min="0" max="48" placeholder="Min minutes">
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table id="stats-table">
+                <thead>
+                    <tr>
+                        <th data-sort="R#">R# <span class="sort-icon"></span></th>
+                        <th data-sort="PLAYER">Player <span class="sort-icon"></span></th>
+                        <th data-sort="POS">Position <span class="sort-icon"></span></th>
+                        <th data-sort="TEAM">Team <span class="sort-icon"></span></th>
+                        <th data-sort="GP">GP <span class="sort-icon"></span></th>
+                        <th data-sort="MPG">MPG <span class="sort-icon"></span></th>
+                        <th data-sort="FG%">FG% <span class="sort-icon"></span></th>
+                        <th data-sort="FT%">FT% <span class="sort-icon"></span></th>
+                        <th data-sort="3PM">3PM <span class="sort-icon"></span></th>
+                        <th data-sort="PTS">PTS <span class="sort-icon"></span></th>
+                        <th data-sort="TREB">REB <span class="sort-icon"></span></th>
+                        <th data-sort="AST">AST <span class="sort-icon"></span></th>
+                        <th data-sort="STL">STL <span class="sort-icon"></span></th>
+                        <th data-sort="BLK">BLK <span class="sort-icon"></span></th>
+                        <th data-sort="TO">TO <span class="sort-icon"></span></th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </section>
-    
+
     <script>
-        document.getElementById('load-stats').addEventListener('click', loadStats);
+        let allPlayers = [];
+        let currentSort = { column: null, direction: 'asc' };
+
+// Map of team abbreviations to full names
+const teamNames = {
+    'ATL': 'Atlanta Hawks',
+    'BOS': 'Boston Celtics',
+    'BKN': 'Brooklyn Nets',
+    'CHA': 'Charlotte Hornets',
+    'CHI': 'Chicago Bulls',
+    'CLE': 'Cleveland Cavaliers',
+    'DAL': 'Dallas Mavericks',
+    'DEN': 'Denver Nuggets',
+    'DET': 'Detroit Pistons',
+    'GSW': 'Golden State Warriors',
+    'HOU': 'Houston Rockets',
+    'IND': 'Indiana Pacers',
+    'LAC': 'Los Angeles Clippers',
+    'LAL': 'Los Angeles Lakers',
+    'MEM': 'Memphis Grizzlies',
+    'MIA': 'Miami Heat',
+    'MIL': 'Milwaukee Bucks',
+    'MIN': 'Minnesota Timberwolves',
+    'NOP': 'New Orleans Pelicans',
+    'NYK': 'New York Knicks',
+    'OKC': 'Oklahoma City Thunder',
+    'ORL': 'Orlando Magic',
+    'PHI': 'Philadelphia 76ers',
+    'PHX': 'Phoenix Suns',
+    'POR': 'Portland Trail Blazers',
+    'SAC': 'Sacramento Kings',
+    'SAS': 'San Antonio Spurs',
+    'TOR': 'Toronto Raptors',
+    'UTA': 'Utah Jazz',
+    'WAS': 'Washington Wizards'
+};
+
+        document.addEventListener('DOMContentLoaded', loadStats);
+
+        document.getElementById('team-filter').addEventListener('change', filterData);
+        document.getElementById('position-filter').addEventListener('change', filterData);
+        document.getElementById('search').addEventListener('input', filterData);
+        document.getElementById('min-mpg').addEventListener('input', filterData);
+
+        document.querySelectorAll('#stats-table th').forEach(headerCell => {
+            headerCell.addEventListener('click', () => {
+                const column = headerCell.dataset.sort;
+                sortTable(column);
+            });
+        });
 
         function loadStats() {
             fetch('playerStats.json')
                 .then(response => {
-                    if (!response.ok) {
-                        throw new Error('Network response was not ok ' + response.statusText);
-                    }
+                    if (!response.ok) throw new Error('Network response was not ok');
                     return response.json();
                 })
                 .then(data => {
-                    console.log(data); // This logs the loaded data to the console
-
-                    // Clear table body before loading new data
-                    const tbody = document.getElementById('stats-table').getElementsByTagName('tbody')[0];
-                    tbody.innerHTML = '';
-
-                    data.forEach(stat => {
-                        const row = tbody.insertRow();
-                        row.insertCell(0).innerText = stat["R#"];
-                        row.insertCell(1).innerText = stat.PLAYER;
-                        row.insertCell(2).innerText = stat.POS;
-                        row.insertCell(3).innerText = stat.TEAM;
-                        row.insertCell(4).innerText = stat.GP;
-                        row.insertCell(5).innerText = stat.MPG;
-                        row.insertCell(6).innerText = stat["FG%"];
-                        row.insertCell(7).innerText = stat["FT%"];
-                        row.insertCell(8).innerText = stat["3PM"];
-                        row.insertCell(9).innerText = stat.PTS;
-                        row.insertCell(10).innerText = stat.TREB;
-                        row.insertCell(11).innerText = stat.AST;
-                        row.insertCell(12).innerText = stat.STL;
-                        row.insertCell(13).innerText = stat.BLK;
-                        row.insertCell(14).innerText = stat.TO;
-                    });
+                    allPlayers = data;
+                    populateTeamFilter(data);
+                    displayData(data);
                 })
-                .catch(error => console.error('Error fetching JSON:', error));
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.querySelector('#stats-table tbody').innerHTML = 
+                        '<tr><td colspan="15">Error loading data. Please try again.</td></tr>';
+                });
+        }
+        function populateTeamFilter(data) {
+            const teams = [...new Set(data.map(player => player.TEAM))].sort();
+            const teamFilter = document.getElementById('team-filter');
+            teams.forEach(team => {
+                const option = document.createElement('option');
+                option.value = team;
+                option.textContent = teamNames[team] || team;  // Display full name or fallback to abbreviation
+                teamFilter.appendChild(option);
+            });
+        }
+
+        function filterData() {
+            const team = document.getElementById('team-filter').value;
+            const position = document.getElementById('position-filter').value;
+            const search = document.getElementById('search').value.toLowerCase();
+            const minMpg = document.getElementById('min-mpg').value;
+
+            let filteredData = allPlayers.filter(player => {
+                return (!team || player.TEAM === team) &&
+                       (!position || player.POS === position) &&
+                       (!search || player.PLAYER.toLowerCase().includes(search)) &&
+                       (!minMpg || parseFloat(player.MPG) >= parseFloat(minMpg));
+            });
+
+            displayData(filteredData);
+        }
+
+        function sortTable(column) {
+            const headers = document.querySelectorAll('#stats-table th');
+            headers.forEach(header => {
+                if (header.dataset.sort === column) {
+                    const icon = header.querySelector('.sort-icon');
+                    icon.classList.remove('asc', 'desc');
+                    if (currentSort.column === column) {
+                        currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
+                    } else {
+                        currentSort.column = column;
+                        currentSort.direction = 'asc';
+                    }
+                    icon.classList.add(currentSort.direction);
+                }
+            });
+
+            const sortedData = [...allPlayers].sort((a, b) => {
+                let valueA = isNaN(a[column]) ? a[column] : parseFloat(a[column]);
+                let valueB = isNaN(b[column]) ? b[column] : parseFloat(b[column]);
+                
+                if (currentSort.direction === 'asc') {
+                    return valueA > valueB ? 1 : -1;
+                } else {
+                    return valueA < valueB ? 1 : -1;
+                }
+            });
+
+            displayData(sortedData);
+        }
+
+        function displayData(data) {
+            const tbody = document.querySelector('#stats-table tbody');
+            tbody.innerHTML = '';
+
+            data.forEach(player => {
+                const row = tbody.insertRow();
+                Object.values(player).forEach(value => {
+                    const cell = row.insertCell();
+                    cell.textContent = value;
+                });
+            });
         }
     </script>
-
 </body>
 </html>
