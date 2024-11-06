@@ -6,19 +6,20 @@
     <title>HoopHub - NBA Schedule</title>
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/nba_schedule-styles.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 </head>
 <body>
     <div id="header-container"></div>
 
+    <div id="top-scroll" class="scroll-container"></div>
+    <div id="middle-scroll" class="scroll-container"></div>
     <div id="table-container">
-        <table id="sheet-data"></table>
+        <!-- The table will be inserted here -->
     </div>
 
-        <div id="table-container">
-        <table id="sheet-data"></table>
-    </div>
-
+    <footer>
+        <p>&copy; 2024 HoopHub. All rights reserved.</p>
+        <p class="disclaimer-text">Disclaimer: This website is created for learning purposes only. The information here should not be considered professional advice. Please note that we make no guarantees regarding the accuracy, completeness, or reliability of the contents of this website. Any actions you take based on the contents of this website are at your own risk. We are not liable for any losses or damages incurred from the use of this website.</p>
+    </footer>
     <script>
         // Load the header
         fetch('header.html')
@@ -27,76 +28,146 @@
                 document.getElementById('header-container').innerHTML = data;
             });
 
-        // Load the Excel file
-        document.addEventListener('DOMContentLoaded', loadExcelFile);
+        // Load the NBA schedule table
+        fetch('nba_schedule_table.html')
+            .then(response => response.text())
+            .then(data => {
+                const parser = new DOMParser();
+                const doc = parser.parseFromString(data, 'text/html');
+                const table = doc.querySelector('table');
+                document.getElementById('table-container').appendChild(table);
 
-        function loadExcelFile() {
-            fetch('nba_schedule.xlsx')
-                .then(response => response.arrayBuffer())
-                .then(data => {
-                    const workbook = XLSX.read(new Uint8Array(data), {type: 'array', cellStyles: true});
-                    const firstSheetName = workbook.SheetNames[0];
-                    const worksheet = workbook.Sheets[firstSheetName];
+                // Apply additional classes and styles
+                applyAdditionalStyles();
 
-                    // Convert the worksheet to HTML
-                    const html = XLSX.utils.sheet_to_html(worksheet, {id: 'sheet-data'});
+                // Add scroll synchronization
+                addScrollSynchronization();
+            });
 
-                    // Replace the existing table content with the new one
-                    document.getElementById('table-container').innerHTML = html;
+        const teamAbbreviations = {
+            'ATL': 'Atlanta Hawks',
+            'BOS': 'Boston Celtics',
+            'BKN': 'Brooklyn Nets',
+            'CHA': 'Charlotte Hornets',
+            'CHI': 'Chicago Bulls',
+            'CLE': 'Cleveland Cavaliers',
+            'DAL': 'Dallas Mavericks',
+            'DEN': 'Denver Nuggets',
+            'DET': 'Detroit Pistons',
+            'GSW': 'Golden State Warriors',
+            'HOU': 'Houston Rockets',
+            'IND': 'Indiana Pacers',
+            'LAC': 'Los Angeles Clippers',
+            'LAL': 'Los Angeles Lakers',
+            'MEM': 'Memphis Grizzlies',
+            'MIA': 'Miami Heat',
+            'MIL': 'Milwaukee Bucks',
+            'MIN': 'Minnesota Timberwolves',
+            'NOP': 'New Orleans Pelicans',
+            'NYK': 'New York Knicks',
+            'OKC': 'Oklahoma City Thunder',
+            'ORL': 'Orlando Magic',
+            'PHI': 'Philadelphia 76ers',
+            'PHX': 'Phoenix Suns',
+            'POR': 'Portland Trail Blazers',
+            'SAC': 'Sacramento Kings',
+            'SAS': 'San Antonio Spurs',
+            'TOR': 'Toronto Raptors',
+            'UTA': 'Utah Jazz',
+            'WAS': 'Washington Wizards'
+        };
 
-                    // Apply additional classes and styles
-                    const table = document.getElementById('sheet-data');
-                    Array.from(table.querySelectorAll('td, th')).forEach((cell, index) => {
-                        cell.classList.add('cell');
+        function applyAdditionalStyles() {
+            const table = document.querySelector('#table-container table');
+            if (!table) return;
 
-                        // Add sticky classes
-                        const rowIndex = cell.parentElement.rowIndex;
-                        const colIndex = cell.cellIndex;
+            table.id = 'sheet-data';
+            Array.from(table.querySelectorAll('td, th')).forEach((cell, index) => {
+                cell.classList.add('cell');
 
-                        if (rowIndex < 3) {
-                            cell.classList.add('sticky-row', `sticky-row-${rowIndex + 1}`);
-                        }
-                        if (colIndex === 0) {
-                            cell.classList.add('sticky-col');
-                        }
-                        if (rowIndex < 3 && colIndex === 0) {
-                            cell.classList.add('sticky-corner');
-                        }
+                const rowIndex = cell.parentElement.rowIndex;
+                const colIndex = cell.cellIndex;
 
-                        // Apply fill color from Excel
-                        const cellAddress = XLSX.utils.encode_cell({r: rowIndex, c: colIndex});
-                        const cellInfo = worksheet[cellAddress];
-                        if (cellInfo && cellInfo.s && cellInfo.s.fill && cellInfo.s.fill.fgColor) {
-                            const fillColor = cellInfo.s.fill.fgColor.rgb;
-                            console.log(`Cell ${cellAddress}: Fill color = ${fillColor}`);
-                            if (fillColor) {
-                                cell.style.setProperty('background-color', '#' + fillColor, 'important');
-                            }
-                        }
-                    });
+                if (rowIndex < 3) {
+                    cell.classList.add('sticky-row', `sticky-row-${rowIndex + 1}`);
+                }
+                if (colIndex === 0) {
+                    cell.classList.add('sticky-col');
+                }
+                if (rowIndex < 3 && colIndex === 0) {
+                    cell.classList.add('sticky-corner');
+                }
 
-                    // Apply sticky styling
-                    applyStickyStyling();
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('table-container').innerHTML = '<p>Error loading sheet data. Please try again later.</p>';
-                });
+                // Add team logos
+                if (rowIndex > 2 && colIndex === 0) {
+                    const teamAbbr = cell.textContent.trim();
+                    if (teamAbbreviations[teamAbbr]) {
+                        const teamName = teamAbbreviations[teamAbbr];
+                        const imgSrc = `logos/${teamAbbr.toUpperCase()}.png`; // Use Uppercase for file names
+                        const img = new Image();
+                        img.onload = () => {
+                            cell.innerHTML = `<img src="${imgSrc}" alt="${teamName}" class="team-logo"> ${teamName}`;
+                        };
+                        img.onerror = () => {
+                            console.error(`Failed to load image for ${teamName}`);
+                            cell.textContent = teamName; // Fallback to just the team name
+                        };
+                        img.src = imgSrc;
+                    }
+                }
+            });
+
+            // Apply sticky styling
+            applyStickyStyling();
         }
 
         function applyStickyStyling() {
             const stickyElements = document.querySelectorAll('.sticky-row, .sticky-col, .sticky-corner');
             stickyElements.forEach(element => {
-                // Ensure the background color is preserved for sticky elements
                 if (element.style.backgroundColor) {
                     element.style.backgroundColor = element.style.backgroundColor;
                 }
             });
         }
+
+        // Add hover effect
+        document.addEventListener('mouseover', function(e) {
+            if (e.target.tagName === 'TD') {
+                e.target.classList.add('highlight');
+            }
+        });
+
+        document.addEventListener('mouseout', function(e) {
+            if (e.target.tagName === 'TD') {
+                e.target.classList.remove('highlight');
+            }
+        });
+
+        function addScrollSynchronization() {
+            const tableContainer = document.getElementById('table-container');
+            const topScroll = document.getElementById('top-scroll');
+            const middleScroll = document.getElementById('middle-scroll');
+
+            // Create dummy content for scroll containers
+            const scrollContent = document.createElement('div');
+            scrollContent.style.width = tableContainer.scrollWidth + 'px';
+            scrollContent.style.height = '1px';
+
+            topScroll.appendChild(scrollContent.cloneNode(true));
+            middleScroll.appendChild(scrollContent.cloneNode(true));
+
+            // Synchronize scrolling
+            [topScroll, middleScroll, tableContainer].forEach(container => {
+                container.addEventListener('scroll', () => {
+                    const scrollLeft = container.scrollLeft;
+                    [topScroll, middleScroll, tableContainer].forEach(c => {
+                        if (c !== container) {
+                            c.scrollLeft = scrollLeft;
+                        }
+                    });
+                });
+            });
+        }
     </script>
 </body>
-<footer>
-    <p>&copy; 2024 HoopHub. All rights reserved.</p>
-    <p class="disclaimer-text">Disclaimer: This website is created for learning purposes only. The information here should not be considered professional advice. Please note that we make no guarantees regarding the accuracy, completeness, or reliability of the contents of this website. Any actions you take based on the contents of this website are at your own risk. We are not liable for any losses or damages incurred from the use of this website.</p>
-</footer>
 </html>

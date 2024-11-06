@@ -3,79 +3,112 @@
     width: 100%;
 }
 
-.cell {
-    padding: 8px;
+#sheet-data td, #sheet-data th {
     border: 1px solid #ddd;
+    padding: 8px;
 }
 
+#sheet-data tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#sheet-data tr:hover {
+    background-color: #ddd;
+}
+
+#sheet-data th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #4CAF50;
+    color: white;
+}
 .sticky-row {
     position: sticky;
     top: 0;
     z-index: 2;
-}
-
-.sticky-row-2 {
-    top: 37px;
-}
-
-.sticky-row-3 {
-    top: 74px;
+    background-color: #fff;
 }
 
 .sticky-col {
     position: sticky;
     left: 0;
     z-index: 1;
+    background-color: #fff;
 }
 
 .sticky-corner {
+    position: sticky;
+    top: 0;
+    left: 0;
     z-index: 3;
+    background-color: #fff;
 }
 
 #table-container {
     overflow-x: auto;
-    max-height: 80vh;
-}
-
-.cell-bold { font-weight: bold; }
-.cell-italic { font-style: italic; }
-.cell-underline { text-decoration: underline; }
-
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Oswald:wght@500&display=swap');
-
-#table-container {
-    overflow: auto;
-    max-height: 80vh;
-    position: relative;
+    margin-top: 20px;
 }
 
 #sheet-data {
-    border-collapse: collapse;
-    width: 100%;
+    font-size: 14px;
 }
 
 .cell {
     padding: 8px;
-    border: 1px solid #ddd;
+    text-align: center;
 }
 
 .sticky-row {
     position: sticky;
-    background-color: inherit;
+    background-color: #f2f2f2;
     z-index: 2;
 }
-
-.sticky-row-1 { top: 0; }
-.sticky-row-2 { top: 37px; }
-.sticky-row-3 { top: 74px; }
 
 .sticky-col {
     position: sticky;
     left: 0;
+    background-color: #f2f2f2;
     z-index: 1;
-    background-color: inherit;
 }
 
 .sticky-corner {
     z-index: 3;
+}
+
+.highlight {
+    background-color: #ffffa0;
+}
+
+.team-logo {
+    width: 20px;
+    height: 20px;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.controls {
+    margin-bottom: 20px;
+}
+
+#weekSelector {
+    padding: 5px;
+    font-size: 16px;
+
+}.scroll-container {
+    overflow-x: auto;
+    margin-bottom: 10px;
+}
+
+.scroll-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.scroll-container::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 4px;
+}
+
+.scroll-container::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
 }
