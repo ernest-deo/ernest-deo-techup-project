@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Oswald:wght@500&display=swap');
 #useful-links {
     max-width: 800px;
     margin: 2rem auto;
@@ -5,8 +6,15 @@
     padding: 2rem;
     border-radius: 12px;
     box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    font-family: 'Roboto', Arial, sans-serif;
 }
 
+#useful-links h2 {
+    font-family: 'Oswald', sans-serif;
+    color: var(--nba-blue);
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
 .useful_links-list {
     list-style-type: none;
     padding-left: 0;
@@ -16,6 +24,7 @@
     padding-left: 1.5em;
     position: relative;
     margin-bottom: 1rem;
+    font-size: 1.1rem;
 }
 
 .useful_links-list li::before {

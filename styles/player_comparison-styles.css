@@ -1,64 +1,53 @@
-.comparison-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 2rem;
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Oswald:wght@500&display=swap');
+
+#comparison-container {
+    font-family: 'Roboto', Arial, sans-serif;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+#comparison-container h1 {
+    font-family: 'Oswald', sans-serif;
+    color: var(--nba-blue);
+    font-size: 2.5rem;
+    margin-bottom: 20px;
 }
 
 .player-select {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 1rem;
-    align-items: center;
-    margin-bottom: 1rem;
+    margin-bottom: 20px;
 }
 
-.filter-group {
-    display: flex;
-    flex-direction: column;
-    gap: 0.5rem;
-}
-
-.filter-group label {
+.player-select label {
     font-weight: bold;
+    margin-right: 10px;
 }
 
-.filter-group select {
+.player-select select {
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.comparison-table {
     width: 100%;
-    padding: 0.5rem;
+    border-collapse: collapse;
 }
 
-.btn-primary {
-    grid-column: span 2;
-    justify-self: center;
+.comparison-table th {
+    background-color: var(--nba-blue);
+    color: var(--text-light);
+    padding: 10px;
+    text-align: left;
 }
 
-.comparison-stats {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 1rem;
-}
-
-.stat-comparison {
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
+.comparison-table td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
 }
 
 .player1-stat, .player2-stat {
     font-weight: bold;
     min-width: 50px;
     text-align: center;
-}
-
-.stat-label {
-    font-weight: bold;
-    min-width: 40px;
-    text-align: center;
-}
-
-.comparison-chart {
-    width: 100%;
-    max-width: 600px;
 }

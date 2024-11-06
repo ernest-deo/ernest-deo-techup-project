@@ -1,3 +1,48 @@
+#sheet-data {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.cell {
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+.sticky-row {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+}
+
+.sticky-row-2 {
+    top: 37px;
+}
+
+.sticky-row-3 {
+    top: 74px;
+}
+
+.sticky-col {
+    position: sticky;
+    left: 0;
+    z-index: 1;
+}
+
+.sticky-corner {
+    z-index: 3;
+}
+
+#table-container {
+    overflow-x: auto;
+    max-height: 80vh;
+}
+
+.cell-bold { font-weight: bold; }
+.cell-italic { font-style: italic; }
+.cell-underline { text-decoration: underline; }
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Oswald:wght@500&display=swap');
+
 #table-container {
     overflow: auto;
     max-height: 80vh;
@@ -5,44 +50,32 @@
 }
 
 #sheet-data {
-    border-collapse: separate;
-    border-spacing: 0;
-    width: max-content;
+    border-collapse: collapse;
+    width: 100%;
 }
 
-#sheet-data th, #sheet-data td {
-    position: relative;
-    border: 1px solid #ddd;
+.cell {
     padding: 8px;
+    border: 1px solid #ddd;
 }
 
-/* Make the first column sticky */
-#sheet-data th:first-child,
-#sheet-data td:first-child {
+.sticky-row {
+    position: sticky;
+    background-color: inherit;
+    z-index: 2;
+}
+
+.sticky-row-1 { top: 0; }
+.sticky-row-2 { top: 37px; }
+.sticky-row-3 { top: 74px; }
+
+.sticky-col {
     position: sticky;
     left: 0;
-    z-index: 10;
+    z-index: 1;
+    background-color: inherit;
 }
 
-/* Make only the first three rows sticky */
-#sheet-data tr:nth-child(-n+3) th,
-#sheet-data tr:nth-child(-n+3) td {
-    position: sticky;
+.sticky-corner {
+    z-index: 3;
 }
-
-#sheet-data tr:nth-child(1) th,
-#sheet-data tr:nth-child(1) td { top: 0; z-index: 20; }
-#sheet-data tr:nth-child(2) th,
-#sheet-data tr:nth-child(2) td { top: 33px; z-index: 19; }
-#sheet-data tr:nth-child(3) th,
-#sheet-data tr:nth-child(3) td { top: 66px; z-index: 18; }
-
-/* Make the corner cells (intersection of sticky rows and columns) have the highest z-index */
-#sheet-data tr:nth-child(-n+3) th:first-child,
-#sheet-data tr:nth-child(-n+3) td:first-child {
-    z-index: 30;
-}
-
-.cell-bold { font-weight: bold; }
-.cell-italic { font-style: italic; }
-.cell-underline { text-decoration: underline; }

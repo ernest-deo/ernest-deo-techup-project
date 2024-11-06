@@ -1,3 +1,139 @@
+/* Keep the existing import at the top of the file */
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Oswald:wght@500&display=swap');
+
+/* Update the body styles */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: var(--background-light);
+    color: var(--text-dark);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    line-height: 1.6;
+}
+
+/* Update header styles */
+#header-container {
+    background-color: var(--nba-blue);
+    color: var(--text-light);
+    padding: 20px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+header h1 {
+    margin: 0;
+    padding: 10px 0;
+    font-size: 2.5rem;
+    text-align: center;
+    color: var(--nba-white);
+    font-family: 'Oswald', sans-serif;
+    font-weight: 500;
+}
+
+.header-subtitle {
+    font-family: 'Roboto', Arial, sans-serif;
+    font-size: 1.2rem;
+    margin-bottom: 20px;
+    text-align: center;
+    color: var(--nba-white);
+}
+
+/* Update nav button styles */
+.nav-button {
+    font-family: 'Roboto', Arial, sans-serif;
+    color: var(--text-light);
+    text-decoration: none;
+    padding: 10px;
+    margin: 0 5px;
+    background-color: var(--nba-red);
+    border-radius: 5px;
+    display: inline-block;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.nav-button:hover {
+    background-color: var(--basketball-orange);
+    transform: translateY(-2px);
+}
+
+/* Update overlay content styles */
+.overlay-content h1, 
+.overlay-content h2, 
+.overlay-content h3, 
+.overlay-content h4, 
+.overlay-content h5, 
+.overlay-content h6 {
+    font-family: 'Oswald', sans-serif;
+    color: var(--basketball-orange);
+}
+
+.overlay-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+.overlay-content h2 {
+    font-size: 1.8rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+
+/* Update footer styles */
+footer {
+    flex-shrink: 0;
+    background-color: var(--nba-blue);
+    color: var(--text-light);
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+
+.disclaimer-text {
+    font-style: italic;
+    font-size: 0.9em;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+
+/* Update about content styles */
+.about-content h1 {
+    font-family: 'Oswald', sans-serif;
+    color: var(--nba-blue);
+    border-bottom: 2px solid var(--nba-red);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.about-content h2 {
+    font-family: 'Oswald', sans-serif;
+    color: var(--basketball-orange);
+    margin-top: 30px;
+}
+
+/* Add responsive design */
+@media (max-width: 768px) {
+    .nav-button {
+        display: block;
+        margin: 10px auto;
+        width: 80%;
+    }
+
+    .overlay-content {
+        padding: 1rem;
+    }
+
+    .overlay-content h1 {
+        font-size: 2rem;
+    }
+
+    .overlay-content h2 {
+        font-size: 1.5rem;
+    }
+}
+
 :root {
     --nba-blue: #17408B;
     --nba-red: #C9082A;
@@ -47,7 +183,6 @@ nav {
     margin-top: 20px;
     text-align: center;
 }
-
 .nav-button {
     color: var(--text-light);
     text-decoration: none;
@@ -71,15 +206,45 @@ nav {
 }
 
 .gif-container {
-    flex: 1;
-    display: flex;
+    position: relative;
 }
 
 .responsive-gif {
     width: 100%;
-    height: 100%;
-    object-fit: fill;
-    opacity: 0.8;
+    height: auto;
+}
+.overlay-content {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7); /* semi-transparent background */
+    color: white;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.overlay-content h1, .overlay-content h2 {
+    color: var(--basketball-orange);
+}
+
+.overlay-content ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.overlay-content li {
+    position: relative;
+    margin-bottom: 10px;
+    padding-left: 25px;
+}
+
+.overlay-content li::before {
+    content: '🏀';
+    position: absolute;
+    left: 0;
+    top: 0;
 }
 
 footer {
@@ -89,8 +254,48 @@ footer {
     text-align: center;
     padding: 10px;
     width: 100%;
-    
+
 }.disclaimer-text {
     font-style: italic;
     font-size: 0.9em;  /* This makes the text slightly smaller, you can adjust or remove this line if you prefer */
+}
+
+.about-content {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    line-height: 1.6;
+}
+
+.about-content h1 {
+    color: var(--nba-blue);
+    border-bottom: 2px solid var(--nba-red);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.about-content h2 {
+    color: var(--basketball-orange);
+    margin-top: 30px;
+}
+
+.about-content ul {
+    list-style-type: none;
+    padding-left: 30px;
+}
+
+.about-content li {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.about-content li::before {
+    content: '🏀';
+    position: absolute;
+    left: -25px;
+    top: 0;
+}
+
+.about-content section {
+    margin-bottom: 30px;
 }

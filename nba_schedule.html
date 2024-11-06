@@ -15,6 +15,10 @@
         <table id="sheet-data"></table>
     </div>
 
+        <div id="table-container">
+        <table id="sheet-data"></table>
+    </div>
+
     <script>
         // Load the header
         fetch('header.html')
@@ -23,90 +27,72 @@
                 document.getElementById('header-container').innerHTML = data;
             });
 
+        // Load the Excel file
+        document.addEventListener('DOMContentLoaded', loadExcelFile);
+
         function loadExcelFile() {
             fetch('nba_schedule.xlsx')
                 .then(response => response.arrayBuffer())
                 .then(data => {
-                    const workbook = XLSX.read(new Uint8Array(data), {type: 'array'});
+                    const workbook = XLSX.read(new Uint8Array(data), {type: 'array', cellStyles: true});
                     const firstSheetName = workbook.SheetNames[0];
                     const worksheet = workbook.Sheets[firstSheetName];
 
-                    const html = XLSX.utils.sheet_to_html(worksheet, {
-                        editable: false,
-                        style: true
+                    // Convert the worksheet to HTML
+                    const html = XLSX.utils.sheet_to_html(worksheet, {id: 'sheet-data'});
+
+                    // Replace the existing table content with the new one
+                    document.getElementById('table-container').innerHTML = html;
+
+                    // Apply additional classes and styles
+                    const table = document.getElementById('sheet-data');
+                    Array.from(table.querySelectorAll('td, th')).forEach((cell, index) => {
+                        cell.classList.add('cell');
+
+                        // Add sticky classes
+                        const rowIndex = cell.parentElement.rowIndex;
+                        const colIndex = cell.cellIndex;
+
+                        if (rowIndex < 3) {
+                            cell.classList.add('sticky-row', `sticky-row-${rowIndex + 1}`);
+                        }
+                        if (colIndex === 0) {
+                            cell.classList.add('sticky-col');
+                        }
+                        if (rowIndex < 3 && colIndex === 0) {
+                            cell.classList.add('sticky-corner');
+                        }
+
+                        // Apply fill color from Excel
+                        const cellAddress = XLSX.utils.encode_cell({r: rowIndex, c: colIndex});
+                        const cellInfo = worksheet[cellAddress];
+                        if (cellInfo && cellInfo.s && cellInfo.s.fill && cellInfo.s.fill.fgColor) {
+                            const fillColor = cellInfo.s.fill.fgColor.rgb;
+                            console.log(`Cell ${cellAddress}: Fill color = ${fillColor}`);
+                            if (fillColor) {
+                                cell.style.setProperty('background-color', '#' + fillColor, 'important');
+                            }
+                        }
                     });
 
-                    const parser = new DOMParser();
-                    const doc = parser.parseFromString(html, 'text/html');
-
-                    const table = doc.querySelector('table');
-                    table.id = 'sheet-data';
-
-                                        // Apply styles and classes
-Array.from(table.querySelectorAll('td, th')).forEach((cell) => {
-    const style = cell.style;
-    cell.className = 'cell';
-
-    if (style.fontWeight === 'bold') cell.classList.add('cell-bold');
-    if (style.fontStyle === 'italic') cell.classList.add('cell-italic');
-    if (style.textDecoration === 'underline') cell.classList.add('cell-underline');
-
-    // Explicitly set background color and store it as a data attribute
-    if (style.backgroundColor) {
-        cell.style.backgroundColor = style.backgroundColor;
-        cell.dataset.backgroundColor = style.backgroundColor;
-    }
-
-    // Explicitly set text color
-    if (style.color) {
-        cell.style.color = style.color;
-    }
-
-    // Preserve all other styles
-    ['textAlign', 'fontSize', 'width', 'height', 'verticalAlign', 'borderTop', 'borderBottom', 'borderLeft', 'borderRight'].forEach(prop => {
-        if (style[prop]) cell.style[prop] = style[prop];
-    });
-
-    // Preserve any custom styles
-    cell.setAttribute('style', cell.getAttribute('style'));
-});
-
-// Add sticky classes
-const rows = table.rows;
-for (let i = 0; i < rows.length; i++) {
-    const cells = rows[i].cells;
-    for (let j = 0; j < cells.length; j++) {
-        const cell = cells[j];
-        if (i < 3) {
-            cell.classList.add('sticky-row');
-            cell.classList.add(`sticky-row-${i + 1}`);
-        }
-        if (j === 0) {
-            cell.classList.add('sticky-col');
-        }
-        if (i < 3 && j === 0) {
-            cell.classList.add('sticky-corner');
-        }
-        
-        // Ensure sticky elements maintain their background color
-        if (i < 3 || j === 0) {
-            const bgColor = cell.dataset.backgroundColor || 'transparent';
-            cell.style.backgroundColor = bgColor;
-        }
-    }
-}
-
-                    document.getElementById('sheet-data').innerHTML = '';
-                    document.getElementById('sheet-data').appendChild(table);
+                    // Apply sticky styling
+                    applyStickyStyling();
                 })
                 .catch(error => {
                     console.error('Error:', error);
-                    document.getElementById('sheet-data').innerHTML = '<p>Error loading sheet data. Please try again later.</p>';
+                    document.getElementById('table-container').innerHTML = '<p>Error loading sheet data. Please try again later.</p>';
                 });
         }
 
-        // Call loadExcelFile when the page loads
-        window.onload = loadExcelFile;
+        function applyStickyStyling() {
+            const stickyElements = document.querySelectorAll('.sticky-row, .sticky-col, .sticky-corner');
+            stickyElements.forEach(element => {
+                // Ensure the background color is preserved for sticky elements
+                if (element.style.backgroundColor) {
+                    element.style.backgroundColor = element.style.backgroundColor;
+                }
+            });
+        }
     </script>
 </body>
 <footer>
