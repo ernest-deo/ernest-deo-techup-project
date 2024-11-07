@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NBA Team Depth Charts - HoopHub</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/depth_charts.css">
 </head>
@@ -11,31 +12,25 @@
     <div id="header-container"></div>
 
     <main class="main-container">
-        <h1>NBA Team Depth Charts</h1>
-
-        <div class="controls">
-            <div class="filter-group">
-                <label for="team-select">Select Team:</label>
-                <select id="team-select">
-                    <option value="all">All Teams</option>
-                    <!-- Teams will be populated dynamically -->
-                </select>
-            </div>
-            <div class="filter-group">
-                <label for="player-search">Search Player:</label>
-                <input type="text" id="player-search" placeholder="Enter player name">
-            </div>
-        </div>
+        <h1 id="depth-charts-title">NBA Team Depth Charts</h1>
+        <h3 id="depth-charts-subtitle">(caa ESPN depth charts - 6 Nov 2024)</h3>
         <div id="depth-charts-container"></div>
     </main>
 
+    <footer>
+        <p>&copy; 2024 HoopHub. All rights reserved.</p>
+        <p class="disclaimer-text">Disclaimer: This website is created for learning purposes only. The information here should not be considered professional advice. Please note that we make no guarantees regarding the accuracy, completeness, or reliability of the contents of this website. Any actions you take based on the contents of this website are at your own risk. We are not liable for any losses or damages incurred from the use of this website.</p>
+    </footer>
+
     <script src="depth_charts.js"></script>
+    <script src="returnToTop.js"></script>
     <script>
         fetch('header.html')
             .then(response => response.text())
             .then(data => {
                 document.getElementById('header-container').innerHTML = data;
-            });
+            })
+            .catch(error => console.error('Error loading header:', error));
     </script>
 </body>
 </html>

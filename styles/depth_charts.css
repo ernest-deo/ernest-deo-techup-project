@@ -1,3 +1,21 @@
+#depth-charts-title {
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
+    color: var(--nba-blue);
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+    margin-top: 30px;
+}
+
+#depth-charts-subtitle {
+    text-align: center;
+    font-family: 'Oswald', sans-serif;
+    color: var(--nba-blue);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+}
+
 .controls {
     display: flex;
     justify-content: space-between;
@@ -19,62 +37,79 @@
     border-radius: 4px;
 }
 
+.depth-charts-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
 .depth-chart {
-    margin-bottom: 2rem;
-    border: 1px solid #ddd;
+    border: 1px solid #e0e0e0;
     border-radius: 8px;
     overflow: hidden;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    background-color: #ffffff;
+    transition: transform 0.3s ease;
+}
+
+.depth-chart:hover {
+    transform: translateY(-5px);
+}
+.team-header {
+    background-color: #f8f8f8;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
 }
 
 .team-logo {
-    width: 40px;
-    height: 40px;
-    margin-right: 1rem;
-    object-fit: contain;
-}
-
-.team-header {
-    display: flex;
-    align-items: center;
-    margin-bottom: 1rem;
+    width: 60px;
+    height: 60px;
+    margin-right: 15px;
 }
 
 .team-name {
-    background-color: var(--nba-blue);
-    color: var(--nba-white);
-    padding: 1rem;
-    font-size: 1.2rem;
+    font-size: 1.5em;
+    color: #333;
+    margin: 0;
+}
+
+.positions-container {
+    padding: 15px;
+}
+
+.position {
+    margin-bottom: 15px;
+}
+
+.position h3 {
+    color: #555;
+    border-bottom: 2px solid #ddd;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.position ol {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.position li {
+    padding: 5px 0;
+    font-size: 0.9em;
+    color: #666;
+}
+
+.position li.starter {
     font-weight: bold;
+    color: #333;
 }
 
-.position-row {
-    display: flex;
-    border-bottom: 1px solid #eee;
-}
-
-.position-row:last-child {
-    border-bottom: none;
-}
-
-.position-name {
-    width: 100px;
-    background-color: #f0f0f0;
-    padding: 0.5rem;
-    font-weight: bold;
-}
-
-.players {
-    flex-grow: 1;
-    display: flex;
-    flex-wrap: wrap;
-    padding: 0.5rem;
-}
-
-.player {
-    margin-right: 1rem;
-    margin-bottom: 0.5rem;
-}
-
-.starter {
-    font-weight: bold;
+@media (max-width: 768px) {
+    .depth-charts-grid {
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    }
 }

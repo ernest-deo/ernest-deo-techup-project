@@ -1,8 +1,48 @@
 let allDepthCharts = {};
 
 function getLogoUrl(teamAbbreviation) {
-    // Assuming your logos are in a 'logos' folder at the root of your project
-    return `./logos/${teamAbbreviation.toUpperCase()}.png`;
+    // Convert team abbreviation to uppercase and remove spaces
+    const formattedAbbreviation = teamAbbreviation.replace(/\s+/g, '').toUpperCase();
+
+    // Map full team names to abbreviations
+    const teamAbbreviations = {
+        'ATLANTAHAWKS': 'ATL',
+        'BOSTONCELTICS': 'BOS',
+        'BROOKLYNNETS': 'BKN',
+        'CHARLOTTEHORNETS': 'CHA',
+        'CHICAGOBULLS': 'CHI',
+        'CLEVELANDCAVALIERS': 'CLE',
+        'DALLASMAVERICKS': 'DAL',
+        'DENVERNUGGETS': 'DEN',
+        'DETROITPISTONS': 'DET',
+        'GOLDENSTATEWARRIORS': 'GS',
+        'HOUSTONROCKETS': 'HOU',
+        'INDIANAPACERS': 'IND',
+        'LACLIPPERS': 'LAC',
+        'LALAKERS': 'LAL',
+        'MEMPHISGRIZZLIES': 'MEM',
+        'MIAMIHEAT': 'MIA',
+        'MILWAUKEEBUCKS': 'MIL',
+        'MINNESOTATIMBERWOLVES': 'MIN',
+        'NEWORLEANSPELICANS': 'NO',
+        'NEWYORKKNICKS': 'NY',
+        'OKLAHOMACITYTHUNDER': 'OKC',
+        'ORLANDOMAGIC': 'ORL',
+        'PHILADELPHIA76ERS': 'PHI',
+        'PHOENIXSUNS': 'PHO',
+        'PORTLANDTRAILBLAZERS': 'POR',
+        'SACRAMENTOKINGS': 'SAC',
+        'SANANTONIOSPURS': 'SA',
+        'TORONTORAPTORS': 'TOR',
+        'UTAHJAZZ': 'UTA',
+        'WASHINGTONWIZARDS': 'WAS'
+    };
+
+    // Get the correct abbreviation
+    const abbreviation = teamAbbreviations[formattedAbbreviation] || formattedAbbreviation;
+
+    // Return the URL for the logo
+    return `./logos/${abbreviation}.png`;
 }
 
 function createDepthChart(team, players) {
@@ -16,7 +56,6 @@ function createDepthChart(team, players) {
     teamLogo.src = getLogoUrl(team);
     teamLogo.alt = `${team} logo`;
     teamLogo.classList.add('team-logo');
-    // Add an error handler in case the logo doesn't load
     teamLogo.onerror = function() {
         this.style.display = 'none';
     };
@@ -29,24 +68,44 @@ function createDepthChart(team, players) {
     teamHeader.appendChild(teamName);
     depthChart.appendChild(teamHeader);
 
-    // ... rest of the function remains the same
+    const positionsContainer = document.createElement('div');
+    positionsContainer.classList.add('positions-container');
+
+    Object.entries(players).forEach(([position, playerList]) => {
+        const positionElement = document.createElement('div');
+        positionElement.classList.add('position');
+
+        const positionName = document.createElement('h3');
+        positionName.textContent = position;
+        positionElement.appendChild(positionName);
+
+        const playerListElement = document.createElement('ol');
+        playerList.forEach((player, index) => {
+            const playerItem = document.createElement('li');
+            if (index === 0) {
+                playerItem.classList.add('starter');
+            }
+            playerItem.textContent = player;
+            playerListElement.appendChild(playerItem);
+        });
+
+        positionElement.appendChild(playerListElement);
+        positionsContainer.appendChild(positionElement);
+    });
+
+    depthChart.appendChild(positionsContainer);
+    return depthChart;
 }
+
 document.addEventListener('DOMContentLoaded', () => {
     loadDepthCharts();
-    setupEventListeners();
 });
-
-function setupEventListeners() {
-    document.getElementById('team-select').addEventListener('change', filterDepthCharts);
-    document.getElementById('player-search').addEventListener('input', filterDepthCharts);
-}
 
 function loadDepthCharts() {
     fetch('depth_charts.json')
         .then(response => response.json())
         .then(data => {
             allDepthCharts = data;
-            populateTeamSelect(data);
             displayDepthCharts(data);
         })
         .catch(error => console.error('Error loading depth charts:', error));
@@ -61,7 +120,6 @@ function populateTeamSelect(data) {
         teamSelect.appendChild(option);
     });
 }
-
 function filterDepthCharts() {
     const selectedTeam = document.getElementById('team-select').value;
     const searchTerm = document.getElementById('player-search').value.toLowerCase();
@@ -100,8 +158,13 @@ function displayDepthCharts(data) {
         return;
     }
 
+    const gridContainer = document.createElement('div');
+    gridContainer.classList.add('depth-charts-grid');
+
     Object.entries(data).forEach(([team, players]) => {
         const chart = createDepthChart(team, players);
-        container.appendChild(chart);
+        gridContainer.appendChild(chart);
     });
+
+    container.appendChild(gridContainer);
 }

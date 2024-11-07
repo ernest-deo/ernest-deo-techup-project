@@ -9,7 +9,13 @@
 </head>
 <body>
     <div id="header-container"></div>
-
+    <script>
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-container').innerHTML = data;
+            });
+    </script>
     <main class="main-container">
         <h1 class="nba-blue-header">Player Comparison</h1>
 
@@ -20,7 +26,7 @@
                 <li>Identify strengths and weaknesses in various aspects of the game</li>
                 <li>Make data-driven decisions for fantasy leagues or team analysis</li>
             </ul>
-            <p class="instruction-text">Simply select two players from the dropdown menus below and click 'Compare' to see their stats. The comparison will provide a quick summary of how the players stack up against each other across multiple categories.</p>
+            <p class="instruction-text">Simply select two players from the dropdown menus below and click 'Compare' to see their stats. The comparison will provide a quick summary of how the players stack up against each other across multiple categories based on their average stats from the season thus far.</p>
         </section>
 
         <div class="comparison-container">
@@ -66,13 +72,11 @@
             </div>
         </div>
     </main>
-
-
     <footer>
         <p>&copy; 2024 HoopHub. All rights reserved.</p>
         <p class="disclaimer-text">Disclaimer: This website is created for learning purposes only. The information here should not be considered professional advice.</p>
     </footer>
 
-    <script src="js/player_comparison.js"></script>
+    <script src="player_comparison.js"></script>
 </body>
 </html>
