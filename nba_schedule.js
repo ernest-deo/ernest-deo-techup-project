@@ -1,49 +1,78 @@
 document.addEventListener('DOMContentLoaded', function() {
-    fetch('nba_schedule_with_styles.json')
-        .then(response => response.json())
-        .then(data => {
-            displaySchedule(data);
-        })
-        .catch(error => console.error('Error:', error));
-});
+    const main = document.querySelector('main') || document.createElement('main');
+    main.className = 'main-container';
+    main.innerHTML = ''; // Clear existing content
 
-/**
- * Displays the NBA schedule data in a table format with applied styles.
- * 
- * @param {Object} data - The schedule data object containing columns, data, and styles.
- * @param {string[]} data.columns - An array of column names for the table headers.
- * @param {Object[]} data.data - An array of objects, each representing a row in the table.
- * @param {Object} data.styles - An object containing style information for specific cells.
- * @returns {void} This function does not return a value, it directly manipulates the DOM.
- */
-function displaySchedule(data) {
-    const table = document.getElementById('schedule-table');
-    const thead = table.createTHead();
-    const headerRow = thead.insertRow();
+    const h1 = document.createElement('h1');
+    h1.textContent = 'NBA Schedule';
+    main.appendChild(h1);
 
-    // Create table headers
-    data.columns.forEach(column => {
-        const th = document.createElement('th');
-        th.textContent = column;
-        headerRow.appendChild(th);
-    });
+    const loadingElement = document.createElement('div');
+    loadingElement.id = 'loading';
+    loadingElement.textContent = 'Loading schedule...';
+    main.appendChild(loadingElement);
 
-    // Create table body
-    const tbody = table.createTBody();
-    data.data.forEach((row, rowIndex) => {
-        const tr = tbody.insertRow();
-        data.columns.forEach((column, columnIndex) => {
-            const td = tr.insertCell();
-            td.textContent = row[column] || '';
+    const errorElement = document.createElement('div');
+    errorElement.id = 'error';
+    errorElement.style.display = 'none';
+    errorElement.style.color = 'red';
+    main.appendChild(errorElement);
 
-            // Apply styles if available
-            const cellStyle = data.styles[`${String.fromCharCode(65 + columnIndex)}${rowIndex + 2}`];
-            if (cellStyle) {
-                if (cellStyle.font.bold) td.style.fontWeight = 'bold';
-                if (cellStyle.font.color) td.style.color = cellStyle.font.color;
-                if (cellStyle.fill.bgcolor) td.style.backgroundColor = cellStyle.fill.bgcolor;
-                if (cellStyle.alignment) td.style.textAlign = cellStyle.alignment;
+    const tableContainer = document.createElement('div');
+    tableContainer.id = 'schedule-table-container';
+    main.appendChild(tableContainer);
+
+    if (!document.querySelector('main')) {
+        document.body.appendChild(main);
+    }
+
+    // Load schedule data
+    fetch('nba_schedule.json')
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
             }
+            return response.json();
+        })
+        .then(data => {
+            loadingElement.style.display = 'none';
+
+            if (!Array.isArray(data) || data.length === 0) {
+                throw new Error('Invalid data format');
+            }
+            const table = document.createElement('table');
+            table.id = 'schedule-table';
+
+            // Create table header
+            const thead = document.createElement('thead');
+            const headerRow = document.createElement('tr');
+            Object.keys(data[0]).forEach(key => {
+                const th = document.createElement('th');
+                th.textContent = key;
+                headerRow.appendChild(th);
+            });
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+
+            // Create table body
+            const tbody = document.createElement('tbody');
+            data.forEach(row => {
+                const tr = document.createElement('tr');
+                Object.values(row).forEach(value => {
+                    const td = document.createElement('td');
+                    td.textContent = value;
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+            table.appendChild(tbody);
+
+            tableContainer.appendChild(table);
+        })
+        .catch(error => {
+            console.error('Error loading schedule:', error);
+            loadingElement.style.display = 'none';
+            errorElement.textContent = 'Error loading schedule. Please try again later.';
+            errorElement.style.display = 'block';
         });
-    });
-}
+});

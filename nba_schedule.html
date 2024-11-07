@@ -3,24 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HoopHub - NBA Schedule</title>
-    <link rel="stylesheet" href="styles/styles.css">
+    <title>NBA Schedule</title>
     <link rel="stylesheet" href="styles/nba_schedule-styles.css">
     <link rel="stylesheet" href="styles/nba_schedule_table.css">
-    <script src="nba_schedule.js" defer></script>
+    <link rel="stylesheet" href="styles/styles.css">
 </head>
 <body>
-<header>
-    <!-- Your header content -->
-</header>
-<main>
-    <h1>NBA Schedule</h1>
-    <div id="schedule-container">
-        <table id="schedule-table"></table>
-    </div>
-</main>
-<footer>
-    <!-- Your footer content -->
-</footer>
+    <div id="header-container"></div>
+    <main class="main-container"></main>
+    <footer>
+        <p>&copy; 2024 HoopHub. All rights reserved.</p>
+        <p class="disclaimer-text">Disclaimer: This website is created for learning purposes only. The information here should not be considered professional advice. Please note that we make no guarantees regarding the accuracy, completeness, or reliability of the contents of this website. Any actions you take based on the contents of this website are at your own risk. We are not liable for any losses or damages incurred from the use of this website.</p>
+    </footer>
+    <script src="nba_schedule.js"></script>
+    <script src="returnToTop.js"></script>
+    <script>
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-container').innerHTML = data;
+            })
+            .catch(error => console.error('Error loading header:', error));
+    </script>
 </body>
 </html>
