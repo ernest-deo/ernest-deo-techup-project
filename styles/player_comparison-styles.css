@@ -1,53 +1,164 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Oswald:wght@500&display=swap');
 
-#comparison-container {
-    font-family: 'Roboto', Arial, sans-serif;
+.main-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 0 20px;
+}
+.nba-blue-header {
+    color: #1d428a;
+    text-align: center;
+    font-family: 'Oswald', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
 }
 
-#comparison-container h1 {
-    font-family: 'Oswald', sans-serif;
-    color: var(--nba-blue);
-    font-size: 2.5rem;
-    margin-bottom: 20px;
+.feature-list {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.feature-list li {
+    padding-left: 1.5em;
+    position: relative;
+}
+
+.feature-list li::before {
+    content: '🏀';
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.comparison-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.left-column {
+    flex: 1;
+    max-width: 60%;
+}
+
+.right-column {
+    flex: 1;
+    max-width: 40%;
+}
+
+.stats-table-container {
+    margin-top: 20px;
+}
+
+.recommendation-container {
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .player-select {
-    margin-bottom: 20px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1em;
 }
 
-.player-select label {
-    font-weight: bold;
-    margin-right: 10px;
+.player-column {
+    width: 48%;
 }
 
-.player-select select {
-    padding: 5px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+.stats-table-container {
+    margin-top: 1em;
+    overflow-x: auto;
 }
 
-.comparison-table {
+#comparison-stats {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
-.comparison-table th {
-    background-color: var(--nba-blue);
-    color: var(--text-light);
-    padding: 10px;
-    text-align: left;
-}
-
-.comparison-table td {
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-}
-
-.player1-stat, .player2-stat {
-    font-weight: bold;
-    min-width: 50px;
+#comparison-stats th, #comparison-stats td {
+    padding: 12px 15px;
     text-align: center;
+}
+
+#comparison-stats thead {
+    color: #1d428a;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+}
+
+#comparison-stats thead th {
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+}
+
+#comparison-stats tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+#comparison-stats tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+.better-stat {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.worse-stat {
+    color: #dc3545;
+}
+
+.recommendation-container {
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin-top: 50px; /* Adjust this value to move the box down */
+}
+
+.recommendation-container h3 {
+    color: #1d428a;
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+}
+
+.recommendation-container p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 10px;
+}
+
+.recommendation-container strong {
+    color: #1d428a;
+}
+
+/* Update the media query for responsive design */
+@media (max-width: 768px) {
+    .comparison-container {
+        flex-direction: column;
+    }
+
+    .left-column, .right-column {
+        width: 100%;
+    }
+
+    .right-column {
+        margin-top: 2em;
+    }
+
+    .recommendation-container {
+        margin-top: 0;
+    }
 }

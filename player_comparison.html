@@ -3,212 +3,76 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HoopHub - Player Comparison</title>
+    <title>Player Comparison - HoopHub</title>
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/player_comparison-styles.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div id="header-container"></div>
 
-    <script>
-        fetch('header.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('header-container').innerHTML = data;
-            });
-    </script>
-
     <main class="main-container">
-        <div class="card">
-            <div class="card-header">
-                <h2 class="card-title">Player Comparison</h2>
-            </div>
+        <h1 class="nba-blue-header">Player Comparison</h1>
 
-            <div class="comparison-container">
+        <section class="explanation-section">
+            <p class="intro-text">This player comparison tool will allow you to:</p>
+            <ul class="feature-list">
+                <li>Compare key statistics of any two NBA players side by side</li>
+                <li>Identify strengths and weaknesses in various aspects of the game</li>
+                <li>Make data-driven decisions for fantasy leagues or team analysis</li>
+            </ul>
+            <p class="instruction-text">Simply select two players from the dropdown menus below and click 'Compare' to see their stats. The comparison will provide a quick summary of how the players stack up against each other across multiple categories.</p>
+        </section>
+
+        <div class="comparison-container">
+            <div class="left-column">
                 <div class="player-select">
-                    <div class="filter-group">
-                        <label for="team1">Team 1:</label>
-                        <select id="team1" onchange="updatePlayerList(1)"></select>
+                    <div class="player-column">
+                        <div class="filter-group">
+                            <label for="team1">Team 1:</label>
+                            <select id="team1"></select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="player1">Player 1:</label>
+                            <select id="player1"></select>
+                        </div>
                     </div>
-                    <div class="filter-group">
-                        <label for="player1">Player 1:</label>
-                        <select id="player1"></select>
+                    <div class="player-column">
+                        <div class="filter-group">
+                            <label for="team2">Team 2:</label>
+                            <select id="team2"></select>
+                        </div>
+                        <div class="filter-group">
+                            <label for="player2">Player 2:</label>
+                            <select id="player2"></select>
+                        </div>
                     </div>
-                    <div class="filter-group">
-                        <label for="team2">Team 2:</label>
-                        <select id="team2" onchange="updatePlayerList(2)"></select>
-                    </div>
-                    <div class="filter-group">
-                        <label for="player2">Player 2:</label>
-                        <select id="player2"></select>
-                    </div>
-                    <button class="btn btn-primary" onclick="comparePlayers()">Compare</button>
                 </div>
-
-                <div class="comparison-stats" id="comparison-stats">
-                    <!-- Stats comparison will be populated here -->
+                <button class="btn btn-primary" id="compareButton">Compare</button>
+                <div class="stats-table-container">
+                    <table id="comparison-stats">
+                        <thead>
+                            <tr>
+                                <th id="stat-header"></th>
+                                <th id="player1-name"></th>
+                                <th id="player2-name"></th>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
                 </div>
-
-                <div class="comparison-chart">
-                    <canvas id="radarChart"></canvas>
-                </div>
+            </div>
+            <div class="right-column">
+                <div id="recommendation-container" class="recommendation-container"></div>
             </div>
         </div>
     </main>
 
-    <script>
-        let allPlayers = [];
-        let chart = null;
-        let teams = [];
 
-        // Load player data
-        fetch('playerStats.json')
-            .then(response => response.json())
-            .then(data => {
-                allPlayers = data;
-                extractTeams();
-                populateTeamSelects();
-                updatePlayerList(1);
-                updatePlayerList(2);
-            });
-
-        function extractTeams() {
-            teams = [...new Set(allPlayers.map(player => player.TEAM))].sort();
-        }
-
-        function populateTeamSelects() {
-            const team1Select = document.getElementById('team1');
-            const team2Select = document.getElementById('team2');
-
-            teams.forEach(team => {
-                const option = document.createElement('option');
-                option.value = team;
-                option.textContent = team;
-                team1Select.appendChild(option.cloneNode(true));
-                team2Select.appendChild(option);
-            });
-        }
-
-        function updatePlayerList(playerNum) {
-            const teamSelect = document.getElementById(`team${playerNum}`);
-            const playerSelect = document.getElementById(`player${playerNum}`);
-            const selectedTeam = teamSelect.value;
-
-            playerSelect.innerHTML = '';
-
-            const teamPlayers = allPlayers.filter(player => player.TEAM === selectedTeam);
-
-            teamPlayers.forEach(player => {
-                const option = document.createElement('option');
-                option.value = player.PLAYER;
-                option.textContent = player.PLAYER;
-                playerSelect.appendChild(option);
-            });
-        }
-
-        function comparePlayers() {
-            const player1Name = document.getElementById('player1').value;
-            const player2Name = document.getElementById('player2').value;
-
-            const player1 = allPlayers.find(p => p.PLAYER === player1Name);
-            const player2 = allPlayers.find(p => p.PLAYER === player2Name);
-
-            if (!player1 || !player2) {
-                alert('Please select two players to compare');
-                return;
-            }
-
-            displayComparison(player1, player2);
-            createRadarChart(player1, player2);
-        }
-        
-        function displayComparison(player1, player2) {
-            const statsContainer = document.getElementById('comparison-stats');
-            statsContainer.innerHTML = '';
-
-            const stats = ['PTS', 'TREB', 'AST', 'STL', 'BLK', 'TO', 'FG%', 'FT%', '3PM'];
-
-            stats.forEach(stat => {
-                const statContainer = document.createElement('div');
-                statContainer.classList.add('stat-comparison');
-
-                const player1Stat = document.createElement('div');
-                player1Stat.textContent = `${player1[stat]}`;
-                player1Stat.classList.add('player1-stat');
-
-                const statLabel = document.createElement('div');
-                statLabel.textContent = stat;
-                statLabel.classList.add('stat-label');
-
-                const player2Stat = document.createElement('div');
-                player2Stat.textContent = `${player2[stat]}`;
-                player2Stat.classList.add('player2-stat');
-
-                statContainer.appendChild(player1Stat);
-                statContainer.appendChild(statLabel);
-                statContainer.appendChild(player2Stat);
-
-                statsContainer.appendChild(statContainer);
-            });
-        }
-
-        function createRadarChart(player1, player2) {
-            const ctx = document.getElementById('radarChart').getContext('2d');
-            const stats = ['PTS', 'TREB', 'AST', 'STL', 'BLK', '3PM'];
-
-            if (chart) {
-                chart.destroy();
-            }
-
-            chart = new Chart(ctx, {
-                type: 'radar',
-                data: {
-                    labels: stats,
-                    datasets: [
-                        {
-                            label: player1.PLAYER,
-                            data: stats.map(stat => player1[stat]),
-                            backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                            borderColor: 'rgb(255, 99, 132)',
-                            pointBackgroundColor: 'rgb(255, 99, 132)',
-                            pointBorderColor: '#fff',
-                            pointHoverBackgroundColor: '#fff',
-                            pointHoverBorderColor: 'rgb(255, 99, 132)'
-                        },
-                        {
-                            label: player2.PLAYER,
-                            data: stats.map(stat => player2[stat]),
-                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
-                            borderColor: 'rgb(54, 162, 235)',
-                            pointBackgroundColor: 'rgb(54, 162, 235)',
-                            pointBorderColor: '#fff',
-                            pointHoverBackgroundColor: '#fff',
-                            pointHoverBorderColor: 'rgb(54, 162, 235)'
-                        }
-                    ]
-                },
-                options: {
-                    elements: {
-                        line: {
-                            borderWidth: 3
-                        }
-                    },
-                    scales: {
-                        r: {
-                            angleLines: {
-                                display: false
-                            },
-                            suggestedMin: 0
-                        }
-                    }
-                }
-            });
-        }
-    </script>
     <footer>
         <p>&copy; 2024 HoopHub. All rights reserved.</p>
-        <p class="disclaimer-text">Disclaimer: This website is created for learning purposes only. The information here should not be considered professional advice. Please note that we make no guarantees regarding the accuracy, completeness, or reliability of the contents of this website. Any actions you take based on the contents of this website are at your own risk. We are not liable for any losses or damages incurred from the use of this website.</p>
+        <p class="disclaimer-text">Disclaimer: This website is created for learning purposes only. The information here should not be considered professional advice.</p>
     </footer>
+
+    <script src="js/player_comparison.js"></script>
 </body>
 </html>

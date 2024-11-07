@@ -1,0 +1,212 @@
+{
+    "Atlanta Hawks": {
+      "PG": ["T. Young", "K. Bufkin", "K. Wallace", "D. Daniels", "V. Krejci"],
+      "SG": ["D. Daniels", "B. Bogdanovic", "V. Krejci", "G. Mathews", "K. Bufkin", "Z. Risacher", "S. Lundy", "K. Wallace"],
+      "SF": ["D. Hunter", "Z. Risacher", "D. Roddy", "D. Daniels", "B. Bogdanovic", "G. Mathews", "V. Krejci", "J. Johnson", "S. Lundy"],
+      "PF": ["J. Johnson", "D. Roddy", "D. Hunter", "L. Nance Jr.", "Z. Risacher", "O. Okongwu", "M. Gueye", "D. Barlow"],
+      "C": ["C. Capela", "O. Okongwu", "L. Nance Jr.", "C. Zeller", "D. Barlow", "M. Gueye", "J. Johnson"]
+    },
+    "Boston Celtics": {
+      "PG": ["J. Holiday", "P. Pritchard", "D. White", "J. Springer", "J. Davison"],
+      "SG": ["D. White", "P. Pritchard", "J. Brown", "J. Springer", "J. Walsh", "J. Holiday", "B. Scheierman", "J. Davison"],
+      "SF": ["J. Brown", "S. Hauser", "J. Tatum", "J. Walsh", "J. Springer", "B. Scheierman", "D. Peterson", "A. Watson"],
+      "PF": ["J. Tatum", "J. Walsh", "S. Hauser", "X. Tillman", "A. Horford", "D. Peterson", "A. Watson", "K. Porzingis"],
+      "C": ["A. Horford", "L. Kornet", "N. Queta", "X. Tillman", "K. Porzingis"]
+    },
+    "Brooklyn Nets": {
+      "PG": ["D. Schroder", "B. Simmons", "K. Johnson", "S. Milton", "C. Thomas"],
+      "SG": ["C. Thomas", "B. Bogdanovic", "Z. Williams", "D. Schroder", "K. Johnson", "J. Wilson", "S. Milton", "D. Whitehead", "Y. Cui", "T. Martin"],
+      "SF": ["C. Johnson", "J. Wilson", "B. Bogdanovic", "C. Thomas", "Z. Williams", "D. Finney-Smith", "D. Whitehead", "J. Martin", "Y. Cui", "T. Martin"],
+      "PF": ["D. Finney-Smith", "N. Clowney", "C. Johnson", "T. Watford", "J. Wilson", "B. Bogdanovic", "Z. Williams", "B. Simmons", "D. Whitehead"],
+      "C": ["N. Claxton", "B. Simmons", "D. Sharpe", "N. Clowney", "D. Finney-Smith", "T. Watford"]
+    },
+    "Charlotte Hornets": {
+      "PG": ["L. Ball", "T. Mann", "V. Micic", "C. Martin", "K. Simpson", "N. Smith Jr."],
+      "SG": ["B. Miller", "S. Curry", "T. Mann", "N. Smith Jr.", "C. Martin", "V. Micic", "J. Green", "D. Jeffries", "J. Rhoden"],
+      "SF": ["J. Green", "C. Martin", "T. Salaun", "B. Miller", "M. Bridges", "D. Jeffries", "J. Rhoden", "S. Curry"],
+      "PF": ["M. Bridges", "G. Williams", "T. Salaun", "J. Green", "M. Diabate", "B. Miller", "D. Jeffries", "J. Rhoden"],
+      "C": ["M. Williams", "M. Diabate", "G. Williams", "T. Gibson", "N. Richards"]
+    },
+    "Chicago Bulls": {
+      "PG": ["J. Giddey", "L. Ball", "A. Dosunmu", "C. White", "J. Carter", "T. Horton-Tucker", "D. Steward"],
+      "SG": ["C. White", "A. Dosunmu", "Z. LaVine", "L. Ball", "D. Terry", "J. Carter", "C. Duarte", "T. Horton-Tucker"],
+      "SF": ["Z. LaVine", "D. Terry", "T. Horton-Tucker", "M. Buzelis", "J. Phillips", "P. Williams", "C. Duarte", "A. Dosunmu", "J. Giddey", "T. Craig"],
+      "PF": ["P. Williams", "J. Phillips", "M. Buzelis", "T. Craig", "D. Terry", "J. Smith", "J. Giddey", "E. Liddell"],
+      "C": ["N. Vucevic", "J. Smith", "A. Sanogo", "E. Liddell"]
+    },
+    "Cleveland Cavaliers": {
+      "PG": ["D. Garland", "T. Jerome", "D. Mitchell", "C. LeVert", "C. Porter Jr.", "E. Bates"],
+      "SG": ["D. Mitchell", "C. LeVert", "S. Merrill", "I. Okoro", "J. Tyson", "T. Jerome", "C. Porter Jr.", "L. Travers", "M. Strus", "E. Bates"],
+      "SF": ["D. Wade", "I. Okoro", "G. Niang", "J. Tyson", "C. LeVert", "L. Travers", "J. Thor", "M. Strus", "E. Bates"],
+      "PF": ["E. Mobley", "G. Niang", "D. Wade", "I. Okoro", "J. Thor", "M. Strus"],
+      "C": ["J. Allen", "E. Mobley", "T. Thompson", "D. Wade"]
+    },
+    "Dallas Mavericks": {
+      "PG": ["L. Doncic", "S. Dinwiddie", "J. Hardy", "K. Irving", "B. Williams", "J. Gortman", "D. Exum"],
+      "SG": ["K. Irving", "Q. Grimes", "J. Hardy", "K. Thompson", "S. Dinwiddie", "N. Marshall", "K. Edwards", "B. Williams", "D. Exum"],
+      "SF": ["K. Thompson", "N. Marshall", "Q. Grimes", "J. Hardy", "O. Prosper", "K. Edwards", "D. Exum"],
+      "PF": ["P. Washington", "M. Kleber", "N. Marshall", "O. Prosper", "M. Morris", "K. Thompson", "K. Edwards"],
+      "C": ["D. Gafford", "D. Lively II", "M. Kleber", "D. Powell", "M. Morris", "P. Washington"]
+    },
+    "Denver Nuggets": {
+      "PG": ["J. Murray", "R. Westbrook", "T. Alexander", "C. Braun", "J. Pickett"],
+      "SG": ["C. Braun", "J. Strawther", "T. Alexander", "J. Murray", "J. Pickett", "S. Jones"],
+      "SF": ["M. Porter Jr.", "C. Braun", "H. Tyson", "J. Strawther", "P. Watson", "A. Gordon", "S. Jones"],
+      "PF": ["A. Gordon", "P. Watson", "M. Porter Jr.", "V. Cancar", "H. Tyson", "D. Saric", "Z. Nnaji", "J. Strawther", "P. Hall"],
+      "C": ["N. Jokic", "Z. Nnaji", "D. Jordan", "D. Saric", "V. Cancar", "P. Hall", "D. Holmes II"]
+    },
+    "Detroit Pistons": {
+      "PG": ["C. Cunningham", "J. Ivey", "M. Sasser", "W. Moore Jr.", "M. Beasley", "D. Jenkins", "A. Williams"],
+      "SG": ["J. Ivey", "M. Beasley", "T. Hardaway Jr.", "M. Sasser", "C. Cunningham", "W. Moore Jr.", "A. Williams", "D. Jenkins", "A. Thompson"],
+      "SF": ["A. Thompson", "T. Hardaway Jr.", "R. Holland II", "S. Fontecchio", "T. Harris", "M. Beasley", "B. Klintman", "W. Moore Jr.", "C. Cunningham"],
+      "PF": ["T. Harris", "S. Fontecchio", "A. Thompson", "B. Klintman", "I. Stewart", "R. Holland II", "C. Swider", "T. Hardaway Jr."],
+      "C": ["J. Duren", "I. Stewart", "P. Reed", "C. Swider"]
+    },
+    "Golden State Warriors": {
+      "PG": ["S. Curry", "D. Melton", "B. Podziemski", "P. Spencer", "R. Beekman"],
+      "SG": ["M. Moody", "B. Podziemski", "B. Hield", "D. Melton", "G. Payton II", "A. Wiggins", "L. Waters III", "G. Santos", "P. Spencer"],
+      "SF": ["A. Wiggins", "B. Hield", "G. Payton II", "J. Kuminga", "M. Moody", "L. Waters III", "K. Anderson", "G. Santos", "D. Melton"],
+      "PF": ["D. Green", "J. Kuminga", "K. Anderson", "A. Wiggins", "M. Moody", "L. Waters III"],
+      "C": ["T. Jackson-Davis", "K. Looney", "D. Green", "Q. Post"]
+    },
+    "Houston Rockets": {
+      "PG": ["F. VanVleet", "R. Sheppard", "A. Holiday", "A. Thompson", "J. Green", "N. Williams"],
+      "SG": ["J. Green", "C. Whitmore", "R. Sheppard", "D. Brooks", "A. Thompson", "A. Holiday", "N. Williams", "J. McVeigh"],
+      "SF": ["D. Brooks", "A. Thompson", "C. Whitmore", "T. Eason", "J. Tate", "N. Williams", "J. Green", "J. Green", "J. McVeigh"],
+      "PF": ["J. Smith Jr.", "T. Eason", "C. Whitmore", "J. Green", "J. Tate", "D. Brooks"],
+      "C": ["A. Sengun", "S. Adams", "J. Landale", "J. Smith Jr.", "J. Green", "N. Dante"]
+    },
+    "Indiana Pacers": {
+        "PG": ["T. Haliburton", "T. McConnell", "A. Nembhard", "T. Newton", "B. Sheppard", "Q. Jackson"],
+        "SG": ["A. Nembhard", "B. Sheppard", "B. Mathurin", "J. Furphy", "A. Nesmith", "T. Newton", "T. Haliburton", "Q. Jackson"],
+        "SF": ["A. Nesmith", "B. Mathurin", "B. Sheppard", "J. Walker", "P. Siakam", "J. Furphy", "E. Freeman"],
+        "PF": ["P. Siakam", "J. Walker", "O. Toppin", "E. Freeman", "A. Nesmith", "J. Johnson"],
+        "C": ["M. Turner", "O. Toppin", "E. Freeman", "P. Siakam", "J. Johnson", "J. Walker", "I. Jackson", "J. Wiseman"]
+    },
+    "LA Clippers": {
+        "PG": ["J. Harden", "K. Porter Jr.", "B. Hyland", "K. Dunn", "T. Mann", "N. Powell"],
+        "SG": ["N. Powell", "K. Dunn", "T. Mann", "A. Coffey", "K. Porter Jr.", "J. Miller", "B. Hyland", "C. Christie", "J. Harden", "T. Flowers"],
+        "SF": ["T. Mann", "A. Coffey", "D. Jones Jr.", "N. Powell", "K. Dunn", "N. Batum", "K. Brown", "J. Miller", "C. Christie", "T. Flowers", "K. Leonard"],
+        "PF": ["D. Jones Jr.", "N. Batum", "A. Coffey", "K. Brown", "K. Jones", "K. Leonard", "P. Tucker"],
+        "C": ["I. Zubac", "M. Bamba", "K. Jones", "K. Brown", "K. Leonard", "P. Tucker"]
+    },
+    "LA Lakers": {
+        "PG": ["D. Russell", "G. Vincent", "A. Reaves", "B. James", "J. Hood-Schifino", "Q. Olivari"],
+        "SG": ["A. Reaves", "M. Christie", "D. Knecht", "G. Vincent", "C. Reddish", "B. James", "J. Hood-Schifino", "Q. Olivari"],
+        "SF": ["R. Hachimura", "D. Knecht", "L. James", "C. Reddish", "M. Christie", "A. Reaves", "M. Lewis", "A. Traore"],
+        "PF": ["L. James", "J. Vanderbilt", "R. Hachimura", "C. Reddish", "C. Wood", "M. Lewis", "J. Hayes", "A. Traore"],
+        "C": ["A. Davis", "J. Hayes", "C. Wood", "J. Vanderbilt", "C. Koloko", "L. James"]
+    },
+    "Memphis Grizzlies": {
+        "PG": ["J. Morant", "S. Pippen Jr.", "M. Smart", "J. Konchar", "Y. Kawamura", "L. Kennard", "D. Bane"],
+        "SG": ["M. Smart", "L. Kennard", "D. Bane", "J. Wells", "J. Konchar", "S. Pippen Jr.", "C. Spencer", "V. Williams Jr."],
+        "SF": ["D. Bane", "J. Konchar", "J. Wells", "J. LaRavia", "L. Kennard", "S. Aldama", "M. Smart", "V. Williams Jr.", "G. Jackson II"],
+        "PF": ["J. Jackson Jr.", "S. Aldama", "J. LaRavia", "B. Clarke", "V. Williams Jr.", "G. Jackson II"],
+        "C": ["Z. Edey", "B. Clarke", "J. Huff", "C. Castleton", "J. Jackson Jr.", "S. Aldama", "G. Jackson II"]
+    },
+    "Miami Heat": {
+        "PG": ["T. Rozier", "T. Herro", "D. Smith", "A. Burks", "J. Richardson", "J. Christopher", "D. Robinson"],
+        "SG": ["T. Herro", "A. Burks", "D. Robinson", "P. Larsson", "J. Richardson", "T. Rozier", "J. Christopher", "J. Jaquez Jr.", "D. Smith"],
+        "SF": ["J. Butler", "D. Robinson", "J. Richardson", "J. Jaquez Jr.", "P. Larsson", "J. Christopher", "K. Johnson"],
+        "PF": ["N. Jovic", "J. Jaquez Jr.", "D. Robinson", "H. Highsmith", "K. Love", "J. Butler", "K. Johnson"],
+        "C": ["B. Adebayo", "K. Love", "T. Bryant", "K. Ware", "N. Jovic"]
+    },
+    "Milwaukee Bucks": {
+        "PG": ["D. Lillard", "A. Green", "D. Wright", "A. Jackson Jr.", "M. Beauchamp", "R. Rollins"],
+        "SG": ["G. Trent Jr.", "P. Connaughton", "K. Middleton", "A. Green", "A. Jackson Jr.", "M. Beauchamp", "D. Wright", "S. Umude", "A. Johnson", "R. Rollins"],
+        "SF": ["K. Middleton", "T. Prince", "A. Jackson Jr.", "G. Trent Jr.", "P. Connaughton", "M. Beauchamp", "T. Smith", "G. Antetokounmpo", "C. Livingston", "S. Umude"],
+        "PF": ["G. Antetokounmpo", "B. Portis", "T. Prince", "T. Smith", "P. Connaughton", "M. Beauchamp", "C. Livingston"],
+        "C": ["B. Lopez", "B. Portis", "G. Antetokounmpo", "L. Robbins"]
+    },
+    "Minnesota Timberwolves": {
+        "PG": ["M. Conley", "D. DiVincenzo", "R. Dillingham", "N. Alexander-Walker", "D. Nix", "A. Edwards"],
+        "SG": ["A. Edwards", "N. Alexander-Walker", "D. DiVincenzo", "J. Ingles", "T. Shannon Jr.", "J. Minott", "R. Dillingham", "P. Dozier", "J. Clark", "D. Nix"],
+        "SF": ["J. McDaniels", "J. Minott", "J. Ingles", "D. DiVincenzo", "T. Shannon Jr.", "N. Alexander-Walker", "L. Miller", "P. Dozier", "A. Edwards", "J. Clark"],
+        "PF": ["J. Randle", "N. Reid", "J. Ingles", "L. Miller", "P. Dozier", "J. McDaniels"],
+        "C": ["R. Gobert", "N. Reid", "J. Randle", "L. Garza", "L. Miller", "J. Edwards"]
+    },
+    "New Orleans Pelicans": {
+        "PG": ["J. Alvarado", "B. Ingram", "A. Reeves", "J. Hawkins", "D. Murray", "C. McCollum"],
+        "SG": ["J. Hawkins", "B. Ingram", "J. Nowell", "B. Boston Jr.", "A. Reeves", "J. Cain", "T. Murphy III", "D. Murray", "H. Jones", "C. McCollum"],
+        "SF": ["B. Ingram", "J. Green", "J. Cain", "J. Hawkins", "B. Boston Jr.", "T. Murphy III", "H. Jones"],
+        "PF": ["Z. Williamson", "J. Green", "J. Robinson-Earl", "K. Matkovic", "B. Ingram", "B. Boston Jr.", "T. Murphy III", "H. Jones"],
+        "C": ["Y. Missi", "D. Theis", "Z. Williamson", "J. Robinson-Earl", "T. Jemison", "K. Matkovic", "H. Jones"]
+    },
+    "New York Knicks": {
+        "PG": ["J. Brunson", "M. McBride", "T. Kolek", "C. Payne", "B. Buie"],
+        "SG": ["M. Bridges", "M. McBride", "C. Payne", "M. Ryan", "P. Dadiet", "J. Hart", "B. Buie"],
+        "SF": ["J. Hart", "O. Anunoby", "M. Bridges", "M. Ryan", "P. Dadiet", "J. Toppin", "K. McCullar Jr."],
+        "PF": ["O. Anunoby", "P. Achiuwa", "J. Hart", "M. Bridges", "J. Sims", "J. Toppin"],
+        "C": ["K. Towns", "M. Robinson", "P. Achiuwa", "J. Sims", "A. Hukporti"]
+    },
+    "Oklahoma City Thunder": {
+        "PG": ["S. Gilgeous-Alexander", "A. Mitchell", "C. Wallace", "A. Caruso", "A. Flagler", "N. Topic"],
+        "SG": ["C. Wallace", "I. Joe", "A. Caruso", "L. Dort", "A. Mitchell", "A. Wiggins", "J. Williams", "S. Gilgeous-Alexander", "A. Flagler", "A. Ducas", "N. Topic"],
+        "SF": ["L. Dort", "A. Caruso", "A. Wiggins", "J. Williams", "C. Wallace", "K. Williams", "D. Jones", "I. Joe", "A. Ducas", "O. Dieng", "M. Leons"],
+        "PF": ["J. Williams", "K. Williams", "A. Wiggins", "O. Dieng", "C. Holmgren", "L. Dort", "D. Jones", "M. Leons", "A. Caruso"],
+        "C": ["C. Holmgren", "O. Dieng", "K. Williams", "I. Hartenstein", "J. Williams"]
+    },
+    "Orlando Magic": {
+        "PG": ["J. Suggs", "A. Black", "C. Anthony", "C. Joseph", "T. Queen", "M. McClung"],
+        "SG": ["K. Caldwell-Pope", "G. Harris", "A. Black", "J. Howard", "C. Anthony", "F. Wagner", "C. Houstan", "J. Suggs", "M. McClung", "T. Queen"],
+        "SF": ["T. da Silva", "J. Howard", "F. Wagner", "C. Houstan", "K. Caldwell-Pope", "G. Harris", "A. Black", "J. Isaac", "J. Suggs", "P. Banchero"],
+        "PF": ["F. Wagner", "J. Isaac", "J. Howard", "T. da Silva", "C. Houstan", "M. Wagner", "P. Banchero"],
+        "C": ["W. Carter Jr.", "M. Wagner", "G. Bitadze", "J. Isaac", "P. Banchero"]
+      },
+      "Philadelphia 76ers": {
+        "PG": ["T. Maxey", "K. Lowry", "R. Jackson", "J. McCain", "J. Dowtin Jr."],
+        "SG": ["K. Oubre Jr.", "J. McCain", "E. Gordon", "K. Lowry", "P. George", "R. Council IV", "C. Martin", "R. Jackson", "L. Quinones", "J. Dowtin Jr.", "T. Maxey"],
+        "SF": ["P. George", "E. Gordon", "K. Oubre Jr.", "K. Martin", "C. Martin", "R. Council IV", "J. Edwards"],
+        "PF": ["C. Martin", "G. Yabusele", "K. Martin", "P. George", "K. Oubre Jr."],
+        "C": ["J. Embiid", "A. Drummond", "G. Yabusele", "A. Bona"]
+      },
+      "Phoenix Suns": {
+        "PG": ["T. Jones", "M. Morris", "D. Booker", "B. Beal", "G. Allen", "C. Gillespie", "T. Washington Jr."],
+        "SG": ["D. Booker", "G. Allen", "B. Beal", "D. Lee", "J. Okogie", "R. O'Neale"],
+        "SF": ["B. Beal", "R. O'Neale", "R. Dunn", "G. Allen", "D. Lee", "J. Okogie", "K. Durant", "J. Bridges"],
+        "PF": ["K. Durant", "R. Dunn", "R. O'Neale", "B. Bol", "O. Ighodaro", "J. Okogie"],
+        "C": ["J. Nurkic", "M. Plumlee", "O. Ighodaro", "B. Bol", "K. Durant"]
+      },
+      "Portland Trail Blazers": {
+        "PG": ["A. Simons", "S. Henderson", "D. Banton", "R. Rupert", "S. Sharpe"],
+        "SG": ["T. Camara", "D. Banton", "K. Murray", "A. Simons", "R. Rupert", "J. Minaya", "B. McGowens", "T. Moore", "S. Sharpe", "M. Thybulle"],
+        "SF": ["D. Avdija", "R. Rupert", "K. Murray", "T. Camara", "D. Banton", "J. Grant", "J. Minaya", "B. McGowens", "T. Moore", "S. Sharpe", "M. Thybulle"],
+        "PF": ["J. Grant", "K. Murray", "J. Walker", "T. Camara", "D. Avdija", "J. Minaya", "D. Reath", "R. Williams III", "M. Thybulle"],
+        "C": ["D. Ayton", "D. Clingan", "R. Williams III", "D. Reath", "J. Walker", "J. Grant"]
+      },
+      "Sacramento Kings": {
+        "PG": ["D. Fox", "M. Monk", "J. McLaughlin", "K. Ellis", "D. Carter"],
+        "SG": ["K. Huerter", "K. Ellis", "M. Monk", "C. Jones", "J. McLaughlin", "D. McDermott", "M. Jones", "D. Carter"],
+        "SF": ["D. DeRozan", "M. Monk", "D. McDermott", "K. Huerter", "C. Jones", "K. Murray", "M. Jones", "I. Crawford"],
+        "PF": ["K. Murray", "D. DeRozan", "T. Lyles", "D. McDermott", "I. Crawford"],
+        "C": ["D. Sabonis", "T. Lyles", "A. Len", "O. Robinson", "I. Jones"]
+      },
+      "San Antonio Spurs": {
+        "PG": ["C. Paul", "T. Jones", "B. Wesley", "S. Castle", "M. Branham", "D. Duke Jr.", "J. Sochan", "D. Vassell"],
+        "SG": ["D. Vassell", "S. Castle", "M. Branham", "J. Champagnie", "B. Wesley", "D. Duke Jr.", "S. Cissoko"],
+        "SF": ["H. Barnes", "J. Champagnie", "K. Johnson", "S. Castle", "H. Ingram", "M. Branham", "D. Duke Jr.", "R. Minix", "S. Cissoko", "D. Vassell", "J. Sochan"],
+        "PF": ["K. Johnson", "H. Barnes", "H. Ingram", "S. Mamukelashvili", "V. Wembanyama", "J. Champagnie", "Z. Collins", "R. Minix", "J. Sochan"],
+        "C": ["V. Wembanyama", "Z. Collins", "S. Mamukelashvili", "C. Bassey", "J. Sochan"]
+      },
+      "Toronto Raptors": {
+        "PG": ["I. Quickley", "D. Mitchell", "J. Shead", "D. Carton", "S. Barnes", "B. Brown"],
+        "SG": ["G. Dick", "J. Walter", "O. Agbaji", "D. Mitchell", "R. Barrett", "G. Temple", "I. Quickley", "D. Carton", "B. Brown", "S. Barnes"],
+        "SF": ["O. Agbaji", "J. Battle", "R. Barrett", "G. Dick", "J. Walter", "J. Mogbo", "G. Temple", "B. Brown", "S. Barnes"],
+        "PF": ["R. Barrett", "C. Boucher", "J. Mogbo", "J. Battle", "O. Agbaji", "U. Chomche", "B. Brown", "S. Barnes", "K. Olynyk"],
+        "C": ["J. Poeltl", "J. Mogbo", "B. Fernando", "C. Boucher", "U. Chomche", "K. Olynyk"]
+      },
+      "Utah Jazz": {
+        "PG": ["K. George", "P. Mills", "I. Collier", "C. Sexton", "J. Preston", "J. Clarkson"],
+        "SG": ["J. Clarkson", "C. Sexton", "J. Juzang", "S. Mykhailiuk", "B. Sensabaugh", "K. George", "J. Preston"],
+        "SF": ["C. Williams", "B. Sensabaugh", "L. Markkanen", "J. Juzang", "S. Mykhailiuk", "J. Clarkson", "T. Hendricks"],
+        "PF": ["L. Markkanen", "K. Filipowski", "B. Sensabaugh", "J. Collins", "C. Williams", "M. Potter", "T. Hendricks"],
+        "C": ["W. Kessler", "J. Collins", "D. Eubanks", "K. Filipowski", "O. Tshiebwe", "M. Potter", "T. Hendricks"]
+      },
+      "Washington Wizards": {
+        "PG": ["J. Poole", "C. Carrington", "J. Butler", "J. Davis", "M. Brogdon"],
+        "SG": ["C. Carrington", "C. Kispert", "J. Davis", "J. Poole", "K. George", "B. Coulibaly", "J. Champagnie", "J. Butler", "M. Brogdon"],
+        "SF": ["B. Coulibaly", "K. George", "C. Kispert", "K. Kuzma", "J. Davis", "A. Gill", "J. Champagnie", "P. Baldwin Jr.", "S. Bey"],
+        "PF": ["K. Kuzma", "K. George", "A. Sarr", "M. Bagley III", "P. Baldwin Jr.", "A. Gill", "C. Kispert", "T. Vukcevic", "S. Bey"],
+        "C": ["D. Gafford", "A. Sarr", "M. Bagley III", "T. Vukcevic"]
+      }
+    }

@@ -4,12 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NBA Fantasy Visualizer - Player Statistics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/playerStats-styles.css">
     <link rel="stylesheet" href="styles/playerStats-table.css">
 </head>
-    <body>
-        <div id="header-container"></div>
+<body>
+    <div id="header-container"></div>
 
     <script>
         fetch('header.html')
@@ -20,8 +21,8 @@
     </script>
 
     <section id="player-stats">
-        <h2>Top-200 Player Ranks (Updated 6 Nov 2024)</h2>
-    
+        <h2 id="player-stats-title">Top-200 Player Ranks</h2>
+        <h3>(Updated 6 Nov 2024)</h3>
         <div class="filters">
             <div class="filter-group">
                 <label for="player-count-filter">Show Top:</label>
@@ -40,12 +41,12 @@
             <div class="filter-group">
                 <label for="position-filter">Position:</label>
                 <select id="position-filter">
-                    <option value="">All</option>
-                    <option value="PG">PG</option>
-                    <option value="SG">SG</option>
-                    <option value="SF">SF</option>
-                    <option value="PF">PF</option>
-                    <option value="C">C</option>
+                    <option value="">All Positions</option>
+                    <option value="PG">Point Guard</option>
+                    <option value="SG">Shooting Guard</option>
+                    <option value="SF">Small Forward</option>
+                    <option value="PF">Power Forward</option>
+                    <option value="C">Center</option>
                 </select>
             </div>
             <div class="filter-group">
@@ -57,7 +58,6 @@
                 <input type="number" id="min-mpg" min="0" max="48" placeholder="Min">
             </div>
         </div>
-        
 
         <div class="table-container">
             <table id="stats-table">
@@ -84,256 +84,69 @@
             </table>
         </div>
     </section>
+<section id="stats-legend">
+    <h3>Legend</h3>
+    <div class="legend-container">
+        <div class="legend-item">
+            <span class="legend-key">R#:</span>
+            <span class="legend-value">Rank</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-key">POS:</span>
+            <span class="legend-value">Position</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-key">GP:</span>
+            <span class="legend-value">Games Played</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-key">MPG:</span>
+            <span class="legend-value">Minutes Per Game</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-key">FG%:</span>
+            <span class="legend-value">Field Goal Percentage</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-key">FT%:</span>
+            <span class="legend-value">Free Throw Percentage</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-key">3PM:</span>
+            <span class="legend-value">Three-Pointers Made</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-key">PTS:</span>
+            <span class="legend-value">Points</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-key">REB:</span>
+            <span class="legend-value">Rebounds</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-key">AST:</span>
+            <span class="legend-value">Assists</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-key">STL:</span>
+            <span class="legend-value">Steals</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-key">BLK:</span>
+            <span class="legend-value">Blocks</span>
+        </div>
+        <div class="legend-item">
+            <span class="legend-key">TO:</span>
+            <span class="legend-value">Turnovers</span>
+        </div>
+    </div>
+</section>
+<footer>
+    <p>&copy; 2023 NBA Fantasy Visualizer. All rights reserved.</p>
+    <p class="disclaimer-text">This website is for educational purposes only and is not affiliated with or endorsed by the NBA.</p>
+</footer>
 
-    <script>
-        let allPlayers = [];
-        let currentSort = { column: null, direction: 'asc' };
-
-        // Map of team abbreviations to full names
-        const teamNames = {
-            'ATL': 'Atlanta Hawks',
-            'BOS': 'Boston Celtics',
-            'BKN': 'Brooklyn Nets',
-            'CHA': 'Charlotte Hornets',
-            'CHI': 'Chicago Bulls',
-            'CLE': 'Cleveland Cavaliers',
-            'DAL': 'Dallas Mavericks',
-            'DEN': 'Denver Nuggets',
-            'DET': 'Detroit Pistons',
-            'GS': 'Golden State Warriors',
-            'HOU': 'Houston Rockets',
-            'IND': 'Indiana Pacers',
-            'LAC': 'Los Angeles Clippers',
-            'LAL': 'Los Angeles Lakers',
-            'MEM': 'Memphis Grizzlies',
-            'MIA': 'Miami Heat',
-            'MIL': 'Milwaukee Bucks',
-            'MIN': 'Minnesota Timberwolves',
-            'NO': 'New Orleans Pelicans',
-            'NY': 'New York Knicks',
-            'OKC': 'Oklahoma City Thunder',
-            'ORL': 'Orlando Magic',
-            'PHI': 'Philadelphia 76ers',
-            'PHO': 'Phoenix Suns',
-            'POR': 'Portland Trail Blazers',
-            'SAC': 'Sacramento Kings',
-            'SA': 'San Antonio Spurs',
-            'TOR': 'Toronto Raptors',
-            'UTA': 'Utah Jazz',
-            'WAS': 'Washington Wizards'
-        };
-
-        document.addEventListener('DOMContentLoaded', loadStats);
-        document.getElementById('player-count-filter').addEventListener('change', filterData);
-        document.getElementById('team-filter').addEventListener('change', filterData);
-        document.getElementById('position-filter').addEventListener('change', filterData);
-        document.getElementById('search').addEventListener('input', filterData);
-        document.getElementById('min-mpg').addEventListener('input', filterData);
-
-        document.querySelectorAll('#stats-table th').forEach(headerCell => {
-            headerCell.addEventListener('click', () => {
-                const column = headerCell.dataset.sort;
-                sortTable(column);
-            });
-        });
-
-        function loadStats() {
-            fetch('playerStats.json')
-                .then(response => {
-                    if (!response.ok) throw new Error('Network response was not ok');
-                    return response.json();
-                })
-                .then(data => {
-                    allPlayers = data.sort((a, b) => parseInt(a['R#']) - parseInt(b['R#']));
-                    populateTeamFilter(allPlayers);
-                    filterData(); // Apply filters (including top 50) immediately after loading
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.querySelector('#stats-table tbody').innerHTML = 
-                        '<tr><td colspan="15">Error loading data. Please try again.</td></tr>';
-                });
-        }
-
-        function populateTeamFilter(data) {
-            const teams = [...new Set(data.map(player => player.TEAM))].sort();
-            const teamFilter = document.getElementById('team-filter');
-            teams.forEach(team => {
-                const option = document.createElement('option');
-                option.value = team;
-                option.textContent = teamNames[team] || team;  // Display full name or fallback to abbreviation
-                teamFilter.appendChild(option);
-            });
-        }
-
-        function filterData() {
-            const team = document.getElementById('team-filter').value;
-            const position = document.getElementById('position-filter').value;
-            const search = document.getElementById('search').value.toLowerCase();
-            const minMpg = document.getElementById('min-mpg').value;
-            const playerCount = parseInt(document.getElementById('player-count-filter').value);
-
-            let filteredData = allPlayers.filter(player => {
-                return (!team || player.TEAM === team) &&
-                       (!position || player.POS === position) &&
-                       (!search || player.PLAYER.toLowerCase().includes(search)) &&
-                       (!minMpg || parseFloat(player.MPG) >= parseFloat(minMpg));
-            });
-
-            // Sort by R# to ensure we're getting the top players
-            filteredData.sort((a, b) => parseInt(a['R#']) - parseInt(b['R#']));
-
-            // Limit to selected number of players
-            filteredData = filteredData.slice(0, playerCount);
-
-            displayData(filteredData);
-        }
-
-        function sortTable(column) {
-            const headers = document.querySelectorAll('#stats-table th');
-            headers.forEach(header => {
-                if (header.dataset.sort === column) {
-                    const icon = header.querySelector('.sort-icon');
-                    icon.classList.remove('asc', 'desc');
-                    if (currentSort.column === column) {
-                        currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
-                    } else {
-                        currentSort.column = column;
-                        currentSort.direction = 'asc';
-                    }
-                    icon.classList.add(currentSort.direction);
-                }
-            });
-
-            const sortedData = [...allPlayers].sort((a, b) => {
-                let valueA = isNaN(a[column]) ? a[column] : parseFloat(a[column]);
-                let valueB = isNaN(b[column]) ? b[column] : parseFloat(b[column]);
-
-                if (currentSort.direction === 'asc') {
-                    return valueA > valueB ? 1 : -1;
-                } else {
-                    return valueA < valueB ? 1 : -1;
-                }
-            });
-
-            displayData(sortedData);
-        }
-
-        function getCellColor(value, column) {
-            const numValue = parseFloat(value);
-            if (isNaN(numValue)) return null; // Return null for non-numeric values
-
-            let percentile;
-            switch (column) {
-                case 'FG%':
-                case 'FT%':
-                case '3PM':
-                case 'PTS':
-                case 'TREB':
-                case 'AST':
-                case 'STL':
-                case 'BLK':
-                    percentile = getPercentile(numValue, column);
-                    break;
-                case 'TO':
-                    percentile = 100 - getPercentile(numValue, column); // Invert for TO (lower is better)
-                    break;
-                default:
-                    return null;
-            }
-
-            return getColorGradient(percentile);
-        }
-
-        function getPercentile(value, column) {
-            // You'll need to define these thresholds based on your data
-            const thresholds = {
-                'FG%': [0.40, 0.42, 0.44, 0.46, 0.48, 0.50],
-                'FT%': [0.60, 0.65, 0.70, 0.75, 0.80, 0.85],
-                '3PM': [0.5, 1.0, 1.5, 2.0, 2.5, 3.0],
-                'PTS': [5, 10, 15, 20, 25, 30],
-                'TREB': [2, 3, 4, 5, 6, 7],
-                'AST': [1, 2, 3, 4, 5, 6],
-                'STL': [0.5, 0.8, 1.1, 1.4, 1.7, 2.0],
-                'BLK': [0.3, 0.6, 0.9, 1.2, 1.5, 1.8],
-                'TO': [1, 1.5, 2, 2.5, 3, 3.5]
-            };
-
-            const categoryThresholds = thresholds[column];
-            for (let i = 0; i < categoryThresholds.length; i++) {
-                if (value < categoryThresholds[i]) {
-                    return (i / categoryThresholds.length) * 100;
-                }
-            }
-            return 100;
-        }
-
-        function getColorGradient(percentile) {
-            // Convert percentile to a value between 0 and 1
-            const t = percentile / 100;
-
-            // Use HSL color model for smoother transitions
-            let h, s, l;
-
-            if (t < 0.5) {
-                // Red (0) to Yellow (60)
-                h = t * 120;
-                s = 100;
-                l = 50;
-            } else {
-                // Yellow (60) to Green (120)
-                h = 60 + (t - 0.5) * 120;
-                s = 100;
-                l = 50;
-            }
-
-            // Adjust lightness for better readability
-            l = Math.min(Math.max(l - 20 + t * 40, 30), 70);
-
-            // Convert HSL to RGB
-            const c = (1 - Math.abs(2 * l / 100 - 1)) * s / 100;
-            const x = c * (1 - Math.abs((h / 60) % 2 - 1));
-            const m = l / 100 - c / 2;
-            let r, g, b;
-            if (h < 60) {
-                [r, g, b] = [c, x, 0];
-            } else if (h < 120) {
-                [r, g, b] = [x, c, 0];
-            } else {
-                [r, g, b] = [0, c, x];
-            }
-
-            // Convert to 8-bit color values
-            r = Math.round((r + m) * 255);
-            g = Math.round((g + m) * 255);
-            b = Math.round((b + m) * 255);
-
-            // Calculate relative luminance for text color
-            const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
-            const textColor = luminance > 0.5 ? '#000000' : '#FFFFFF';
-
-            return {
-                background: `rgb(${r}, ${g}, ${b})`,
-                text: textColor
-            };
-        }
-        function displayData(data) {
-            const tbody = document.querySelector('#stats-table tbody');
-            tbody.innerHTML = '';
-
-            data.forEach(player => {
-                const row = tbody.insertRow();
-                Object.entries(player).forEach(([key, value]) => {
-                    const cell = row.insertCell();
-                    cell.textContent = value;
-                    const colors = getCellColor(value, key);
-                    if (colors) {
-                        cell.style.backgroundColor = colors.background;
-                        cell.style.color = colors.text;
-                    }
-                });
-            });
-        }
-    </script>
+<script src="playerStats.js"></script>
+<script src="returnToTop.js"></script>
 </body>
 </html>

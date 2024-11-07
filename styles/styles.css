@@ -144,15 +144,8 @@ footer {
     --text-light: #FFFFFF;
     --background-light: #F4F4F4;
 }
-
 body {
-    margin: 0;
-    padding: 0;
-    font-family: Arial, sans-serif;
-    background-color: var(--background-light);
-    color: var(--text-dark);
-    display: flex;
-    flex-direction: column;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
     min-height: 100vh;
 }
 
@@ -254,10 +247,11 @@ footer {
     text-align: center;
     padding: 10px;
     width: 100%;
+}
 
-}.disclaimer-text {
+.disclaimer-text {
     font-style: italic;
-    font-size: 0.9em;  /* This makes the text slightly smaller, you can adjust or remove this line if you prefer */
+    font-size: 0.9em;
 }
 
 .about-content {

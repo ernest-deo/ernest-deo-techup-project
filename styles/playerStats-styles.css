@@ -1,58 +1,190 @@
+:root {
+    --nba-blue: #1d428a;
+    --nba-red: #c8102e;
+    --nba-white: #ffffff;
+}
 #player-stats {
     max-width: 1400px;
     margin: 2rem auto;
     background: var(--nba-white);
     padding: 2rem;
     border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+#player-stats h3 {
+    text-align: center;
+    font-family: 'Oswald', sans-serif;
+    color: var(--nba-blue);
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+}
+
+#player-stats-title {
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
+    color: var(--nba-blue);
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    margin-top: 30px;
 }
 
 .filters {
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
-    margin-bottom: 1rem;
-    flex-wrap: nowrap;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 2rem;
 }
 
 .filter-group {
-    flex: 0 1 18%;
-    min-width: 0;
-    margin-right: 0.5rem;
+    display: flex;
+    align-items: center;
 }
 
-.filter-group:last-child {
-    margin-right: 0;
+.filter-group label {
+    margin-right: 0.5rem;
+    font-weight: bold;
 }
+
+.filter-group select,
+.filter-group input {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.filter-group input[type="number"] {
+    width: 60px;
+}
+
+.table-container {
+    max-height: 70vh; /* Adjust this value as needed */
+    overflow-y: auto;
+    border: 1px solid #ddd;
+}
+
+#stats-table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-family: 'Arial', sans-serif;
+}
+
+#stats-table th,
+#stats-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+#stats-table th {
+    background-color: var(--nba-blue);
+    color: var(--nba-white);
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    letter-spacing: 0.5px;
+}
+
+#stats-table tbody tr {
+    transition: background-color 0.3s ease;
+}
+
+#stats-table tbody tr:nth-child(even) {
+    background-color: #f8f9fa;
+}
+
+#stats-table tbody tr:hover {
+    background-color: #e9ecef;
+}
+
+#stats-table td {
+    font-size: 0.95rem;
+    line-height: 1.4;
+    color: #333;
+}
+
+#stats-table td:first-child,
+#stats-table td:nth-child(2) {
+    font-weight: bold;
+}
+
+.sticky-col {
+    position: sticky;
+    background-color: #fff;
+    z-index: 10;
+}
+
+.first-col {
+    left: 0;
+}
+
+.second-col {
+    left: 50px; /* Adjust based on the width of your first column */
+}
+
+/* Ensure the header stays on top when scrolling */
+#stats-table thead th {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+    background-color: var(--nba-blue);
+}
+
+/* Add a subtle box-shadow to create a separation effect */
+#stats-table thead th::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+@media screen and (max-width: 768px) {
+    #player-stats {
+        padding: 1rem;
+    }
+
+    #player-stats-title {
+        font-size: 2rem;
+    }
+
+    .filters {
+        flex-direction: column;
+    }
+
+    .filter-group {
+        width: 100%;
+    }
+}
+
+.filter-group {
+    flex: 1 1 200px;
+}
+
 .filter-group label {
     display: block;
-    margin-bottom: 0.25rem;
+    margin-bottom: 5px;
+    font-weight: bold;
     color: var(--nba-blue);
-    font-size: 0.9em;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 
 .filter-group select,
 .filter-group input {
     width: 100%;
-    padding: 0.25rem;
-    border: 1px solid var(--nba-blue);
+    padding: 8px;
+    border: 1px solid #ccc;
     border-radius: 4px;
-    font-size: 0.9em;
+    font-size: 14px;
 }
 
-/* Remove any responsive styles that might be causing issues */
-@media (max-width: 1200px), (max-width: 768px), (max-width: 480px) {
-    .filters {
-        flex-wrap: nowrap;
-    }
-
-    .filter-group {
-        flex: 0 1 18%;
-        margin-bottom: 0;
-    }
+.filter-group select:focus,
+.filter-group input:focus {
+    outline: none;
+    border-color: var(--nba-blue);
+    box-shadow: 0 0 0 2px rgba(0, 102, 204, 0.2);
 }
 
 .sort-icon {
@@ -71,4 +203,108 @@
 
 .sort-desc .sort-icon {
     border-top: 4px solid var(--text-light);
+    
+}@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+#stats-table tbody tr {
+    animation: fadeIn 0.3s ease-in;
+}
+
+.filter-group select,
+.filter-group input {
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+#stats-legend {
+    max-width: 1400px;  /* Match the max-width of #player-stats */
+    margin: 2rem auto;
+    padding: 2rem;
+    background-color: #f8f9fa;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+#stats-legend h3 {
+    text-align: center;
+    font-family: 'Oswald', sans-serif;
+    color: var(--nba-blue);
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+}
+.legend-container {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);  /* 5 columns for better spread */
+    gap: 1rem;
+}
+
+.legend-item {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0.5rem;
+}
+
+.legend-key {
+    font-weight: bold;
+    margin-bottom: 0.25rem;
+    color: var(--nba-blue);
+}
+
+.legend-value {
+    color: #6c757d;
+}
+
+@media screen and (max-width: 1200px) {
+    .legend-container {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+@media screen and (max-width: 992px) {
+    .legend-container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+@media screen and (max-width: 768px) {
+    #stats-legend {
+        padding: 1rem;
+    }
+    .legend-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .legend-container {
+        grid-template-columns: 1fr;
+    }
+}
+#return-to-top {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: var(--nba-blue);
+    color: var(--nba-white);
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    transition: background-color 0.3s, opacity 0.5s, visibility 0.5s;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 1000;
+}
+
+#return-to-top:hover {
+    background-color: var(--nba-red);
+}
+
+#return-to-top.show {
+    opacity: 1;
+    visibility: visible;
 }

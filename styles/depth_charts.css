@@ -1,0 +1,80 @@
+.controls {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+}
+
+.filter-group label {
+    margin-right: 0.5rem;
+}
+
+.filter-group input {
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.depth-chart {
+    margin-bottom: 2rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.team-logo {
+    width: 40px;
+    height: 40px;
+    margin-right: 1rem;
+    object-fit: contain;
+}
+
+.team-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1rem;
+}
+
+.team-name {
+    background-color: var(--nba-blue);
+    color: var(--nba-white);
+    padding: 1rem;
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.position-row {
+    display: flex;
+    border-bottom: 1px solid #eee;
+}
+
+.position-row:last-child {
+    border-bottom: none;
+}
+
+.position-name {
+    width: 100px;
+    background-color: #f0f0f0;
+    padding: 0.5rem;
+    font-weight: bold;
+}
+
+.players {
+    flex-grow: 1;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0.5rem;
+}
+
+.player {
+    margin-right: 1rem;
+    margin-bottom: 0.5rem;
+}
+
+.starter {
+    font-weight: bold;
+}

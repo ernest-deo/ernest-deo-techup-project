@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NBA Team Depth Charts - HoopHub</title>
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/depth_charts.css">
+</head>
+<body>
+    <div id="header-container"></div>
+
+    <main class="main-container">
+        <h1>NBA Team Depth Charts</h1>
+
+        <div class="controls">
+            <div class="filter-group">
+                <label for="team-select">Select Team:</label>
+                <select id="team-select">
+                    <option value="all">All Teams</option>
+                    <!-- Teams will be populated dynamically -->
+                </select>
+            </div>
+            <div class="filter-group">
+                <label for="player-search">Search Player:</label>
+                <input type="text" id="player-search" placeholder="Enter player name">
+            </div>
+        </div>
+        <div id="depth-charts-container"></div>
+    </main>
+
+    <script src="depth_charts.js"></script>
+    <script>
+        fetch('header.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('header-container').innerHTML = data;
+            });
+    </script>
+</body>
+</html>
