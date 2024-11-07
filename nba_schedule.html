@@ -10,27 +10,17 @@
     <script src="nba_schedule.js" defer></script>
 </head>
 <body>
-    <div id="header-container"></div>
-
-    <main>
-        <h1>NBA Schedule</h1>
-        <div id="schedule-container"></div>
-    </main>
-
-    <footer>
-        <p>&copy; 2024 HoopHub. All rights reserved.</p>
-        <p class="disclaimer-text">Disclaimer: This website is created for learning purposes only. The information here should not be considered professional advice. Please note that we make no guarantees regarding the accuracy, completeness, or reliability of the contents of this website. Any actions you take based on the contents of this website are at your own risk. We are not liable for any losses or damages incurred from the use of this website.</p>
-    </footer>
-
-    <script>
-        fetch('header.html')
-            .then(response => response.text())
-            .then(data => {
-                document.getElementById('header-container').innerHTML = data;
-            })
-            .catch(error => {
-                console.error('Error loading header:', error);
-            });
-    </script>
+<header>
+    <!-- Your header content -->
+</header>
+<main>
+    <h1>NBA Schedule</h1>
+    <div id="schedule-container">
+        <table id="schedule-table"></table>
+    </div>
+</main>
+<footer>
+    <!-- Your footer content -->
+</footer>
 </body>
 </html>
