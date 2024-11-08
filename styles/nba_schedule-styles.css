@@ -3,27 +3,52 @@
 .main-container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
+    padding: 20px;
 }
 
-.nba-blue-header {
-    color: #1d428a;
-    text-align: center;
-    font-family: 'Oswald', sans-serif;
-    font-size: 2rem;
+#week-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
     margin-bottom: 20px;
-    text-transform: uppercase;
 }
 
-#schedule-table-container {
+#filter-container {
+    margin-bottom: 20px;
+}
+
+#day-filters, #back-to-back-filter {
+    margin-bottom: 10px;
+}
+
+#day-filters label, #back-to-back-filter label {
+    margin-right: 10px;
+}
+#week-tabs button {
+    margin-right: 5px;
+    margin-bottom: 5px;
+    padding: 5px 10px;
+    border: 1px solid #ccc;
+    background-color: #f0f0f0;
+    cursor: pointer;
+}
+
+#week-tabs button.active {
+    background-color: #007bff;
+    color: white;
+}
+
+#schedule-table td.highlight {
+    background-color: #ffffcc;
+}
+
+#schedule-container {
     overflow-x: auto;
-    margin-top: 20px;
 }
 
 #schedule-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 20px;
 }
 
 #schedule-table th, #schedule-table td {
@@ -45,12 +70,32 @@
     background-color: #f5f5f5;
 }
 
-#loading, #error {
-    text-align: center;
-    margin-top: 20px;
-    font-size: 18px;
+/* Add this to your existing CSS */
+#schedule-table caption {
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 1.2em;
+    color: #333;
+}
+.bold-header {
+    font-weight: bold;
 }
 
-#error {
-    color: red;
+/* Ensure header row is bold */
+#schedule-table thead tr {
+    font-weight: bold;
+}
+
+/* Ensure "Team" column is bold */
+#schedule-table td:first-child.bold-header {
+    font-weight: bold;
+}
+
+/* Ensure rows starting with "Team" are bold */
+#schedule-table tr.bold-header {
+    font-weight: bold;
+}
+#loading, #error {
+    text-align: center;
+    margin: 20px 0;
 }

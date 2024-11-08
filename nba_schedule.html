@@ -5,12 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NBA Schedule</title>
     <link rel="stylesheet" href="styles/nba_schedule-styles.css">
-    <link rel="stylesheet" href="styles/nba_schedule_table.css">
     <link rel="stylesheet" href="styles/styles.css">
+    <style>
+        .bold-header {
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
     <div id="header-container"></div>
-    <main class="main-container"></main>
+    <main class="main-container">
+        <h1>NBA Schedule</h1>
+        <div id="week-tabs"></div>
+        <div id="schedule-container">
+            <div id="loading">Loading schedule...</div>
+            <div id="error" style="display: none; color: red;"></div>
+            <table id="schedule-table"></table>
+        </div>
+    </main>
     <footer>
         <p>&copy; 2024 HoopHub. All rights reserved.</p>
         <p class="disclaimer-text">Disclaimer: This website is created for learning purposes only. The information here should not be considered professional advice. Please note that we make no guarantees regarding the accuracy, completeness, or reliability of the contents of this website. Any actions you take based on the contents of this website are at your own risk. We are not liable for any losses or damages incurred from the use of this website.</p>
