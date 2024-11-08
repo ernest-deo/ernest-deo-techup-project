@@ -4,6 +4,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const loadingElement = document.getElementById('loading');
     const errorElement = document.getElementById('error');
 
+    if (!weekTabs || !scheduleTable || !loadingElement || !errorElement) {
+        console.error('One or more required elements are missing from the DOM');
+        return;
+    }
+
     const weekDates = [
         { start: "Oct 21", end: "Oct 27" },
         { start: "Oct 28", end: "Nov 3" },
@@ -27,15 +32,18 @@ document.addEventListener('DOMContentLoaded', function() {
         { start: "Mar 17", end: "Mar 23" },
     ];
     function createWeekTabs() {
+        const fragment = document.createDocumentFragment();
         weekDates.forEach((week, index) => {
             const tab = document.createElement('button');
             tab.textContent = `Week ${index + 1} (${week.start} - ${week.end})`;
             tab.addEventListener('click', () => loadWeekSchedule(index + 1));
-            weekTabs.appendChild(tab);
+            fragment.appendChild(tab);
         });
+        weekTabs.appendChild(fragment);
     }
 
     function loadWeekSchedule(weekNumber) {
+        highlightActiveTab(weekNumber);
         loadingElement.style.display = 'block';
         errorElement.style.display = 'none';
         scheduleTable.innerHTML = '';
@@ -43,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
         fetch(`nba_schedule/nba_scheduleW${weekNumber}.json`)
             .then(response => {
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error(`HTTP error! status: ${response.status}`);
                 }
                 return response.json();
             })
@@ -54,12 +62,13 @@ document.addEventListener('DOMContentLoaded', function() {
             .catch(error => {
                 console.error('Error loading schedule:', error);
                 loadingElement.style.display = 'none';
-                errorElement.textContent = 'Error loading schedule. Please try again later.';
+                errorElement.textContent = `Error loading schedule for week ${weekNumber}. Please try again later.`;
                 errorElement.style.display = 'block';
             });
     }
 
     function createScheduleTable(data, weekNumber) {
+        const table = document.createElement('table');
         const thead = document.createElement('thead');
         const tbody = document.createElement('tbody');
 
@@ -75,30 +84,26 @@ document.addEventListener('DOMContentLoaded', function() {
         // Create body rows
         data.forEach(row => {
             const tr = document.createElement('tr');
+            let isTeamRow = false;
             Object.entries(row).forEach(([key, value]) => {
                 const td = document.createElement('td');
                 if (key === 'Team' && typeof value === 'string' && value.trim() !== '') {
                     if (value === 'Team' || value.startsWith('# Games Played')) {
-                        // For 'Team' header or '#game played' rows, just display the text
                         td.textContent = value;
+                        isTeamRow = true;
                     } else {
-                        // Create a container for the logo and team name
                         const container = document.createElement('div');
                         container.style.display = 'flex';
                         container.style.alignItems = 'center';
 
-                        // Create and add the logo
                         const logo = document.createElement('img');
                         logo.src = getLogoUrl(value);
                         logo.alt = `${value} logo`;
-                        logo.style.width = '30px';  // Adjust size as needed
+                        logo.style.width = '30px';
                         logo.style.marginRight = '10px';
                         container.appendChild(logo);
 
-                        // Add the team name
-                        const teamName = document.createTextNode(value);
-                        container.appendChild(teamName);
-
+                        container.appendChild(document.createTextNode(value));
                         td.appendChild(container);
                     }
                 } else {
@@ -106,12 +111,17 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
                 tr.appendChild(td);
             });
+
+            if (isTeamRow) {
+                tr.classList.add('bold-header');
+            }
             tbody.appendChild(tr);
         });
 
+        table.appendChild(thead);
+        table.appendChild(tbody);
         scheduleTable.innerHTML = '';
-        scheduleTable.appendChild(thead);
-        scheduleTable.appendChild(tbody);
+        scheduleTable.appendChild(table);
     }
 
     // Add this function to get the logo URL
@@ -157,6 +167,16 @@ document.addEventListener('DOMContentLoaded', function() {
             return './logos/default.png';  // You should add a default logo image
         }
     }
+function highlightActiveTab(weekNumber) {
+    const tabs = weekTabs.getElementsByTagName('button');
+    Array.from(tabs).forEach((tab, index) => {
+        if (index + 1 === weekNumber) {
+            tab.classList.add('active');
+        } else {
+            tab.classList.remove('active');
+        }
+    });
+}
 
     createWeekTabs();
     loadWeekSchedule(1); // Load Week 1 by default
