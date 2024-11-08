@@ -24,7 +24,15 @@
         </section>
 
         <div class="comparison-container">
-            <div class="left-column">
+            <div class="filter-section">
+                <div class="filter-group">
+                    <label for="time-period">Time Period:</label>
+                    <select id="time-period">
+                        <option value="season">Season</option>
+                        <option value="seven">Last 7 Days</option>
+                        <option value="fourteen">Last 14 Days</option>
+                    </select>
+                </div>
                 <div class="player-select">
                     <div class="player-column">
                         <div class="filter-group">
@@ -48,11 +56,13 @@
                     </div>
                 </div>
                 <button class="btn btn-primary" id="compareButton">Compare</button>
+            </div>
+            <div class="comparison-results">
                 <div class="stats-table-container">
                     <table id="comparison-stats">
                         <thead>
                             <tr>
-                                <th id="stat-header"></th>
+                                <th id="stat-header">Stat</th>
                                 <th id="player1-name"></th>
                                 <th id="player2-name"></th>
                             </tr>
@@ -60,9 +70,7 @@
                         <tbody></tbody>
                     </table>
                 </div>
-            </div>
-            <div class="right-column">
-                <div id="recommendation-container" class="recommendation-container"></div>
+                <div id="recommendation-container"></div>
             </div>
         </div>
     </main>

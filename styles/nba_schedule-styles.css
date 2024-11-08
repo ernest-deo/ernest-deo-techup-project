@@ -144,3 +144,13 @@ h1 {
         font-size: 0.9em;
     }
 }
+.schedule-info {
+    text-align: center;
+    margin: 0 auto 20px;
+    padding: 0 10 px;
+}
+
+.schedule-info p {
+    margin-bottom: 15px;
+    line-height: 1.2;
+}

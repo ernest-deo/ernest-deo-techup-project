@@ -1,36 +1,49 @@
-let allPlayers = [];
+let allPlayersSeason = [];
+let allPlayersSevenDays = [];
+let allPlayersFourteenDays = [];
 
 document.addEventListener('DOMContentLoaded', () => {
-    loadPlayerData();
+    loadStats();
     setupEventListeners();
 });
 
-function loadPlayerData() {
-    fetch('playerStats.json')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Data loaded:', data);
-            allPlayers = data;
-            populateTeamDropdowns();
-        })
-        .catch(error => {
-            console.error('Error loading player data:', error);
-        });
+function loadStats() {
+    Promise.all([
+        fetch('playerStats.json'),
+        fetch('playerStats_Seven.json'),
+        fetch('playerStats_Fourteen.json')
+    ])
+    .then(responses => Promise.all(responses.map(response => response.json())))
+    .then(([seasonData, sevenDaysData, fourteenDaysData]) => {
+        allPlayersSeason = processData(seasonData);
+        allPlayersSevenDays = processData(sevenDaysData);
+        allPlayersFourteenDays = processData(fourteenDaysData);
+        populateTeamDropdowns();
+    })
+    .catch(error => console.error('Error:', error));
+}
+
+function processData(data) {
+    // Process the data if needed
+    return data;
 }
 
 function setupEventListeners() {
     const team1Select = document.getElementById('team1');
     const team2Select = document.getElementById('team2');
     const compareButton = document.getElementById('compareButton');
+    const timePeriodSelect = document.getElementById('time-period');
 
     if (team1Select) team1Select.addEventListener('change', () => updatePlayerList(1));
     if (team2Select) team2Select.addEventListener('change', () => updatePlayerList(2));
     if (compareButton) compareButton.addEventListener('click', comparePlayers);
+    if (timePeriodSelect) {
+        timePeriodSelect.addEventListener('change', () => {
+            updatePlayerList(1);
+            updatePlayerList(2);
+            clearComparison();
+        });
+    }
 }
 
 function populateTeamDropdowns() {
@@ -42,7 +55,7 @@ function populateTeamDropdowns() {
         return;
     }
 
-    const uniqueTeams = [...new Set(allPlayers.map(player => player.TEAM))];
+    const uniqueTeams = [...new Set(allPlayersSeason.map(player => player.TEAM))];
     uniqueTeams.sort();
 
     uniqueTeams.forEach(team => {
@@ -61,6 +74,7 @@ function populateTeamDropdowns() {
 function updatePlayerList(playerNum) {
     const teamSelect = document.getElementById(`team${playerNum}`);
     const playerSelect = document.getElementById(`player${playerNum}`);
+    const timePeriod = document.getElementById('time-period').value;
 
     if (!teamSelect || !playerSelect) {
         console.error(`Team or player select element not found for player ${playerNum}`);
@@ -68,9 +82,21 @@ function updatePlayerList(playerNum) {
     }
 
     const selectedTeam = teamSelect.value;
-    playerSelect.innerHTML = '';
+    playerSelect.innerHTML = '<option value="">Select Player</option>';
 
-    const teamPlayers = allPlayers.filter(player => player.TEAM === selectedTeam);
+    let players;
+    switch (timePeriod) {
+        case 'seven':
+            players = allPlayersSevenDays;
+            break;
+        case 'fourteen':
+            players = allPlayersFourteenDays;
+            break;
+        default:
+            players = allPlayersSeason;
+    }
+
+    const teamPlayers = players.filter(player => player.TEAM === selectedTeam);
 
     teamPlayers.forEach(player => {
         const option = document.createElement('option');
@@ -83,13 +109,23 @@ function updatePlayerList(playerNum) {
 function comparePlayers() {
     const player1Name = document.getElementById('player1').value;
     const player2Name = document.getElementById('player2').value;
+    const timePeriod = document.getElementById('time-period').value;
+
+    let players;
+    switch (timePeriod) {
+        case 'seven':
+            players = allPlayersSevenDays;
+            break;
+        case 'fourteen':
+            players = allPlayersFourteenDays;
+            break;
+        default:
+            players = allPlayersSeason;
+    }
 
     if (player1Name && player2Name) {
-        const player1 = allPlayers.find(p => p.PLAYER === player1Name);
-        const player2 = allPlayers.find(p => p.PLAYER === player2Name);
-
-        console.log("Player 1:", player1);
-        console.log("Player 2:", player2);
+        const player1 = players.find(p => p.PLAYER === player1Name);
+        const player2 = players.find(p => p.PLAYER === player2Name);
 
         if (player1 && player2) {
             displayComparison(player1, player2);
@@ -102,151 +138,156 @@ function comparePlayers() {
                 console.error("Recommendation container not found");
             }
         } else {
-            alert('One or both players not found');
+            alert('One or both players not found for the selected time period');
         }
     } else {
         alert('Please select two players to compare');
     }
 }
 
+function clearComparison() {
+    const comparisonTable = document.getElementById('comparison-stats');
+    if (comparisonTable) {
+        comparisonTable.querySelector('tbody').innerHTML = '';
+    }
+    const recommendationContainer = document.getElementById('recommendation-container');
+    if (recommendationContainer) {
+        recommendationContainer.innerHTML = '';
+    }
+}
+    function generateRecommendation(player1, player2) {
+        const categories = {
+            offense: ['PTS', '3PM', 'AST'],
+            defense: ['TREB', 'STL', 'BLK'],
+            efficiency: ['FG%', 'FT%', 'TO']
+        };
+
+        let recommendationHTML = '<h2>Player Comparison Insights</h2>';
+
+        for (const category in categories) {
+            let categoryHTML = `<div class="insight-category">
+                <h3>${category.charAt(0).toUpperCase() + category.slice(1)}</h3>
+                <ul>`;
+
+            categories[category].forEach(stat => {
+                const value1 = parseFloat(player1[stat]);
+                const value2 = parseFloat(player2[stat]);
+                let comparison = '';
+
+                if (stat === 'TO') {
+                    const diff = (value1 - value2).toFixed(1);
+                    if (value1 < value2) {
+                        comparison = `${player1.PLAYER} has ${Math.abs(diff)} fewer turnovers`;
+                    } else if (value2 < value1) {
+                        comparison = `${player2.PLAYER} has ${Math.abs(diff)} fewer turnovers`;
+                    } else {
+                        comparison = `Both players have the same number of turnovers`;
+                    }
+                } else if (stat === 'FG%' || stat === 'FT%') {
+                    const diff = (value1 - value2).toFixed(3);
+                    if (value1 > value2) {
+                        comparison = `${player1.PLAYER} leads by ${diff} in ${stat}`;
+                    } else if (value2 > value1) {
+                        comparison = `${player2.PLAYER} leads by ${Math.abs(diff)} in ${stat}`;
+                    } else {
+                        comparison = `Both players are equal in ${stat}`;
+                    }
+                } else {
+                    const diff = (value1 - value2).toFixed(1);
+                    if (value1 > value2) {
+                        comparison = `${player1.PLAYER} leads by ${diff} in ${stat}`;
+                    } else if (value2 > value1) {
+                        comparison = `${player2.PLAYER} leads by ${Math.abs(diff)} in ${stat}`;
+                    } else {
+                        comparison = `Both players are equal in ${stat}`;
+                    }
+                }
+
+                categoryHTML += `<li>${comparison}</li>`;
+            });
+
+            categoryHTML += '</ul></div>';
+            recommendationHTML += categoryHTML;
+        }
+
+        return recommendationHTML;
+    }
+
+function determineOverallWinner(insights) {
+    let player1Wins = 0;
+    let player2Wins = 0;
+
+    for (const category in insights) {
+        if (insights[category].winner === insights.offense.winner) {
+            player1Wins++;
+        } else if (insights[category].winner !== 'Tie') {
+            player2Wins++;
+        }
+    }
+
+    if (player1Wins > player2Wins) {
+        return insights.offense.winner;
+    } else if (player2Wins > player1Wins) {
+        return player2Wins === 2 ? insights.defense.winner : insights.efficiency.winner;
+    } else {
+        return 'Tie';
+    }
+}
 function displayComparison(player1, player2) {
-    const statsTable = document.getElementById('comparison-stats');
-    const tbody = statsTable.querySelector('tbody');
+    const comparisonTable = document.getElementById('comparison-stats');
+    const tbody = comparisonTable.querySelector('tbody');
     tbody.innerHTML = '';
+
+    const statsToCompare = [
+        'POS', 'R#', 'MPG', 'FG%', 'FT%', '3PM', 'PTS', 'TREB', 'AST', 'STL', 'BLK', 'TO'
+    ];
 
     document.getElementById('player1-name').textContent = player1.PLAYER;
     document.getElementById('player2-name').textContent = player2.PLAYER;
 
-    // Add position row
-    const positionRow = document.createElement('tr');
-    positionRow.innerHTML = `
-        <td><strong>Position</strong></td>
-        <td>${player1.POS}</td>
-        <td>${player2.POS}</td>
-    `;
-    tbody.appendChild(positionRow);
-
-    const stats = ['FG%', 'FT%', '3PM', 'PTS', 'TREB', 'AST', 'STL', 'BLK', 'TO'];
-
-    stats.forEach(stat => {
+    statsToCompare.forEach(stat => {
         const row = document.createElement('tr');
-
         const statCell = document.createElement('td');
-        statCell.textContent = stat;
-        row.appendChild(statCell);
-
         const player1Cell = document.createElement('td');
-        player1Cell.textContent = player1[stat];
-        row.appendChild(player1Cell);
-
         const player2Cell = document.createElement('td');
-        player2Cell.textContent = player2[stat];
-        row.appendChild(player2Cell);
 
-        if (['FG%', 'FT%'].includes(stat)) {
-            const player1Value = parseFloat(player1[stat]);
-            const player2Value = parseFloat(player2[stat]);
-            if (player1Value > player2Value) {
-                player1Cell.classList.add('better-stat');
-                player2Cell.classList.add('worse-stat');
-            } else if (player2Value > player1Value) {
-                player2Cell.classList.add('better-stat');
-                player1Cell.classList.add('worse-stat');
-            }
-        } else if (stat !== 'TO') {
-            if (parseFloat(player1[stat]) > parseFloat(player2[stat])) {
-                player1Cell.classList.add('better-stat');
-                player2Cell.classList.add('worse-stat');
-            } else if (parseFloat(player2[stat]) > parseFloat(player1[stat])) {
-                player2Cell.classList.add('better-stat');
-                player1Cell.classList.add('worse-stat');
-            }
-        } else {
-            if (parseFloat(player1[stat]) < parseFloat(player2[stat])) {
-                player1Cell.classList.add('better-stat');
-                player2Cell.classList.add('worse-stat');
-            } else if (parseFloat(player2[stat]) < parseFloat(player1[stat])) {
-                player2Cell.classList.add('better-stat');
-                player1Cell.classList.add('worse-stat');
+        statCell.textContent = stat;
+        player1Cell.textContent = player1[stat];
+        player2Cell.textContent = player2[stat];
+
+        if (stat !== 'POS') {
+            const value1 = parseFloat(player1[stat]);
+            const value2 = parseFloat(player2[stat]);
+            if (stat === 'R#' || stat === 'TO') {
+                if (value1 < value2) {
+                    player1Cell.classList.add('better-value');
+                    player2Cell.classList.add('worse-value');
+                } else if (value2 < value1) {
+                    player2Cell.classList.add('better-value');
+                    player1Cell.classList.add('worse-value');
+                }
+            } else {
+                if (value1 > value2) {
+                    player1Cell.classList.add('better-value');
+                    player2Cell.classList.add('worse-value');
+                } else if (value2 > value1) {
+                    player2Cell.classList.add('better-value');
+                    player1Cell.classList.add('worse-value');
+                }
             }
         }
 
+        row.appendChild(statCell);
+        row.appendChild(player1Cell);
+        row.appendChild(player2Cell);
         tbody.appendChild(row);
     });
 }
 
-function generateRecommendation(player1, player2) {
-    let recommendation = `<h3>Comparison Insights: ${player1.PLAYER} vs ${player2.PLAYER}</h3>`;
-
-    const categories = {
-        'Scoring': ['PTS', '3PM'],
-        'Rebounding': ['TREB'],
-        'Playmaking': ['AST'],
-        'Defense': ['STL', 'BLK'],
-        'Efficiency': ['FG%', 'FT%', 'TO']
-    };
-
-    for (const [category, stats] of Object.entries(categories)) {
-        let insights = [];
-
-        if (category === 'Scoring') {
-            const ptsDiff = Math.abs(parseFloat(player1['PTS']) - parseFloat(player2['PTS'])).toFixed(1);
-            const threePMDiff = Math.abs(parseFloat(player1['3PM']) - parseFloat(player2['3PM'])).toFixed(1);
-
-            if (ptsDiff > 0.5 || threePMDiff > 0.5) {
-                const ptsHigher = parseFloat(player1['PTS']) > parseFloat(player2['PTS']) ? player1.PLAYER : player2.PLAYER;
-                insights.push(`${ptsHigher} scores ${ptsDiff} more points overall and makes ${threePMDiff} more three-pointers per game.`);
-            }
-        } else if (category === 'Efficiency') {
-            ['FG%', 'FT%'].forEach(stat => {
-                const p1Value = parseFloat(player1[stat]);
-                const p2Value = parseFloat(player2[stat]);
-                const diff = Math.abs(p1Value - p2Value).toFixed(1);
-
-                if (diff >= 0.001) {  // Comparing percentage difference of 0.01% or more
-                    const higher = p1Value > p2Value ? player1.PLAYER : player2.PLAYER;
-                    const lower = p1Value > p2Value ? player2.PLAYER : player1.PLAYER;
-                    insights.push(`${higher} has a ${diff}% higher ${stat} (${Math.max(p1Value, p2Value).toFixed(1)}%) compared to ${lower} (${Math.min(p1Value, p2Value).toFixed(1)}%).`);
-                }
-            });
-
-            const toDiff = Math.abs(parseFloat(player1['TO']) - parseFloat(player2['TO'])).toFixed(1);
-            if (toDiff > 0.5) {
-                const lower = parseFloat(player1['TO']) < parseFloat(player2['TO']) ? player1.PLAYER : player2.PLAYER;
-                insights.push(`${lower} commits ${toDiff} fewer turnovers per game.`);
-            }
-        } else {
-            stats.forEach(stat => {
-                const p1Value = parseFloat(player1[stat]);
-                const p2Value = parseFloat(player2[stat]);
-                const diff = Math.abs(p1Value - p2Value).toFixed(1);
-
-                if (diff > 0.5) {
-                    const higher = p1Value > p2Value ? player1.PLAYER : player2.PLAYER;
-                    insights.push(`${higher} averages ${diff} more ${stat} per game.`);
-                }
-            });
-        }
-
-        if (insights.length > 0) {
-            recommendation += `<h4>${category}:</h4><ul>`;
-            insights.forEach(insight => {
-                recommendation += `<li>${insight}</li>`;
-            });
-            recommendation += '</ul>';
-        }
+function highlightBetterValue(cell1, cell2, isCell1Better) {
+    if (isCell1Better) {
+        cell1.classList.add('better-value');
+    } else if (cell1.textContent !== cell2.textContent) {
+        cell2.classList.add('better-value');
     }
-
-    console.log("Generated recommendation:", recommendation);
-    return recommendation;
-}
-
-function clearComparison() {
-    document.getElementById('stat-header').textContent = '';
-    document.getElementById('comparison-stats').querySelector('tbody').innerHTML = '';
-    document.getElementById('recommendation-container').innerHTML = '';
-    document.querySelector('.right-column').style.display = 'none';
-    // Clear player names in the table header
-    document.getElementById('player1-name').textContent = '';
-    document.getElementById('player2-name').textContent = '';
 }

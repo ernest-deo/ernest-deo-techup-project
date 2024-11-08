@@ -238,7 +238,7 @@ function displayData(players) {
         default:
             timePeriodText = 'Season';
     }
-    document.getElementById('player-stats-title').textContent = `Top-200 Player Ranks (${timePeriodText})`;
+    document.getElementById('player-stats-title').textContent = `Top-200 Player Average Ranking (${timePeriodText})`;
 
     // Apply sticky classes to header cells
     const headerCells = document.querySelectorAll('#stats-table th');
