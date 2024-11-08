@@ -1,6 +1,8 @@
 let allPlayers = [];
 let currentSort = { column: null, direction: 'asc' };
 let percentiles = {};
+let playersSevenDays = [];
+let playersFourteenDays = [];
 
 // Map of team abbreviations to full names
 const teamNames = {
@@ -42,7 +44,7 @@ document.getElementById('team-filter').addEventListener('change', filterData);
 document.getElementById('position-filter').addEventListener('change', filterData);
 document.getElementById('search').addEventListener('input', filterData);
 document.getElementById('min-mpg').addEventListener('input', filterData);
-
+document.getElementById('time-period-filter').addEventListener('change', filterData);
 document.querySelectorAll('#stats-table th').forEach(headerCell => {
     headerCell.addEventListener('click', () => {
         const column = headerCell.dataset.sort;
@@ -51,37 +53,47 @@ document.querySelectorAll('#stats-table th').forEach(headerCell => {
 });
 
 function loadStats() {
-    fetch('playerStats.json')
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            return response.json();
-        })
-        .then(data => {
-            console.log('Data received:', data);
-            if (!data || data.length === 0) {
-                throw new Error('No data available');
-            }
-            allPlayers = data
-                .filter(player => player.POS && player.PLAYER && player.TEAM)
-                .sort((a, b) => parseInt(a['R#']) - parseInt(b['R#']));
-            console.log('Filtered players:', allPlayers);
-            if (allPlayers.length === 0) {
-                throw new Error('No valid players after filtering');
-            }
-            populateTeamFilter(allPlayers);
-            filterData();
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            const errorMessage = error.message === 'No data available' || error.message === 'No valid players after filtering'
-                ? 'No player data is currently available. Please check back later.'
-                : 'Error loading data. Please try again later.';
-            document.querySelector('#stats-table tbody').innerHTML = 
-                `<tr><td colspan="15">${errorMessage}</td></tr>`;
-            disableFilters();
-        });
+    Promise.all([
+        fetch('playerStats.json'),
+        fetch('playerStats_Seven.json'),
+        fetch('playerStats_Fourteen.json')
+    ])
+    .then(responses => Promise.all(responses.map(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        return response.json();
+    })))
+    .then(([seasonData, sevenDaysData, fourteenDaysData]) => {
+        console.log('Data received:', seasonData, sevenDaysData, fourteenDaysData);
+        if (!seasonData || seasonData.length === 0 || 
+            !sevenDaysData || sevenDaysData.length === 0 || 
+            !fourteenDaysData || fourteenDaysData.length === 0) {
+            throw new Error('No data available');
+        }
+
+        allPlayers = processData(seasonData);
+        playersSevenDays = processData(sevenDaysData);
+        playersFourteenDays = processData(fourteenDaysData);
+
+        populateTeamFilter(allPlayers);
+        filterData();
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        const errorMessage = error.message === 'No data available'
+            ? 'No player data is currently available. Please check back later.'
+            : 'Error loading data. Please try again later.';
+        document.querySelector('#stats-table tbody').innerHTML = 
+            `<tr><td colspan="15">${errorMessage}</td></tr>`;
+        disableFilters();
+    });
+}
+
+function processData(data) {
+    return data
+        .filter(player => player.POS && player.PLAYER && player.TEAM)
+        .sort((a, b) => parseInt(a['R#']) - parseInt(b['R#']));
 }
 
 function disableFilters() {
@@ -111,8 +123,21 @@ function filterData() {
     const searchFilter = document.getElementById('search').value.toLowerCase();
     const minMpgFilter = parseFloat(document.getElementById('min-mpg').value) || 0;
     const playerCountFilter = parseInt(document.getElementById('player-count-filter').value);
+    const timePeriodFilter = document.getElementById('time-period-filter').value;
 
-    let filteredPlayers = allPlayers.filter(player => {
+    let playersToFilter;
+    switch (timePeriodFilter) {
+        case 'seven':
+            playersToFilter = playersSevenDays;
+            break;
+        case 'fourteen':
+            playersToFilter = playersFourteenDays;
+            break;
+        default:
+            playersToFilter = allPlayers;
+    }
+
+    let filteredPlayers = playersToFilter.filter(player => {
         const playerPositions = player.POS ? player.POS.split(',').map(pos => pos.trim()) : [];
         return (
             (teamFilter === '' || player.TEAM === teamFilter) &&
@@ -200,6 +225,20 @@ function displayData(players) {
     }
     const tbody = document.querySelector('#stats-table tbody');
     tbody.innerHTML = '';
+
+    const timePeriod = document.getElementById('time-period-filter').value;
+    let timePeriodText;
+    switch (timePeriod) {
+        case 'seven':
+            timePeriodText = 'Last 7 Days';
+            break;
+        case 'fourteen':
+            timePeriodText = 'Last 14 Days';
+            break;
+        default:
+            timePeriodText = 'Season';
+    }
+    document.getElementById('player-stats-title').textContent = `Top-200 Player Ranks (${timePeriodText})`;
 
     // Apply sticky classes to header cells
     const headerCells = document.querySelectorAll('#stats-table th');
