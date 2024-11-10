@@ -239,7 +239,7 @@ function displayComparison(player1, player2) {
     tbody.innerHTML = '';
 
     const statsToCompare = [
-        'POS', 'R#', 'MPG', 'FG%', 'FT%', '3PM', 'PTS', 'TREB', 'AST', 'STL', 'BLK', 'TO'
+        'POS', 'R#', 'GP', 'MPG', 'FG%', 'FT%', '3PM', 'PTS', 'TREB', 'AST', 'STL', 'BLK', 'TO'
     ];
 
     document.getElementById('player1-name').textContent = player1.PLAYER;
