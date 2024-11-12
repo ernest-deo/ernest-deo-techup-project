@@ -1,55 +1,63 @@
-@media screen and (max-width: 768px) {
-    .main-container {
-        padding: 10px;
+/* Small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {
+    header {
+        padding: 10px 3%;
     }
 
-    h1 {
-        font-size: 24px;
-        text-align: center;
+    header nav {
+        flex-direction: column;
     }
 
-    /* Header styles for mobile */
-    #header-container {
-        padding: 10px;
-    }
-
-    #header-container nav {
+    header nav ul {
         flex-direction: column;
         align-items: center;
     }
 
-    #header-container nav ul {
-        flex-direction: column;
-        align-items: center;
-        padding: 0;
-    }
-
-    #header-container nav ul li {
+    header nav ul li {
         margin: 5px 0;
     }
 
-    /* Footer styles for mobile */
     footer {
-        padding: 15px 10px;
+        padding: 15px 3%;
     }
 
-    footer .copyright,
-    footer .disclaimer-text {
+    .copyright, .disclaimer-text {
         font-size: 12px;
         line-height: 1.4;
     }
+}
 
-    /* Existing styles */
-    .schedule-info p {
-        font-size: 14px;
+/* Medium devices (tablets, 600px and up) */
+@media only screen and (min-width: 600px) and (max-width: 768px) {
+    header {
+        padding: 12px 4%;
     }
 
-    .week-tabs-container {
-        flex-direction: row;
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-        padding-bottom: 10px;
+    header nav ul {
+        justify-content: center;
     }
 
-    /* ... rest of your existing mobile styles ... */
+    footer {
+        padding: 18px 4%;
+    }
+
+    .copyright, .disclaimer-text {
+        font-size: 13px;
+        line-height: 1.5;
+    }
+}
+
+/* Large devices (laptops/desktops, 768px and up) */
+@media only screen and (min-width: 768px) {
+    header nav ul {
+        justify-content: flex-end;
+    }
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+    header, footer {
+        padding-left: calc((100% - 1200px) / 2);
+        padding-right: calc((100% - 1200px) / 2);
+    }
 }
