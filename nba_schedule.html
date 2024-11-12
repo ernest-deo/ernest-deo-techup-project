@@ -6,6 +6,7 @@
     <title>NBA Schedule</title>
     <link rel="stylesheet" href="styles/nba_schedule-styles.css">
     <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="styles/mobile-styles.css">
     <style>
         .bold-header {
             font-weight: bold;
@@ -32,8 +33,9 @@
         <div id="week-tabs"></div>
         <div id="schedule-container">
             <div id="loading">Loading schedule...</div>
-            <div id="error" style="display: none; color: red;"></div>
-            <table id="schedule-table"></table>
+            <div id="error" style="display: none; color: red;">Error loading schedule</div>
+            <div class="table-wrapper">
+                <table id="schedule-table" class="schedule-table"></table>
         </div>
     </main>
     <footer>

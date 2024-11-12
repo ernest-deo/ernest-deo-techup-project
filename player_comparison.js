@@ -133,7 +133,6 @@ function comparePlayers() {
             const recommendationContainer = document.getElementById('recommendation-container');
             if (recommendationContainer) {
                 recommendationContainer.innerHTML = recommendation;
-                document.querySelector('.right-column').style.display = 'block';
             } else {
                 console.error("Recommendation container not found");
             }

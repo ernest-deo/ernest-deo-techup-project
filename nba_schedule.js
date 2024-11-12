@@ -181,3 +181,35 @@ function highlightActiveTab(weekNumber) {
     createWeekTabs();
     loadWeekSchedule(1); // Load Week 1 by default
 });
+// Add this function to your existing JavaScript
+function adjustForMobile() {
+    if (window.innerWidth <= 768) {
+        const table = document.getElementById('schedule-table');
+        if (table) {
+            const headerRow = table.querySelector('tr');
+            if (headerRow) {
+                const firstCell = headerRow.cells[0];
+                firstCell.style.position = 'sticky';
+                firstCell.style.left = '0';
+                firstCell.style.backgroundColor = '#fff';
+                firstCell.style.zIndex = '1';
+            }
+
+            const rows = table.querySelectorAll('tr');
+            rows.forEach(row => {
+                const firstCell = row.cells[0];
+                if (firstCell) {
+                    firstCell.style.position = 'sticky';
+                    firstCell.style.left = '0';
+                    firstCell.style.backgroundColor = '#fff';
+                    firstCell.style.zIndex = '1';
+                }
+            });
+        }
+    }
+}
+
+// Call this function after loading the schedule
+window.addEventListener('load', adjustForMobile);
+window.addEventListener('resize', adjustForMobile);
+

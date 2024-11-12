@@ -1,0 +1,38 @@
+@media screen and (max-width: 768px) {
+    .main-container {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    .schedule-info p {
+        font-size: 14px;
+    }
+
+    .week-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .week-tabs button {
+        margin: 5px;
+        padding: 8px 12px;
+        font-size: 14px;
+    }
+
+    .table-wrapper {
+        overflow-x: auto;
+    }
+
+    .schedule-table {
+        font-size: 12px;
+    }
+
+    .schedule-table th,
+    .schedule-table td {
+        padding: 5px;
+    }
+}
