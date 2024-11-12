@@ -399,4 +399,53 @@ header {
         html {
             font-size: 22px;
         }
+/* Add this after your existing styles */
+
+@media screen and (max-width: 768px) {
+    header {
+        padding: 10px 3%;
+    }
+
+    header h1 {
+        font-size: 1.8rem;
+    }
+
+    .header-subtitle {
+        font-size: 1rem;
+    }
+
+    nav {
+        margin-top: 10px;
+    }
+
+    .nav-button {
+        padding: 8px;
+        font-size: 0.9rem;
+        margin: 3px;
+    }
+
+    footer {
+        padding: 15px 3%;
+    }
+
+    .copyright, .disclaimer-text {
+        font-size: 0.8rem;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    .header-subtitle {
+        font-size: 0.9rem;
+    }
+
+    .nav-button {
+        padding: 6px;
+        font-size: 0.8rem;
+        margin: 2px;
+    }
+}
     }

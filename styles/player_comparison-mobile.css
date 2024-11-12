@@ -1,0 +1,51 @@
+@media screen and (max-width: 768px) {
+    .main-container {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .instruction-text {
+        font-size: 0.9rem;
+    }
+
+    .comparison-container {
+        flex-direction: column;
+    }
+
+    .filter-section,
+    .comparison-results {
+        width: 100%;
+    }
+
+    .player-select {
+        flex-direction: column;
+    }
+
+    .player-column {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    #comparison-stats {
+        font-size: 0.8rem;
+    }
+
+    #comparison-stats th,
+    #comparison-stats td {
+        padding: 5px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #comparison-stats {
+        font-size: 0.7rem;
+    }
+
+    #comparison-stats th,
+    #comparison-stats td {
+        padding: 3px;
+    }
+}

@@ -1,0 +1,44 @@
+@media screen and (max-width: 768px) {
+    .main-container {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 1.5rem;
+    }
+
+    .schedule-info p {
+        font-size: 0.9rem;
+    }
+
+    .week-tabs-container {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    .week-tab {
+        margin: 2px;
+        padding: 5px 10px;
+        font-size: 0.8rem;
+    }
+
+    .schedule-table {
+        font-size: 0.8rem;
+    }
+
+    .schedule-table th,
+    .schedule-table td {
+        padding: 5px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .schedule-table {
+        font-size: 0.7rem;
+    }
+
+    .schedule-table th,
+    .schedule-table td {
+        padding: 3px;
+    }
+}

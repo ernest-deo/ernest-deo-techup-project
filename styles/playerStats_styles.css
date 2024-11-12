@@ -147,16 +147,21 @@
         padding: 1rem;
     }
 
-    #player-stats-title {
-        font-size: 2rem;
-    }
-
     .filters {
-        flex-direction: column;
+        gap: 0.5rem;
     }
 
     .filter-group {
-        width: 100%;
+        flex: 1 1 100%;
+    }
+
+    .filter-group select,
+    .filter-group input {
+        font-size: 14px;
+    }
+
+    #stats-legend h3 {
+        font-size: 1.5rem;
     }
 }
 
@@ -217,8 +222,18 @@
 .filter-group input {
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
 }
+/* ... (keep the existing CSS above) ... */
+
+#return-to-top:hover {
+    background-color: var(--nba-red);
+}
+
+#return-to-top.show {
+    opacity: 1;
+    visibility: visible;
+}
 #stats-legend {
-    max-width: 1400px;  /* Match the max-width of #player-stats */
+    max-width: 1400px;
     margin: 2rem auto;
     padding: 2rem;
     background-color: #f8f9fa;
@@ -233,9 +248,10 @@
     font-size: 2rem;
     margin-bottom: 1.5rem;
 }
+
 .legend-container {
     display: grid;
-    grid-template-columns: repeat(5, 1fr);  /* 5 columns for better spread */
+    grid-template-columns: repeat(5, 1fr);
     gap: 1rem;
 }
 
@@ -267,50 +283,77 @@
         grid-template-columns: repeat(3, 1fr);
     }
 }
+
 @media screen and (max-width: 768px) {
+    #player-stats {
+        padding: 1rem;
+        margin: 1rem auto;
+    }
+
+    #player-stats-title {
+        font-size: 1.8rem;
+        margin-top: 20px;
+        margin-bottom: 1rem;
+    }
+
+    .filters {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    .filter-group {
+        width: 100%;
+    }
+
+    .filter-group label {
+        font-size: 14px;
+    }
+
+    .filter-group select,
+    .filter-group input {
+        width: 100%;
+        padding: 8px;
+        font-size: 14px;
+    }
     #stats-legend {
         padding: 1rem;
+    }
+
+    #stats-legend h3 {
+        font-size: 1.5rem;
     }
     .legend-container {
         grid-template-columns: repeat(2, 1fr);
     }
+
+    .legend-item {
+        padding: 0.25rem;
+    }
 }
 
 @media screen and (max-width: 480px) {
+    #player-stats-title {
+        font-size: 1.5rem;
+    }
     .legend-container {
         grid-template-columns: 1fr;
     }
-}
-#return-to-top {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background-color: var(--nba-blue);
-    color: var(--nba-white);
-    width: 50px;
-    height: 50px;
-    text-align: center;
-    line-height: 50px;
-    border-radius: 50%;
-    font-size: 20px;
-    cursor: pointer;
-    transition: background-color 0.3s, opacity 0.5s, visibility 0.5s;
-    opacity: 0;
-    visibility: hidden;
-    z-index: 1000;
-}
 
-#return-to-top:hover {
-    background-color: var(--nba-red);
-}
-
-#return-to-top.show {
-    opacity: 1;
-    visibility: visible;
-}
-
-}@media screen and (max-width: 768px) {
-    .copyright {
-        font-size: 12px;
+    .legend-item {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        border-bottom: 1px solid #e0e0e0;
+        padding: 0.5rem 0;
     }
+
+    .legend-key {
+        margin-bottom: 0;
+    }
+}
+
+.copyright {
+    font-size: 12px;
+    text-align: center;
+    margin-top: 1rem;
 }

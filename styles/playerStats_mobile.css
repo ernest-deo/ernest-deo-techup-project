@@ -1,0 +1,73 @@
+@media screen and (max-width: 768px) {
+    .main-container {
+        padding: 10px;
+    }
+
+    #player-stats-title {
+        font-size: 1.8rem;
+    }
+    h1, h2 {
+        font-size: 1.5rem;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+    }
+
+    .filters {
+        flex-direction: column;
+    }
+
+    .filter-group {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+    .table-container {
+        overflow-x: auto;
+    }
+
+    #stats-table {
+        font-size: 0.8rem;
+    }
+
+    #stats-table th,
+    #stats-table td {
+        padding: 5px;
+    }
+
+    .sticky-col {
+        position: sticky;
+        background-color: #fff;
+        z-index: 1;
+    }
+
+    .first-col {
+        left: 0;
+    }
+
+    .second-col {
+        left: 80px;
+    }
+
+    #stats-legend {
+        padding: 1rem;
+    }
+
+    .legend-container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    #return-to-top {
+        width: 40px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 16px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .legend-container {
+        grid-template-columns: 1fr;
+    }
+}
