@@ -358,24 +358,57 @@ footer {
     padding: 10px;
 }
 
+header {
+    padding: 20px;
+}
+
+.header-subtitle {
+    font-size: 16px;
+}
+
+.nav-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.nav-button {
+    margin: 5px;
+    padding: 8px 12px;
+}
+
+footer {
+    padding: 10px;
+}
 @media screen and (max-width: 768px) {
-    .menu-toggle {
-        display: block;
+    header {
+        padding: 10px;
     }
 
-    .nav-links {
-        display: none;
-        flex-direction: column;
-        width: 100%;
+    h1 {
+        font-size: 24px;
     }
 
-    .nav-links.show {
-        display: flex;
+    .header-subtitle {
+        font-size: 14px;
     }
 
     .nav-button {
-        width: 100%;
-        text-align: center;
-        margin: 5px 0;
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+
+    footer {
+        padding: 5px;
+        font-size: 12px;
+    }
+
+    .disclaimer-text {
+        font-size: 10px;
+    }
+    
+}@media screen and (max-width: 768px) {
+    .copyright {
+        font-size: 12px;
     }
 }

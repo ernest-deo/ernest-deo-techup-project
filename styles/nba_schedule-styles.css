@@ -154,3 +154,9 @@ h1 {
     margin-bottom: 15px;
     line-height: 1.2;
 }
+
+}@media screen and (max-width: 768px) {
+    .copyright {
+        font-size: 12px;
+    }
+}

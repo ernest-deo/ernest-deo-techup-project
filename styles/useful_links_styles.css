@@ -45,3 +45,9 @@
 .useful_links-list a:hover {
     color: var(--basketball-orange);
 }
+
+}@media screen and (max-width: 768px) {
+    .copyright {
+        font-size: 12px;
+    }
+}
