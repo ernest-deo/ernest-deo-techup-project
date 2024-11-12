@@ -5,6 +5,8 @@
     </header>
 
     <nav>
+        <button class="menu-toggle">Menu</button>
+        <div class="nav-links">
         <a href="index.html" class="nav-button"><span>Home</span></a>
         <a href="nba_schedule.html" class="nav-button"><span>NBA Schedule</span></a>
         <a href="playerStats.html" class="nav-button"><span>Player Stats</span></a>
@@ -20,5 +22,10 @@
   gtag('js', new Date());
 
   gtag('config', 'G-EDXSFDMLGK');
+</script>
+<script>
+    document.querySelector('.menu-toggle').addEventListener('click', function() {
+        document.querySelector('.nav-links').classList.toggle('show');
+    });
 </script>
 </div>

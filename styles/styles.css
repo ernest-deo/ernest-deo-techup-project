@@ -347,3 +347,35 @@ footer {
     --nba-white: #FFFFFF;
     --basketball-orange: #F7882F;
 }
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+@media screen and (max-width: 768px) {
+    .menu-toggle {
+        display: block;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .nav-links.show {
+        display: flex;
+    }
+
+    .nav-button {
+        width: 100%;
+        text-align: center;
+        margin: 5px 0;
+    }
+}

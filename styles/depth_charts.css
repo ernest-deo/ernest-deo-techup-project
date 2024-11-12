@@ -113,3 +113,44 @@
         grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     }
 }
+
+@media screen and (max-width: 768px) {
+    body {
+        font-size: 14px;
+    }
+
+    .main-container {
+        padding: 10px;
+    }
+
+    h1 {
+        font-size: 24px;
+    }
+
+    h3 {
+        font-size: 18px;
+    }
+
+    .nav-links {
+        flex-direction: column;
+    }
+
+    .nav-links li {
+        margin: 5px 0;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .team-depth-chart {
+        width: 100%;
+    }
+
+    .team-logo {
+        width: 60px;
+        height: 60px;
+    }
+
+    .position-column {
+        font-size: 12px;
+    }
+}

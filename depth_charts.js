@@ -168,3 +168,15 @@ function displayDepthCharts(data) {
 
     container.appendChild(gridContainer);
 }
+
+function adjustForMobile() {
+    if (window.innerWidth <= 768) {
+        const depthCharts = document.querySelectorAll('.team-depth-chart');
+        depthCharts.forEach(chart => {
+            chart.style.width = '100%';
+        });
+    }
+}
+
+window.addEventListener('load', adjustForMobile);
+window.addEventListener('resize', adjustForMobile);
