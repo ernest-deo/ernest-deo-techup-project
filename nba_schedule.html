@@ -30,13 +30,13 @@
             <p>Click on the different tabs for the week to see what days teams play - use this to decide on whether to stream-in players for the week!</p>
             <p><em>Note: 2 games of the NBA schedule won't be released until the results of the Play-In Tournament, so there are TBC placeholder games between 10-16 December.</em></p>
         </section>
-        <div id="week-tabs"></div>
-        <div id="schedule-container">
-            <div id="loading">Loading schedule...</div>
-            <div id="error" style="display: none; color: red;">Error loading schedule</div>
+        <div id="week-tabs" class="week-tabs-container"></div>
+        <div id="schedule-container" class="schedule-container">
+            <div id="loading" class="loading-message">Loading schedule...</div>
+            <div id="error" class="error-message" style="display: none;">Error loading schedule</div>
             <div class="table-wrapper">
                 <table id="schedule-table" class="schedule-table"></table>
-        </div>
+            </div>
     </main>
     <footer>
         <p class="copyright">&copy; 2024 HoopHub. All rights reserved.</p>

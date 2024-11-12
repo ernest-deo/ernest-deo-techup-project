@@ -5,34 +5,51 @@
 
     h1 {
         font-size: 24px;
+        text-align: center;
     }
 
+    /* Header styles for mobile */
+    #header-container {
+        padding: 10px;
+    }
+
+    #header-container nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #header-container nav ul {
+        flex-direction: column;
+        align-items: center;
+        padding: 0;
+    }
+
+    #header-container nav ul li {
+        margin: 5px 0;
+    }
+
+    /* Footer styles for mobile */
+    footer {
+        padding: 15px 10px;
+    }
+
+    footer .copyright,
+    footer .disclaimer-text {
+        font-size: 12px;
+        line-height: 1.4;
+    }
+
+    /* Existing styles */
     .schedule-info p {
         font-size: 14px;
     }
 
-    .week-tabs {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: center;
-    }
-
-    .week-tabs button {
-        margin: 5px;
-        padding: 8px 12px;
-        font-size: 14px;
-    }
-
-    .table-wrapper {
+    .week-tabs-container {
+        flex-direction: row;
         overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 10px;
     }
 
-    .schedule-table {
-        font-size: 12px;
-    }
-
-    .schedule-table th,
-    .schedule-table td {
-        padding: 5px;
-    }
+    /* ... rest of your existing mobile styles ... */
 }
