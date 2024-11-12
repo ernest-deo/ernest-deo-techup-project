@@ -3,19 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Player Comparison - HoopHub</title>
+    <title>Player Comparison</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles/styles.css">
     <link rel="stylesheet" href="styles/player_comparison-styles.css">
     <link rel="stylesheet" href="styles/player_comparison-mobile.css">
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-EDXSFDMLGK"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-EDXSFDMLGK"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-  gtag('config', 'G-EDXSFDMLGK');
-</script>
+      gtag('config', 'G-EDXSFDMLGK');
+    </script>
 </head>
 <body>
     <div id="header-container"></div>
@@ -27,7 +28,7 @@
             });
     </script>
     <main class="main-container">
-        <h1 class="nba-blue-header">Player Comparison</h1>
+        <h1 id="player-comparison-title">Player Comparison</h1>
 
         <section class="explanation-section">
             <p class="instruction-text">Simply select two players from the dropdown menus and click 'Compare' to see their stats. The comparison will provide a quick summary of how the players stack up against each other across multiple categories based on their average stats from the season thus far.</p>

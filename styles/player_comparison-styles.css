@@ -1,5 +1,21 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Oswald:wght@500&display=swap');
 
+#player-comparison-title {
+    font-family: 'Oswald', sans-serif;
+    text-align: center;
+    color: var(--nba-blue);
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+    margin-top: 30px;
+}
+
+@media screen and (max-width: 768px) {
+    #player-comparison-title {
+        font-size: 1.8rem;
+        margin-top: 20px;
+        margin-bottom: 1rem;
+    }
+}
 body {
     font-family: 'Roboto', sans-serif;
     line-height: 1.6;
@@ -115,6 +131,19 @@ body {
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+#recommendation-container h2 {
+    font-family: 'Oswald', sans-serif;
+    color: var(--nba-blue);
+    font-size: 1.8rem;
+    margin-bottom: 1rem;
+    text-align: center;
+}
+
+@media screen and (max-width: 768px) {
+    #recommendation-container h2 {
+        font-size: 1.5rem;
+    }
 }
 
 .insight-category {

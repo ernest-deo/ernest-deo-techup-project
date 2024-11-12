@@ -107,6 +107,7 @@ function updatePlayerList(playerNum) {
 }
 
 function comparePlayers() {
+    clearComparison();
     const player1Name = document.getElementById('player1').value;
     const player2Name = document.getElementById('player2').value;
     const timePeriod = document.getElementById('time-period').value;
@@ -145,14 +146,15 @@ function comparePlayers() {
 }
 
 function clearComparison() {
-    const comparisonTable = document.getElementById('comparison-stats');
-    if (comparisonTable) {
-        comparisonTable.querySelector('tbody').innerHTML = '';
-    }
+    const table = document.getElementById('comparison-stats');
+    const tbody = table.querySelector('tbody');
+    tbody.innerHTML = '';
+
+    // Clear the header row
+    const headerRow = table.querySelector('thead tr');
+    headerRow.innerHTML = '<th></th><th></th><th></th>';
     const recommendationContainer = document.getElementById('recommendation-container');
-    if (recommendationContainer) {
-        recommendationContainer.innerHTML = '';
-    }
+    recommendationContainer.innerHTML = '';
 }
     function generateRecommendation(player1, player2) {
         const categories = {
@@ -290,3 +292,4 @@ function highlightBetterValue(cell1, cell2, isCell1Better) {
         cell2.classList.add('better-value');
     }
 }
+
