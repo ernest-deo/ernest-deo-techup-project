@@ -162,11 +162,12 @@ document.addEventListener('DOMContentLoaded', function() {
         const abbreviation = teamAbbreviations[teamName];
         if (abbreviation) {
             return `./logos/${abbreviation}.png`;
-        } else {
-            console.warn(`No logo found for team: ${teamName}`);
-            return './logos/default.png';  // You should add a default logo image
         }
-    }
+
+        // Add a return statement for when no abbreviation is found
+    return ''; // or return a default logo URL
+}
+
 function highlightActiveTab(weekNumber) {
     const tabs = weekTabs.getElementsByTagName('button');
     Array.from(tabs).forEach((tab, index) => {

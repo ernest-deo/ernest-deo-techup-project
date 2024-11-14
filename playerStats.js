@@ -4,6 +4,7 @@ let percentiles = {};
 let playersSevenDays = [];
 let playersFourteenDays = [];
 
+
 // Map of team abbreviations to full names
 const teamNames = {
     'ATL': 'Atlanta Hawks',
@@ -38,6 +39,7 @@ const teamNames = {
     'WAS': 'Washington Wizards'
 };
 
+
 document.addEventListener('DOMContentLoaded', loadStats);
 document.getElementById('player-count-filter').addEventListener('change', filterData);
 document.getElementById('team-filter').addEventListener('change', filterData);
@@ -51,6 +53,7 @@ document.querySelectorAll('#stats-table th').forEach(headerCell => {
         sortTable(column);
     });
 });
+
 
 function loadStats() {
     Promise.all([
@@ -66,15 +69,17 @@ function loadStats() {
     })))
     .then(([seasonData, sevenDaysData, fourteenDaysData]) => {
         console.log('Data received:', seasonData, sevenDaysData, fourteenDaysData);
-        if (!seasonData || seasonData.length === 0 || 
-            !sevenDaysData || sevenDaysData.length === 0 || 
+        if (!seasonData || seasonData.length === 0 ||
+            !sevenDaysData || sevenDaysData.length === 0 ||
             !fourteenDaysData || fourteenDaysData.length === 0) {
             throw new Error('No data available');
         }
 
+
         allPlayers = processData(seasonData);
         playersSevenDays = processData(sevenDaysData);
         playersFourteenDays = processData(fourteenDaysData);
+
 
         populateTeamFilter(allPlayers);
         filterData();
@@ -84,11 +89,12 @@ function loadStats() {
         const errorMessage = error.message === 'No data available'
             ? 'No player data is currently available. Please check back later.'
             : 'Error loading data. Please try again later.';
-        document.querySelector('#stats-table tbody').innerHTML = 
+        document.querySelector('#stats-table tbody').innerHTML =
             `<tr><td colspan="15">${errorMessage}</td></tr>`;
         disableFilters();
     });
 }
+
 
 function processData(data) {
     return data
@@ -96,7 +102,8 @@ function processData(data) {
         .sort((a, b) => parseInt(a['R#']) - parseInt(b['R#']));
 }
 
-function disableFilters() {
+
+function disableFilters() { // Disable all filters when there's an error loading the data or in process of updating display data.
     const filters = ['player-count-filter', 'team-filter', 'position-filter', 'search', 'min-mpg'];
     filters.forEach(filterId => {
         const element = document.getElementById(filterId);
@@ -105,6 +112,7 @@ function disableFilters() {
         }
     });
 }
+
 
 function populateTeamFilter(data) {
     const teams = [...new Set(data.map(player => player.TEAM))].sort();
@@ -117,6 +125,7 @@ function populateTeamFilter(data) {
     });
 }
 
+
 function filterData() {
     const teamFilter = document.getElementById('team-filter').value;
     const positionFilter = document.getElementById('position-filter').value;
@@ -125,11 +134,12 @@ function filterData() {
     const playerCountFilter = parseInt(document.getElementById('player-count-filter').value);
     const timePeriodFilter = document.getElementById('time-period-filter').value;
 
+
     let playersToFilter;
     switch (timePeriodFilter) {
         case 'seven':
             playersToFilter = playersSevenDays;
-            break;
+            break; // exits or terminate the current loop or switch statement
         case 'fourteen':
             playersToFilter = playersFourteenDays;
             break;
@@ -137,7 +147,8 @@ function filterData() {
             playersToFilter = allPlayers;
     }
 
-    let filteredPlayers = playersToFilter.filter(player => {
+
+    let filteredPlayers = playersToFilter.filter(player => { // filters the players based on user-selected criteria, limits the number of displayed players, calculates new percentiles for the filtered data, and then updates the display with the filtered results.
         const playerPositions = player.POS ? player.POS.split(',').map(pos => pos.trim()) : [];
         return (
             (teamFilter === '' || player.TEAM === teamFilter) &&
@@ -147,16 +158,20 @@ function filterData() {
         );
     });
 
-    filteredPlayers = filteredPlayers.slice(0, playerCountFilter);
+
+    filteredPlayers = filteredPlayers.slice(0, playerCountFilter); // limits the number of displayed players to the user-selected count
+
 
     console.log('Filtered players:', filteredPlayers);
     calculatePercentiles(filteredPlayers);
     displayData(filteredPlayers);
 }
 
+
 function calculatePercentiles(players) {
     const stats = ['FG%', 'FT%', '3PM', 'PTS', 'TREB', 'AST', 'STL', 'BLK', 'TO'];
     percentiles = {};
+
 
     stats.forEach(stat => {
         let values;
@@ -175,11 +190,14 @@ function calculatePercentiles(players) {
     });
 }
 
+
 function getColorStyle(value, stat) {
     if (!percentiles[stat]) return '';
 
+
     const { min, max, q1, median, q3 } = percentiles[stat];
     let hue, saturation, lightness;
+
 
     // Convert percentage strings to numbers for FG% and FT%
     if (stat === 'FG%' || stat === 'FT%') {
@@ -197,6 +215,7 @@ function getColorStyle(value, stat) {
         percentile = 75 + (value - q3) / (max - q3) * 25;
     }
 
+
     if (stat === 'TO') {
         // For TO (Turnovers), lower is better
         hue = 120 - percentile * 1.2; // 120 (green) to 0 (red)
@@ -205,17 +224,20 @@ function getColorStyle(value, stat) {
         hue = percentile * 1.2; // 0 (red) to 120 (green)
     }
 
+
     // Adjust saturation and lightness for more vivid colors
     saturation = 70 + percentile * 0.3; // 70% to 100%
     lightness = 65 - Math.abs(percentile - 50) * 0.3; // 50% to 65%
 
+
     return `background-color: hsla(${hue}, ${saturation}%, ${lightness}%, 0.6);`;
 }
+
 
 function displayData(players) {
     if (!players || players.length === 0) {
         console.error('No players data to display');
-        document.querySelector('#stats-table tbody').innerHTML = 
+        document.querySelector('#stats-table tbody').innerHTML =
             '<tr><td colspan="15">No players match the current filters.</td></tr>';
         return;
     }
@@ -225,6 +247,7 @@ function displayData(players) {
     }
     const tbody = document.querySelector('#stats-table tbody');
     tbody.innerHTML = '';
+
 
     const timePeriod = document.getElementById('time-period-filter').value;
     let timePeriodText;
@@ -239,6 +262,7 @@ function displayData(players) {
             timePeriodText = 'Season';
     }
     document.getElementById('player-stats-title').textContent = `Top-200 Player Average Ranking (${timePeriodText})`;
+
 
     // Apply sticky classes to header cells
     const headerCells = document.querySelectorAll('#stats-table th');
@@ -267,6 +291,7 @@ function displayData(players) {
     });
 }
 
+
 function sortTable(column) {
     if (currentSort.column === column) {
         currentSort.direction = currentSort.direction === 'asc' ? 'desc' : 'asc';
@@ -275,31 +300,39 @@ function sortTable(column) {
         currentSort.direction = 'asc';
     }
 
+
     const sortedPlayers = [...allPlayers].sort((a, b) => {
         let valueA = a[column];
         let valueB = b[column];
 
+
         if (column === 'PLAYER') {
-            return currentSort.direction === 'asc' 
-                ? valueA.localeCompare(valueB)
+            return currentSort.direction === 'asc'
+                ? valueA.localeCompare(valueB) // localeCompare is used to sort player names alphabetically in a way that respects language-specific sorting rules
                 : valueB.localeCompare(valueA);
         }
+
 
         valueA = parseFloat(valueA);
         valueB = parseFloat(valueB);
 
+
         if (isNaN(valueA)) valueA = 0;
         if (isNaN(valueB)) valueB = 0;
+
 
         return currentSort.direction === 'asc' ? valueA - valueB : valueB - valueA;
     });
 
+
     displayData(sortedPlayers);
+
 
     // Update sort indicators
     document.querySelectorAll('#stats-table th').forEach(th => {
         th.classList.remove('sort-asc', 'sort-desc');
     });
+
 
     const header = document.querySelector(`th[data-sort="${column}"]`);
     header.classList.add(`sort-${currentSort.direction}`);

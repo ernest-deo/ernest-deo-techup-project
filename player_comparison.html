@@ -15,6 +15,7 @@
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
+
       gtag('config', 'G-EDXSFDMLGK');
     </script>
 </head>
@@ -30,9 +31,11 @@
     <main class="main-container">
         <h1 id="player-comparison-title">Player Comparison</h1>
 
+
         <section class="explanation-section">
             <p class="instruction-text">Simply select two players from the dropdown menus and click 'Compare' to see their stats. The comparison will provide a quick summary of how the players stack up against each other across multiple categories based on their average stats from the season thus far.</p>
         </section>
+
 
         <div class="comparison-container">
             <div class="filter-section">
@@ -66,7 +69,7 @@
                         </div>
                     </div>
                 </div>
-                <button class="btn btn-primary" id="compareButton">Compare</button>
+                <button class="btn btn-primary" id="compareButton" onclick="comparePlayers()">Compare</button>
             </div>
             <div class="comparison-results">
                 <div class="stats-table-container">
@@ -87,8 +90,9 @@
     </main>
     <footer>
         <p class="copyright"></p>&copy; 2024 HoopHub. All rights reserved.</p>
-        <p class="disclaimer-text">Disclaimer: This website is created for learning purposes only. The information here should not be considered professional advice.</p>
+        <p class="disclaimer-text">Disclaimer: This website is created for learning purposes only. The information here should not be considered professional advice. Please note that we make no guarantees regarding the accuracy, completeness, or reliability of the contents of this website. Any actions you take based on the contents of this website are at your own risk. We are not liable for any losses or damages incurred from the use of this website.</p>
     </footer>
+
 
     <script src="player_comparison.js"></script>
 </body>

@@ -16,27 +16,6 @@
     font-weight: 400;
 }
 
-.controls {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 1rem;
-}
-
-.filter-group {
-    display: flex;
-    align-items: center;
-}
-
-.filter-group label {
-    margin-right: 0.5rem;
-}
-
-.filter-group input {
-    padding: 0.5rem;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
 .depth-charts-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));

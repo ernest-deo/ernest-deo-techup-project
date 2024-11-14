@@ -1,7 +1,21 @@
-/* Keep the existing import at the top of the file */
+/* Import fonts */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Oswald:wght@500&display=swap');
 
-/* Update the body styles */
+
+/* Variables */
+:root {
+    --nba-blue: #17408B;
+    --nba-red: #C9082A;
+    --nba-white: #FFFFFF;
+    --basketball-orange: #F36C21;
+    --court-brown: #C68E17;
+    --text-dark: #333333;
+    --text-light: #FFFFFF;
+    --background-light: #F4F4F4;
+}
+
+
+/* Global Styles */
 body {
     margin: 0;
     padding: 0;
@@ -12,9 +26,11 @@ body {
     flex-direction: column;
     min-height: 100vh;
     line-height: 1.6;
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
 }
 
-/* Update header styles */
+
+/* Header Styles */
 #header-container {
     background-color: var(--nba-blue);
     color: var(--text-light);
@@ -22,6 +38,7 @@ body {
     width: 100%;
     box-sizing: border-box;
 }
+
 
 header h1 {
     margin: 0;
@@ -33,6 +50,7 @@ header h1 {
     font-weight: 500;
 }
 
+
 .header-subtitle {
     font-family: 'Roboto', Arial, sans-serif;
     font-size: 1.2rem;
@@ -41,7 +59,12 @@ header h1 {
     color: var(--nba-white);
 }
 
-/* Update nav button styles */
+
+/* Navigation Styles */
+nav {
+    margin-top: 20px;
+    text-align: center;
+}
 .nav-button {
     font-family: 'Roboto', Arial, sans-serif;
     color: var(--text-light);
@@ -56,17 +79,22 @@ header h1 {
     overflow: hidden;
 }
 
+
 .nav-button span {
     display: inline-block;
     transition: transform 0.3s ease;
 }
+
+
 .nav-button:hover {
     background-color: var(--basketball-orange);
 }
 
+
 .nav-button:hover span {
     animation: bounce 0.5s ease infinite;
 }
+
 
 @keyframes bounce {
     0%, 100% {
@@ -77,181 +105,76 @@ header h1 {
     }
 }
 
-/* Rest of your existing CSS styles */
 
-/* Update overlay content styles */
-.overlay-content h1, 
-.overlay-content h2, 
-.overlay-content h3, 
-.overlay-content h4, 
-.overlay-content h5, 
-.overlay-content h6 {
-    font-family: 'Oswald', sans-serif;
-    color: var(--basketball-orange);
-}
-
-.overlay-content h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1.5rem;
-}
-
-.overlay-content h2 {
-    font-size: 1.8rem;
-    margin-top: 2rem;
-    margin-bottom: 1rem;
-}
-
-/* Update footer styles */
-footer {
-    flex-shrink: 0;
-    background-color: var(--nba-blue);
-    color: var(--text-light);
-    text-align: center;
-    padding: 10px;
-    width: 100%;
-    font-family: 'Roboto', Arial, sans-serif;
-}
-
-.disclaimer-text {
-    font-style: italic;
-    font-size: 0.9em;
-    font-family: 'Roboto', Arial, sans-serif;
-}
-
-/* Update about content styles */
-.about-content h1 {
-    font-family: 'Oswald', sans-serif;
-    color: var(--nba-blue);
-    border-bottom: 2px solid var(--nba-red);
-    padding-bottom: 10px;
-    margin-bottom: 20px;
-}
-
-.about-content h2 {
-    font-family: 'Oswald', sans-serif;
-    color: var(--basketball-orange);
-    margin-top: 30px;
-}
-
-/* Add responsive design */
-@media (max-width: 768px) {
-    .nav-button {
-        display: block;
-        margin: 10px auto;
-        width: 80%;
-    }
-
-    .overlay-content {
-        padding: 1rem;
-    }
-
-    .overlay-content h1 {
-        font-size: 2rem;
-    }
-
-    .overlay-content h2 {
-        font-size: 1.5rem;
-    }
-}
-
-:root {
-    --nba-blue: #17408B;
-    --nba-red: #C9082A;
-    --nba-white: #FFFFFF;
-    --basketball-orange: #F36C21;
-    --court-brown: #C68E17;
-    --text-dark: #333333;
-    --text-light: #FFFFFF;
-    --background-light: #F4F4F4;
-}
-body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-    min-height: 100vh;
-}
-
-#header-container {
-    background-color: var(--nba-blue);
-    color: var(--text-light);
-    padding: 20px;
-    width: 100%;
-    box-sizing: border-box;
-}
-
-header h1 {
-    margin: 0;
-    padding: 10px 0;
-    font-size: 2.5rem;
-    text-align: center;
-    color: var(--nba-white);
-}
-
-.header-subtitle {
-    font-size: 1.2rem;
-    margin-bottom: 20px;
-    text-align: center;
-    color: var(--nba-white);
-}
-
-nav {
-    margin-top: 20px;
-    text-align: center;
-}
-.nav-button {
-    color: var(--text-light);
-    text-decoration: none;
-    padding: 10px;
-    margin: 0 5px;
-    background-color: var(--nba-red);
-    border-radius: 5px;
-    display: inline-block;
-    transition: background-color 0.3s ease;
-}
-
-.nav-button:hover {
-    background-color: var(--basketball-orange);
-}
-
+/* Main Container Styles */
 .main-container {
     flex: 1;
     display: flex;
     flex-direction: column;
-    overflow: hidden; 
+    overflow: hidden;
 }
 
+
+/* GIF Container Styles */
 .gif-container {
     position: relative;
 }
+
 
 .responsive-gif {
     width: 100%;
     height: auto;
 }
+
+
+/* Overlay Content Styles */
 .overlay-content {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7); /* semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.7);
     color: white;
     padding: 20px;
     overflow-y: auto;
 }
 
-.overlay-content h1, .overlay-content h2 {
+
+.overlay-content h1,
+.overlay-content h2,
+.overlay-content h3,
+.overlay-content h4,
+.overlay-content h5,
+.overlay-content h6 {
+    font-family: 'Oswald', sans-serif;
     color: var(--basketball-orange);
 }
 
+
+.overlay-content h1 {
+    font-size: 2.5rem;
+    margin-bottom: 1.5rem;
+}
+
+
+.overlay-content h2 {
+    font-size: 1.8rem;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
 .overlay-content ul {
     list-style-type: none;
     padding-left: 0;
 }
+
 
 .overlay-content li {
     position: relative;
     margin-bottom: 10px;
     padding-left: 25px;
 }
+
 
 .overlay-content li::before {
     content: '🏀';
@@ -260,20 +183,8 @@ nav {
     top: 0;
 }
 
-footer {
-    flex-shrink: 0;
-    background-color: var(--nba-blue);
-    color: var(--text-light);
-    text-align: center;
-    padding: 10px;
-    width: 100%;
-}
 
-.disclaimer-text {
-    font-style: italic;
-    font-size: 0.9em;
-}
-
+/* About Content Styles */
 .about-content {
     max-width: 800px;
     margin: 0 auto;
@@ -281,27 +192,34 @@ footer {
     line-height: 1.6;
 }
 
+
 .about-content h1 {
+    font-family: 'Oswald', sans-serif;
     color: var(--nba-blue);
     border-bottom: 2px solid var(--nba-red);
     padding-bottom: 10px;
     margin-bottom: 20px;
 }
 
+
 .about-content h2 {
+    font-family: 'Oswald', sans-serif;
     color: var(--basketball-orange);
     margin-top: 30px;
 }
+
 
 .about-content ul {
     list-style-type: none;
     padding-left: 30px;
 }
 
+
 .about-content li {
     position: relative;
     margin-bottom: 10px;
 }
+
 
 .about-content li::before {
     content: '🏀';
@@ -310,9 +228,32 @@ footer {
     top: 0;
 }
 
+
 .about-content section {
     margin-bottom: 30px;
 }
+
+
+/* Footer Styles */
+footer {
+    flex-shrink: 0;
+    background-color: var(--nba-blue);
+    color: var(--text-light);
+    text-align: center;
+    padding: 10px;
+    width: 100%;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+
+
+.disclaimer-text {
+    font-style: italic;
+    font-size: 0.9em;
+    font-family: 'Roboto', Arial, sans-serif;
+}
+
+
+/* Return to Top Button Styles */
 #return-to-top {
     position: fixed;
     bottom: 20px;
@@ -332,120 +273,38 @@ footer {
     z-index: 1000;
 }
 
+
 #return-to-top.show {
     opacity: 1;
     visibility: visible;
 }
 
+
 #return-to-top:hover {
     background-color: var(--basketball-orange);
 }
 
-/* Make sure these variables are defined in your :root */
-:root {
-    --nba-blue: #17408B;
-    --nba-white: #FFFFFF;
-    --basketball-orange: #F7882F;
-}
 
-header {
-    header {
-        width: 100%;
-        padding: 15px 5%;
-        box-sizing: border-box;
-    }
-
-    header nav {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        flex-wrap: wrap;
-    }
-
-    header nav ul {
-        display: flex;
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-        flex-wrap: wrap;
-    }
-
-    header nav ul li {
-        margin: 5px 10px;
-    }
-
-    footer {
-        width: 100%;
-        padding: 20px 5%;
-        box-sizing: border-box;
-    }
-
-    .copyright, .disclaimer-text {
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-
-    html {
-        font-size: 16px;
-    }
-    
-    @media screen and (min-width: 320px) {
-        html {
-            font-size: calc(16px + 6 * ((100vw - 320px) / 680));
-        }
-    }
-    
-    @media screen and (min-width: 1000px) {
-        html {
-            font-size: 22px;
-        }
-/* Add this after your existing styles */
-
-@media screen and (max-width: 768px) {
-    header {
-        padding: 10px 3%;
-    }
-
-    header h1 {
-        font-size: 1.8rem;
-    }
-
-    .header-subtitle {
-        font-size: 1rem;
-    }
-
-    nav {
-        margin-top: 10px;
-    }
-
+/* Media Queries */
+@media (max-width: 768px) {
     .nav-button {
-        padding: 8px;
-        font-size: 0.9rem;
-        margin: 3px;
+        display: block;
+        margin: 10px auto;
+        width: 80%;
     }
 
-    footer {
-        padding: 15px 3%;
+
+    .overlay-content {
+        padding: 1rem;
     }
 
-    .copyright, .disclaimer-text {
-        font-size: 0.8rem;
-    }
-}
 
-@media screen and (max-width: 480px) {
-    header h1 {
+    .overlay-content h1 {
+        font-size: 2rem;
+    }
+
+
+    .overlay-content h2 {
         font-size: 1.5rem;
     }
-
-    .header-subtitle {
-        font-size: 0.9rem;
-    }
-
-    .nav-button {
-        padding: 6px;
-        font-size: 0.8rem;
-        margin: 2px;
-    }
 }
-    }

@@ -111,52 +111,9 @@ function loadDepthCharts() {
         .catch(error => console.error('Error loading depth charts:', error));
 }
 
-function populateTeamSelect(data) {
-    const teamSelect = document.getElementById('team-select');
-    Object.keys(data).forEach(team => {
-        const option = document.createElement('option');
-        option.value = team;
-        option.textContent = team;
-        teamSelect.appendChild(option);
-    });
-}
-function filterDepthCharts() {
-    const selectedTeam = document.getElementById('team-select').value;
-    const searchTerm = document.getElementById('player-search').value.toLowerCase();
-
-    let filteredData = {};
-
-    if (selectedTeam === 'all') {
-        filteredData = { ...allDepthCharts };
-    } else {
-        filteredData[selectedTeam] = allDepthCharts[selectedTeam];
-    }
-
-    if (searchTerm) {
-        Object.keys(filteredData).forEach(team => {
-            const positions = filteredData[team];
-            Object.keys(positions).forEach(position => {
-                positions[position] = positions[position].filter(player => 
-                    player.toLowerCase().includes(searchTerm)
-                );
-            });
-            if (Object.values(positions).every(arr => arr.length === 0)) {
-                delete filteredData[team];
-            }
-        });
-    }
-
-    displayDepthCharts(filteredData);
-}
-
 function displayDepthCharts(data) {
     const container = document.getElementById('depth-charts-container');
     container.innerHTML = '';
-
-    if (Object.keys(data).length === 0) {
-        container.innerHTML = '<p>No teams or players match the current filters.</p>';
-        return;
-    }
 
     const gridContainer = document.createElement('div');
     gridContainer.classList.add('depth-charts-grid');
