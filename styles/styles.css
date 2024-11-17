@@ -107,37 +107,25 @@ nav {
 
 
 /* Main Container Styles */
-.main-container {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-}
-
-
-/* GIF Container Styles */
-.gif-container {
+.background-container {
     position: relative;
+    background-image: url('../front.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh; /* Adjust this value as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-
-.responsive-gif {
-    width: 100%;
-    height: auto;
-}
-
-
-/* Overlay Content Styles */
 .overlay-content {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.7); /* Semi-transparent black background */
     color: white;
     padding: 20px;
-    overflow-y: auto;
+    border-radius: 10px;
+    max-width: 800px; /* Adjust as needed */
+    margin: 0 auto;
 }
 
 

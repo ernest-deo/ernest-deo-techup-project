@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const table = document.createElement('table');
         const thead = document.createElement('thead');
         const tbody = document.createElement('tbody');
-
+    
         // Create header row
         const headerRow = document.createElement('tr');
         Object.keys(data[0]).forEach(key => {
@@ -80,7 +80,7 @@ document.addEventListener('DOMContentLoaded', function() {
             headerRow.appendChild(th);
         });
         thead.appendChild(headerRow);
-
+    
         // Create body rows
         data.forEach(row => {
             const tr = document.createElement('tr');
@@ -92,81 +92,25 @@ document.addEventListener('DOMContentLoaded', function() {
                         td.textContent = value;
                         isTeamRow = true;
                     } else {
-                        const container = document.createElement('div');
-                        container.style.display = 'flex';
-                        container.style.alignItems = 'center';
-
-                        const logo = document.createElement('img');
-                        logo.src = getLogoUrl(value);
-                        logo.alt = `${value} logo`;
-                        logo.style.width = '30px';
-                        logo.style.marginRight = '10px';
-                        container.appendChild(logo);
-
-                        container.appendChild(document.createTextNode(value));
-                        td.appendChild(container);
+                        td.textContent = value; // Simply set the text content to the team name
                     }
                 } else {
                     td.textContent = value;
                 }
                 tr.appendChild(td);
             });
-
+    
             if (isTeamRow) {
                 tr.classList.add('bold-header');
             }
             tbody.appendChild(tr);
         });
-
+    
         table.appendChild(thead);
         table.appendChild(tbody);
         scheduleTable.innerHTML = '';
         scheduleTable.appendChild(table);
     }
-
-    // Add this function to get the logo URL
-    function getLogoUrl(teamName) {
-        const teamAbbreviations = {
-            'Atlanta Hawks': 'ATL',
-            'Boston Celtics': 'BOS',
-            'Brooklyn Nets': 'BKN',
-            'Charlotte Hornets': 'CHA',
-            'Chicago Bulls': 'CHI',
-            'Cleveland Cavaliers': 'CLE',
-            'Dallas Mavericks': 'DAL',
-            'Denver Nuggets': 'DEN',
-            'Detroit Pistons': 'DET',
-            'Golden State Warriors': 'GS',
-            'Houston Rockets': 'HOU',
-            'Indiana Pacers': 'IND',
-            'Los Angeles Clippers': 'LAC',
-            'Los Angeles Lakers': 'LAL',
-            'Memphis Grizzlies': 'MEM',
-            'Miami Heat': 'MIA',
-            'Milwaukee Bucks': 'MIL',
-            'Minnesota Timberwolves': 'MIN',
-            'New Orleans Pelicans': 'NO',
-            'New York Knicks': 'NY',
-            'Oklahoma City Thunder': 'OKC',
-            'Orlando Magic': 'ORL',
-            'Philadelphia 76ers': 'PHI',
-            'Phoenix Suns': 'PHO',
-            'Portland Trail Blazers': 'POR',
-            'Sacramento Kings': 'SAC',
-            'San Antonio Spurs': 'SA',
-            'Toronto Raptors': 'TOR',
-            'Utah Jazz': 'UTA',
-            'Washington Wizards': 'WAS'
-        };
-
-        const abbreviation = teamAbbreviations[teamName];
-        if (abbreviation) {
-            return `./logos/${abbreviation}.png`;
-        }
-
-        // Add a return statement for when no abbreviation is found
-    return ''; // or return a default logo URL
-}
 
 function highlightActiveTab(weekNumber) {
     const tabs = weekTabs.getElementsByTagName('button');

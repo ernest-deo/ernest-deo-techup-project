@@ -1,50 +1,5 @@
 let allDepthCharts = {};
 
-function getLogoUrl(teamAbbreviation) {
-    // Convert team abbreviation to uppercase and remove spaces
-    const formattedAbbreviation = teamAbbreviation.replace(/\s+/g, '').toUpperCase();
-
-    // Map full team names to abbreviations
-    const teamAbbreviations = {
-        'ATLANTAHAWKS': 'ATL',
-        'BOSTONCELTICS': 'BOS',
-        'BROOKLYNNETS': 'BKN',
-        'CHARLOTTEHORNETS': 'CHA',
-        'CHICAGOBULLS': 'CHI',
-        'CLEVELANDCAVALIERS': 'CLE',
-        'DALLASMAVERICKS': 'DAL',
-        'DENVERNUGGETS': 'DEN',
-        'DETROITPISTONS': 'DET',
-        'GOLDENSTATEWARRIORS': 'GS',
-        'HOUSTONROCKETS': 'HOU',
-        'INDIANAPACERS': 'IND',
-        'LACLIPPERS': 'LAC',
-        'LALAKERS': 'LAL',
-        'MEMPHISGRIZZLIES': 'MEM',
-        'MIAMIHEAT': 'MIA',
-        'MILWAUKEEBUCKS': 'MIL',
-        'MINNESOTATIMBERWOLVES': 'MIN',
-        'NEWORLEANSPELICANS': 'NO',
-        'NEWYORKKNICKS': 'NY',
-        'OKLAHOMACITYTHUNDER': 'OKC',
-        'ORLANDOMAGIC': 'ORL',
-        'PHILADELPHIA76ERS': 'PHI',
-        'PHOENIXSUNS': 'PHO',
-        'PORTLANDTRAILBLAZERS': 'POR',
-        'SACRAMENTOKINGS': 'SAC',
-        'SANANTONIOSPURS': 'SA',
-        'TORONTORAPTORS': 'TOR',
-        'UTAHJAZZ': 'UTA',
-        'WASHINGTONWIZARDS': 'WAS'
-    };
-
-    // Get the correct abbreviation
-    const abbreviation = teamAbbreviations[formattedAbbreviation] || formattedAbbreviation;
-
-    // Return the URL for the logo
-    return `./logos/${abbreviation}.png`;
-}
-
 function createDepthChart(team, players) {
     const depthChart = document.createElement('div');
     depthChart.classList.add('depth-chart');
@@ -52,19 +7,10 @@ function createDepthChart(team, players) {
     const teamHeader = document.createElement('div');
     teamHeader.classList.add('team-header');
 
-    const teamLogo = document.createElement('img');
-    teamLogo.src = getLogoUrl(team);
-    teamLogo.alt = `${team} logo`;
-    teamLogo.classList.add('team-logo');
-    teamLogo.onerror = function() {
-        this.style.display = 'none';
-    };
-
     const teamName = document.createElement('h2');
     teamName.textContent = team;
     teamName.classList.add('team-name');
 
-    teamHeader.appendChild(teamLogo);
     teamHeader.appendChild(teamName);
     depthChart.appendChild(teamHeader);
 
